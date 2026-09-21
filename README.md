@@ -10,4 +10,4 @@ A single-file design portfolio (`index.html`) whose interface borrows from topog
 
 ## Edit
 
-All content lives in the `P` array near the bottom of `index.html`, plus the hero, About and Contact copy in the markup. Replace the sample name, projects and email (`hello@example.com`).
+All content lives in the `P` array near the bottom of `index.html`, plus the hero, About and Contact copy in the markup. Content is Cody Trinkaus's; the project years (2024, 2025) are assumptions, so update them.
