@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Design portfolio organised as a topographic survey: one contour per year, one station per project.">
+<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Halloran Survey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --ground:#E1E9E4;
+  --paper:#EDF3EF;
+  --ink:#14302A;
+  --ink-soft:#4A645D;
+  --line:rgba(20,48,42,.18);
+  --line-strong:rgba(20,48,42,.5);
+  --contour:#9DB8AD;
+  --contour-index:#5B8477;
+  --accent:#E8471F;
+  --on-accent:#fff;
+  --rail:56px;
+  --display:"Anybody","Arial Narrow",Impact,sans-serif;
+  --body:"Hanken Grotesk",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#0D1815;--paper:#132420;--ink:#DCE9E3;--ink-soft:#8CA89F;
+    --line:rgba(220,233,227,.16);--line-strong:rgba(220,233,227,.45);
+    --contour:#22413A;--contour-index:#3F7263;--accent:#FF6A3A;--on-accent:#1a0a04;
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0D1815;--paper:#132420;--ink:#DCE9E3;--ink-soft:#8CA89F;
+  --line:rgba(220,233,227,.16);--line-strong:rgba(220,233,227,.45);
+  --contour:#22413A;--contour-index:#3F7263;--accent:#FF6A3A;--on-accent:#1a0a04;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--ground);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+#terrain{position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+button{font:inherit;color:inherit;cursor:pointer}
+.mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- elevation rail ---------- */
+.rail{position:fixed;left:0;top:0;bottom:0;width:var(--rail);z-index:5;
+  padding-block:calc(28px + env(safe-area-inset-top,0px)) calc(28px + env(safe-area-inset-bottom,0px));
+  border-right:1px solid var(--line);background:color-mix(in srgb,var(--ground) 78%,transparent);pointer-events:none}
+.ruler{position:relative;height:100%}
+.tick{position:absolute;right:0;width:8px;height:1px;background:var(--ink-soft)}
+.tick.idx{width:18px;background:var(--ink);height:1.5px}
+.tick span{position:absolute;right:24px;top:-7px;font:500 10px/14px var(--mono);color:var(--ink);letter-spacing:.02em}
+.flag{position:absolute;right:-6px;width:12px;height:12px;margin-top:-6px;padding:0;border:0;background:var(--accent);
+  clip-path:polygon(0 50%,100% 0,100% 100%);pointer-events:auto}
+.flag:hover{transform:scale(1.35)}
+.flag[hidden]{display:none}
+.marker{position:absolute;left:0;right:0;height:2px;background:var(--accent);top:0;will-change:top}
+.marker output{position:absolute;left:5px;bottom:4px;font:500 10.5px/1 var(--mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.rail-cap{position:absolute;left:0;right:0;font:500 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
+.rail-cap.t{top:9px}.rail-cap.b{bottom:9px}
+
+/* ---------- layout ---------- */
+.sheet{margin-left:var(--rail);padding-inline:clamp(16px,4.5vw,64px);max-width:calc(1320px + var(--rail));}
+.bar{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;padding-block:22px}
+.bar .brand{font:700 15px/1 var(--display);font-stretch:70%;letter-spacing:.14em;text-transform:uppercase;text-decoration:none}
+.bar nav{display:flex;gap:22px}
+.bar nav a{text-decoration:none;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;padding-block:6px;border-bottom:1.5px solid transparent}
+.bar nav a:hover{border-color:var(--accent)}
+
+.hero{padding-block:clamp(28px,7vh,80px) clamp(36px,6vh,72px)}
+.hero h1{margin:.2em 0 0;font:800 clamp(4rem,17vw,13.5rem)/.84 var(--display);font-stretch:58%;text-transform:uppercase;letter-spacing:-.005em;text-wrap:balance}
+.hero h1 span{display:block}
+.hero h1 .fill{color:transparent;-webkit-text-stroke:2px var(--ink);
+  background:repeating-radial-gradient(circle at 34% 62%,var(--ink) 0 2.5px,transparent 2.5px 9px);
+  -webkit-background-clip:text;background-clip:text}
+.hero-row{display:grid;grid-template-columns:minmax(0,1fr);gap:28px 48px;margin-top:clamp(28px,5vh,52px);align-items:end}
+@media(min-width:900px){.hero-row{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}}
+.lede{font-size:clamp(1.15rem,2vw,1.5rem);line-height:1.4;max-width:34em;margin:0;text-wrap:pretty}
+.sheetinfo{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;font-family:var(--mono);font-size:12px;line-height:1.5}
+.sheetinfo dt{color:var(--ink-soft);text-transform:uppercase;letter-spacing:.06em}
+.sheetinfo dd{margin:0}
+.descend{display:inline-flex;align-items:center;gap:10px;margin-top:26px;text-decoration:none}
+.descend i{display:block;width:34px;height:1.5px;background:var(--ink);position:relative}
+.descend i::after{content:"";position:absolute;right:0;top:-4px;width:9px;height:9px;border-right:1.5px solid var(--ink);border-top:1.5px solid var(--ink);transform:rotate(45deg);transform-origin:100% 0;}
+
+/* ---------- work ---------- */
+.work-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px 40px;padding-top:28px;border-top:1.5px solid var(--ink)}
+.work-head h2,.about h2,.contact h2{margin:0;font:800 clamp(2rem,5vw,3.4rem)/.95 var(--display);font-stretch:62%;text-transform:uppercase}
+.legend{display:flex;flex-wrap:wrap;gap:8px}
+.legend button{display:inline-flex;align-items:center;gap:9px;padding:8px 14px 8px 12px;border:1px solid var(--line-strong);background:color-mix(in srgb,var(--ground) 80%,transparent);
+  font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
+.legend button:hover{border-color:var(--ink)}
+.legend button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.sym{display:inline-block;width:11px;height:11px;background:var(--accent);flex:none}
+.sym[data-d="Identity"]{border-radius:50%}
+.sym[data-d="Systems"]{clip-path:polygon(50% 0,100% 100%,0 100%)}
+.sym[data-d="Editorial"]{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.sym.all{background:linear-gradient(90deg,var(--accent) 50%,var(--ink-soft) 50%);border-radius:0}
+.count{margin:14px 0 0}
+
+.work{position:relative;margin-top:8px}
+.stn{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:18px 36px;padding:46px 0 46px 34px}
+.stn[hidden]{display:none}
+.stn::before{content:"";position:absolute;left:5px;top:0;bottom:0;border-left:1.5px dashed var(--line-strong)}
+.stn:first-child::before{top:58px}
+.stn:last-child::before{bottom:auto;height:58px}
+.stn>.sym{position:absolute;left:-1px;top:52px;width:13px;height:13px;outline:5px solid var(--ground)}
+.stn .when{display:flex;align-items:baseline;gap:14px}
+.yr{font:800 clamp(2.6rem,5vw,4.2rem)/.9 var(--display);font-stretch:60%;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.thumb{position:relative;display:block;aspect-ratio:16/10;max-width:100%;border:1px solid var(--line-strong);overflow:hidden;background:var(--paper)}
+.thumb canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
+.thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.5))}
+.thumb h3{position:absolute;left:18px;right:18px;bottom:14px;z-index:1;margin:0;font:800 clamp(2rem,5.5vw,3.8rem)/.9 var(--display);font-stretch:60%;text-transform:uppercase;color:#fff;letter-spacing:.01em;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.thumb .spot{position:absolute;top:14px;right:14px;z-index:1;color:#fff;font:500 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.meta h4{margin:0 0 8px;font:600 1.2rem/1.3 var(--body);text-wrap:balance}
+.meta p{margin:0 0 18px;color:var(--ink-soft);max-width:38em}
+.facts{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;padding-top:14px;border-top:1px solid var(--line);font-size:14px}
+.facts dt{font:500 11px/1.9 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+.facts dd{margin:0}
+.facts dd.out{font-weight:600}
+.notes{grid-column:1/-1}
+.notes summary{list-style:none;display:inline-flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1.5px solid var(--ink);font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+.notes summary::-webkit-details-marker{display:none}
+.notes summary::after{content:"+";font-size:16px;line-height:1}
+.notes[open] summary::after{content:"\2212"}
+.notes summary:hover{border-color:var(--accent)}
+.notes .body{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:24px 36px;margin-top:22px;padding:24px;background:color-mix(in srgb,var(--paper) 92%,transparent);border:1px solid var(--line)}
+.notes h5{margin:0 0 6px;font:500 11.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.notes p{margin:0;font-size:15px;max-width:34em}
+@media(min-width:980px){
+  .stn{grid-template-columns:130px minmax(0,1.6fr) minmax(230px,1fr)}
+  .stn .when{flex-direction:column;gap:8px}
+  .notes{grid-column:2/-1}
+}
+
+/* ---------- about / contact ---------- */
+.about{display:grid;grid-template-columns:minmax(0,1fr);gap:32px 64px;padding-block:56px;border-top:1.5px solid var(--ink)}
+@media(min-width:900px){.about{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr)}}
+.about p{margin:0 0 1em;max-width:36em;font-size:1.1rem;text-wrap:pretty}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:28px;margin-top:30px}
+.cols h3{margin:0 0 10px;font:500 11.5px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.cols ul{margin:0;padding:0;list-style:none;font-size:15px}
+.cols li{padding-block:7px;border-top:1px solid var(--line)}
+.contact{padding-block:56px 40px;border-top:1.5px solid var(--ink)}
+.contact .bm{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.contact .bm .sym{clip-path:none;border-radius:50%;width:15px;height:15px;box-shadow:0 0 0 5px var(--ground),0 0 0 6.5px var(--accent)}
+.mail{display:inline-block;margin-top:24px;font:800 clamp(1.7rem,7vw,5.6rem)/1 var(--display);font-stretch:62%;text-transform:uppercase;text-decoration:none;
+  background:linear-gradient(var(--accent),var(--accent)) 0 100%/100% .09em no-repeat;padding-bottom:.08em;overflow-wrap:anywhere}
+.mail:hover{background-size:100% 100%;color:var(--on-accent)}
+.contact p{max-width:34em;margin:14px 0 0;font-size:1.1rem}
+.margin-note{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 40px;margin-top:64px;padding-top:16px;border-top:1px solid var(--line-strong)}
+.scalebar{display:flex;align-items:center;gap:10px}
+.scalebar i{display:block;width:96px;height:7px;border:1.5px solid var(--ink);border-top-width:0;background:linear-gradient(90deg,var(--ink) 50%,transparent 50%) 0 0/48px 100%}
+
+@media(max-width:700px){
+  :root{--rail:40px}
+  .tick span{font-size:9px;right:15px}
+  .tick.idx{width:11px}
+  .tick{width:5px}
+  .marker output{font-size:9px;left:3px}
+  .stn{padding-left:26px}
+  .bar nav{gap:16px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.flag:hover{transform:none}}
+</style>
+</head>
+<body>
+<canvas id="terrain" aria-hidden="true"></canvas>
+
+<aside class="rail" aria-label="Year scale. Contour interval one year.">
+  <div class="rail-cap t">Now</div>
+  <div class="ruler" id="ruler">
+    <div class="marker" id="marker"><output id="readout">2026.7</output></div>
+  </div>
+  <div class="rail-cap b">Datum</div>
+</aside>
+
+<div class="sheet">
+  <header class="bar">
+    <a class="brand" href="#top">W. Halloran</a>
+    <nav aria-label="Sections">
+      <a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="top">
+    <p class="mono" style="margin:0">Survey sheet · Portfolio 2015–2026 · Seattle, WA</p>
+    <h1><span>Wren</span><span class="fill">Halloran</span></h1>
+    <div class="hero-row">
+      <div>
+        <p class="lede">Product and identity designer. Eleven years of ground covered, mapped here by the year. Scroll and you descend into the past, one contour at a time.</p>
+        <a class="descend mono" href="#work"><i></i>Begin the descent</a>
+      </div>
+      <dl class="sheetinfo">
+        <dt>Position</dt><dd>47.6062° N, 122.3321° W</dd>
+        <dt>Interval</dt><dd>1 contour = 1 year</dd>
+        <dt>Summit</dt><dd>2026 · Tarn</dd>
+        <dt>Datum</dt><dd>2015 · First job</dd>
+        <dt>Stations</dt><dd id="stationTotal">7 surveyed</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section id="work" aria-labelledby="workTitle">
+    <div class="work-head">
+      <h2 id="workTitle">Stations</h2>
+      <div class="legend" role="group" aria-label="Filter by discipline" id="legend"></div>
+    </div>
+    <p class="mono count" id="count" aria-live="polite"></p>
+    <div class="work" id="work-list"></div>
+  </section>
+
+  <section class="about" id="about">
+    <h2>Field notes</h2>
+    <div>
+      <p>I work between brand and product. I like problems with a lot of ground to cover: many users, many surfaces, a long history nobody wrote down.</p>
+      <p>My habit is to survey first. I talk to the people on the ground, map what already exists, and only then draw the route. The result is usually less new than expected and much easier to walk.</p>
+      <div class="cols">
+        <div><h3>Terrain covered</h3><ul><li>Product design</li><li>Design systems</li><li>Identity and packaging</li><li>Editorial and data stories</li><li>Prototyping in code</li></ul></div>
+        <div><h3>Base camps</h3><ul><li>Independent, 2021 to now</li><li>Northbeam Studio, 2017–2021</li><li>Print shop apprenticeship, 2015–2017</li></ul></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact">
+    <div class="bm"><span class="sym"></span><span class="mono">Benchmark · Elev. 2015</span></div>
+    <h2>Where the map begins</h2>
+    <p>Taking on two projects starting early 2027. Tell me about the terrain.</p>
+    <a class="mail" href="mailto:hello@example.com">hello@example.com</a>
+    <div class="margin-note mono">
+      <span class="scalebar"><i></i>0 · 1 · 2 yr</span>
+      <span>Contour interval 1 year</span>
+      <span>Projection: reverse-chronological</span>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+"use strict";
+var root=document.documentElement;
+var reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function $(s,r){return (r||document).querySelector(s)}
+
+/* ---------- data ---------- */
+var P=[
+ {name:"Tarn",year:2026,d:"Product",title:"Trail and booking app for a 14-hut alpine network",sum:"One offline-first app replaces three booking sites, a paper logbook and a radio schedule.",role:"Lead designer",client:"Cascade Huts Alliance",time:"7 months",out:"14 huts, one booking flow, works without signal",
+  notes:["Wardens juggled paper logs, three booking sites and a daily radio call. Hikers arrived at full huts with stale information.","I shadowed wardens for two summers, then mapped every hand-off between hiker, warden and booking. The app was drawn around the hut, not the trail.","Bookings, weather holds and bunk counts sync whenever a hiker regains signal. Wardens close the day in under a minute."],
+  seed:11,scale:1.5,rough:.5,f:[{x:.9,y:.45,s:.32,a:.55},{x:.3,y:.8,s:.2,a:-.25}],ramp:["#1F3B4D","#2F5D6E","#5E8F8A","#9DBB9A","#D5DDB4","#F2EFD9","#FFFFFF"]},
+ {name:"Ledger Lines",year:2025,d:"Systems",title:"A design system for a payments platform",sum:"Six products, four teams, and a shared language for money on screen.",role:"Systems designer, team of four",client:"Ferro Pay",time:"9 months",out:"212 components across 6 products",
+  notes:["Six products had drifted into six dialects of the same button, and every new team started from a screenshot.","I audited 1,400 screens, sorted them by how often people met them, and built the system outward from the most-walked paths.","Tokens and components ship from one source. Teams adopt a piece at a time, and the audit doubles as the roadmap."],
+  seed:23,scale:2.1,rough:.42,f:[{x:.5,y:.5,s:.45,a:.7}],ramp:["#0F1E3A","#1B355F","#2E5590","#5C86C4","#A9C1E6","#E3ECF8","#FF6A3A"]},
+ {name:"Saltmarsh",year:2023,d:"Identity",title:"Identity and jackets for an independent press",sum:"A wordmark that survives a spine, a stamp and a tote bag, plus a type pairing for thirty titles.",role:"Designer",client:"Saltmarsh Press",time:"5 months",out:"Identity, 30 jacket templates, type system",
+  notes:["A small press with a strong list and no visual memory. Every jacket looked like it came from a different house.","I started from the physical objects: spines on a shelf, a stamp on a proof. The mark was cut to work at 12 mm before anything else.","A two-typeface system and a flexible jacket grid let the editor art-direct a season in a day."],
+  seed:37,scale:1.2,rough:.55,f:[{x:.2,y:.3,s:.3,a:.5},{x:.85,y:.75,s:.25,a:.4}],ramp:["#3B4A2A","#61703A","#8E9A55","#C1C27C","#E6DDA8","#F4EBC9"]},
+ {name:"Dispatch",year:2022,d:"Product",title:"Publishing tool redesign for a regional newsroom",sum:"Filing a breaking story stops being a scavenger hunt.",role:"Product designer",client:"Northbeam Studio for The Ledger-Post",time:"11 months",out:"Breaking-story filing time cut by about a third",
+  notes:["Editors filed through a CMS built for magazines. Breaking news meant nine screens and a phone call.","We timed real filings, cut every step that the desk skipped by habit, and rebuilt the rest around a single editable page.","Reporters file from a phone in the field. Editors see what changed and who touched it before anything goes live."],
+  seed:52,scale:2.6,rough:.6,f:[{x:.7,y:.4,s:.22,a:-.5},{x:.25,y:.7,s:.3,a:.45}],ramp:["#2A1B2E","#4B2A4E","#7A3F6B","#B25C7F","#E38F8F","#F8CDB4"]},
+ {name:"Kiln & Co.",year:2020,d:"Identity",title:"Flat-packed packaging for a ceramics studio",sum:"Boxes that ship flat, unfold in one move and double as the shelf display.",role:"Designer",client:"Kiln & Co.",time:"3 months",out:"Packaging that ships flat and becomes a display",
+  notes:["Breakage was eating the margin, and the old boxes were too tall to stack at craft fairs.","I built forty cardboard prototypes on the studio floor. The winner folds from a single sheet and locks without tape.","Glaze colours pick the print colour of each box, so a stack of orders looks like a kiln load."],
+  seed:64,scale:1.7,rough:.45,f:[{x:.4,y:.55,s:.4,a:.6}],ramp:["#3A1F17","#6B3524","#A5502F","#D4793F","#EBB073","#F6DDB1"]},
+ {name:"Fathom",year:2018,d:"Editorial",title:"A long-form story told from the sea floor up",sum:"Nine charts, one dive: ocean temperature read from surface to abyss.",role:"Designer and front-end",client:"Independent",time:"4 months",out:"Long-form piece with 9 interactive charts",
+  notes:["Ocean warming is usually a line chart of the surface. The story is in the depth, where the numbers stay hidden.","I made depth the scroll axis, so each screen goes further down. Every chart reads from the same dataset at a different pressure.","Scrolling is the dive. The page ends where the data does: 2,000 metres, and still warming."],
+  seed:79,scale:1.4,rough:.5,f:[{x:.6,y:.5,s:.5,a:-.7}],ramp:["#04202E","#083B52","#0E5F7A","#1C8AA0","#54B7BE","#A8E0D9"]},
+ {name:"First Light",year:2016,d:"Editorial",title:"Exhibition design and catalogue for a graduating cohort",sum:"Twenty-two students, one room, a single guiding line on the floor.",role:"Designer",client:"Art school graduating class",time:"6 months",out:"Exhibition, 22 artists, 96-page catalogue",
+  notes:["Twenty-two practices had to share one room without becoming a flea market.","We laid a single line across the floor and hung each work at its own distance from it. The line was the only rule.","The catalogue reuses the line as a running rule on every page. It was my first project to leave the studio."],
+  seed:91,scale:1.3,rough:.55,f:[{x:.15,y:.6,s:.35,a:.5},{x:.8,y:.3,s:.3,a:.4}],ramp:["#1A1A2E","#3B2F63","#7A4A8F","#D0648A","#F79A6B","#FFD9A0"]}
+];
+var DISC=["Identity","Product","Systems","Editorial"];
+
+/* ---------- noise ---------- */
+function makeNoise(seed){
+  var perm=[],i,j,s=(seed*2654435761)>>>0||1;
+  for(i=0;i<256;i++)perm[i]=i;
+  function rnd(){s^=s<<13;s>>>=0;s^=s>>>17;s^=s<<5;s>>>=0;return s/4294967296}
+  for(i=255;i>0;i--){j=Math.floor(rnd()*(i+1));var t=perm[i];perm[i]=perm[j];perm[j]=t}
+  var p=new Uint8Array(512);for(i=0;i<512;i++)p[i]=perm[i&255];
+  function g(h,x,y){switch(h&7){case 0:return x+y;case 1:return x-y;case 2:return -x+y;case 3:return -x-y;case 4:return x;case 5:return -x;case 6:return y;default:return -y}}
+  function fade(t){return t*t*t*(t*(t*6-15)+10)}
+  return function(x,y){
+    var xf=Math.floor(x),yf=Math.floor(y),X=xf&255,Y=yf&255;x-=xf;y-=yf;
+    var u=fade(x),v=fade(y),a=p[p[X]+Y],b=p[p[X+1]+Y],c=p[p[X]+Y+1],d=p[p[X+1]+Y+1];
+    var l1=g(a,x,y)+u*(g(b,x-1,y)-g(a,x,y)), l2=g(c,x,y-1)+u*(g(d,x-1,y-1)-g(c,x,y-1));
+    return l1+v*(l2-l1);
+  };
+}
+function fbm(n,x,y,oct){var a=1,f=1,s=0,t=0;for(var o=0;o<oct;o++){s+=a*n(x*f,y*f);t+=a;a*=.5;f*=2}return s/t}
+
+/* ---------- thumbnails (hypsometric tints) ---------- */
+function hex(h){return [parseInt(h.substr(1,2),16),parseInt(h.substr(3,2),16),parseInt(h.substr(5,2),16)]}
+function drawThumb(cv,p){
+  var w=640,h=400,n=makeNoise(p.seed),ramp=p.ramp.map(hex),N=ramp.length,SUB=3;
+  cv.width=w;cv.height=h;
+  var ctx=cv.getContext("2d"),img=ctx.createImageData(w,h),lv=new Int16Array(w*h),i,x,y;
+  for(y=0;y<h;y++)for(x=0;x<w;x++){
+    var nx=x/h,ny=y/h,v=.5+fbm(n,nx*p.scale*2.2+3,ny*p.scale*2.2+3,4)*p.rough*1.6;
+    for(i=0;i<p.f.length;i++){var f=p.f[i],dx=nx-f.x*1.6,dy=ny-f.y;v+=f.a*Math.exp(-(dx*dx+dy*dy)/(f.s*f.s))}
+    v=Math.max(0,Math.min(.999,v));lv[y*w+x]=Math.floor(v*N*SUB);
+  }
+  for(y=0;y<h;y++)for(x=0;x<w;x++){
+    var k=y*w+x,L=lv[k],c=ramp[Math.floor(L/SUB)],m=1;
+    var r=x<w-1?lv[k+1]:L,b=y<h-1?lv[k+w]:L;
+    if(r!==L||b!==L){m=(Math.floor(r/SUB)!==Math.floor(L/SUB)||Math.floor(b/SUB)!==Math.floor(L/SUB))?.32:.62}
+    img.data[k*4]=c[0]*m;img.data[k*4+1]=c[1]*m;img.data[k*4+2]=c[2]*m;img.data[k*4+3]=255;
+  }
+  ctx.putImageData(img,0,0);
+}
+
+/* ---------- stations ---------- */
+var list=$("#work-list");
+list.innerHTML=P.map(function(p,i){
+  var el=(p.year);
+  return '<article class="stn" data-i="'+i+'" data-d="'+p.d+'" id="s'+p.year+'">'+
+   '<span class="sym" data-d="'+p.d+'"></span>'+
+   '<div class="when"><div class="yr">'+p.year+'</div><div class="mono">El. '+el+'<br>'+p.d+'</div></div>'+
+   '<div class="thumb"><canvas aria-hidden="true"></canvas><span class="spot">▲ '+p.year+'</span><h3>'+p.name+'</h3></div>'+
+   '<div class="meta"><h4>'+p.title+'</h4><p>'+p.sum+'</p>'+
+     '<dl class="facts"><dt>Role</dt><dd>'+p.role+'</dd><dt>Client</dt><dd>'+p.client+'</dd><dt>Time</dt><dd>'+p.time+'</dd><dt>Result</dt><dd class="out">'+p.out+'</dd></dl></div>'+
+   '<details class="notes"><summary>Survey notes</summary><div class="body">'+
+     '<div><h5>Terrain</h5><p>'+p.notes[0]+'</p></div><div><h5>Route</h5><p>'+p.notes[1]+'</p></div><div><h5>Summit</h5><p>'+p.notes[2]+'</p></div>'+
+   '</div></details></article>';
+}).join("");
+var stns=[].slice.call(list.children);
+stns.forEach(function(s,i){drawThumb($("canvas",s),P[i])});
+
+/* legend / filter */
+var legend=$("#legend"),active="All";
+legend.innerHTML=["All"].concat(DISC).map(function(d){
+  return '<button type="button" aria-pressed="'+(d==="All")+'" data-f="'+d+'"><span class="sym'+(d==="All"?" all":"")+'" data-d="'+d+'"></span>'+d+'</button>';
+}).join("");
+legend.addEventListener("click",function(e){
+  var b=e.target.closest("button");if(!b)return;
+  active=b.dataset.f;
+  [].forEach.call(legend.children,function(x){x.setAttribute("aria-pressed",x===b)});
+  applyFilter();
+});
+function applyFilter(){
+  var shown=0;
+  stns.forEach(function(s,i){var on=active==="All"||P[i].d===active;s.hidden=!on;flags[i].hidden=!on;if(on)shown++});
+  $("#count").textContent="Showing "+shown+" of "+P.length+" stations"+(active==="All"?"":" · "+active);
+  buildAnchors();dirty();
+}
+$("#stationTotal").textContent=P.length+" surveyed";
+
+/* ---------- rail ---------- */
+var YMAX=2027,YMIN=2015,ruler=$("#ruler"),marker=$("#marker"),readout=$("#readout");
+function yPct(y){return (YMAX-y)/(YMAX-YMIN)*100}
+for(var y=YMIN;y<=2026;y++){
+  var t=document.createElement("div");t.className="tick"+(y%5===0?" idx":"");t.style.top=yPct(y)+"%";
+  if(y%5===0||y===2026){t.className="tick idx";t.innerHTML="<span>"+y+"</span>"}
+  ruler.insertBefore(t,marker);
+}
+var flags=P.map(function(p,i){
+  var b=document.createElement("button");b.type="button";b.className="flag";b.style.top=yPct(p.year)+"%";
+  b.setAttribute("aria-label","Jump to "+p.name+", "+p.year);b.title=p.name+" · "+p.year;
+  b.addEventListener("click",function(){stns[i].scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"})});
+  ruler.insertBefore(b,marker);return b;
+});
+var anchors=[];
+function buildAnchors(){
+  var sy=window.scrollY,a=[{y:0,v:2026.75}];
+  stns.forEach(function(s,i){if(s.hidden)return;var r=s.querySelector(".thumb").getBoundingClientRect();a.push({y:r.top+r.height/2+sy,v:P[i].year})});
+  a.push({y:Math.max(document.documentElement.scrollHeight-innerHeight,1)+innerHeight*.45,v:2015});
+  anchors=a;
+}
+function yearAt(py){
+  if(py<=anchors[0].y)return anchors[0].v;
+  for(var i=1;i<anchors.length;i++){
+    if(py<=anchors[i].y){var a=anchors[i-1],b=anchors[i],t=(py-a.y)/Math.max(b.y-a.y,1);return a.v+(b.v-a.v)*t}
+  }
+  return anchors[anchors.length-1].v;
+}
+function updateRail(){
+  var v=Math.max(YMIN,Math.min(2026.9,yearAt(window.scrollY+innerHeight*.45)));
+  marker.style.top=yPct(v+ (v>=2026?0:0))+"%";
+  readout.textContent=v.toFixed(1);
+}
+
+/* ---------- terrain ---------- */
+var cv=$("#terrain"),cx=cv.getContext("2d"),W=0,H=0,DPR=1,CELL=12;
+var nz=makeNoise(5),grid=null,S=.0019;
+var ptr={x:-999,y:-999,tx:-999,ty:-999,amp:0,target:0};
+var hov={x:0,y:0,amp:0,target:0,el:null};
+var pending=false;
+function size(){
+  DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
+  cv.width=W*DPR;cv.height=H*DPR;CELL=W<700?14:12;grid=null;
+}
+function dirty(){if(!pending){pending=true;requestAnimationFrame(frame)}}
+function frame(){
+  pending=false;var moving=false,k=reduce?1:.14;
+  ptr.x+=(ptr.tx-ptr.x)*k;ptr.y+=(ptr.ty-ptr.y)*k;
+  if(Math.abs(ptr.tx-ptr.x)>.5||Math.abs(ptr.ty-ptr.y)>.5)moving=true;
+  ptr.amp+=(ptr.target-ptr.amp)*k;if(Math.abs(ptr.target-ptr.amp)>.003)moving=true;else ptr.amp=ptr.target;
+  hov.amp+=(hov.target-hov.amp)*(reduce?1:.1);if(Math.abs(hov.target-hov.amp)>.003)moving=true;else hov.amp=hov.target;
+  draw();if(moving)dirty();
+}
+function draw(){
+  var cs=getComputedStyle(root),cMinor=cs.getPropertyValue("--contour").trim(),cMajor=cs.getPropertyValue("--contour-index").trim();
+  var cols=Math.ceil(W/CELL)+1,rows=Math.ceil(H/CELL)+1,gw=cols+1;
+  if(!grid||grid.length!==gw*(rows+1))grid=new Float32Array(gw*(rows+1));
+  var off=window.scrollY*.32,i,j,peaks=[];
+  if(ptr.amp>.003)peaks.push([ptr.x,ptr.y,ptr.amp,150]);
+  if(hov.amp>.003)peaks.push([hov.x,hov.y,hov.amp,Math.min(260,W*.3)]);
+  for(j=0;j<=rows;j++){
+    var py=j*CELL;
+    for(i=0;i<=cols;i++){
+      var px=i*CELL,v=fbm(nz,px*S+10,(py+off)*S+10,3);
+      for(var q=0;q<peaks.length;q++){var pk=peaks[q],dx=px-pk[0],dy=py-pk[1];v+=pk[2]*Math.exp(-(dx*dx+dy*dy)/(2*pk[3]*pk[3]))}
+      grid[j*gw+i]=v;
+    }
+  }
+  cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,W,H);
+  var minor=new Path2D(),major=new Path2D(),STEP=.05;
+  for(j=0;j<rows;j++)for(i=0;i<cols;i++){
+    var a=grid[j*gw+i],b=grid[j*gw+i+1],c=grid[(j+1)*gw+i+1],d=grid[(j+1)*gw+i]; // tl,tr,br,bl
+    var lo=Math.min(a,b,c,d),hi=Math.max(a,b,c,d);
+    var k0=Math.ceil(lo/STEP),k1=Math.floor(hi/STEP);
+    for(var k=k0;k<=k1;k++){
+      var L=k*STEP,path=(k%5===0)?major:minor,x0=i*CELL,y0=j*CELL;
+      var cs2=(a>L?8:0)|(b>L?4:0)|(c>L?2:0)|(d>L?1:0);
+      if(cs2===0||cs2===15)continue;
+      var T=[x0+CELL*(L-a)/(b-a),y0],R=[x0+CELL,y0+CELL*(L-b)/(c-b)],B=[x0+CELL*(L-d)/(c-d),y0+CELL],Lf=[x0,y0+CELL*(L-a)/(d-a)],s;
+      switch(cs2){
+        case 1:case 14:s=[Lf,B];break;
+        case 2:case 13:s=[B,R];break;
+        case 3:case 12:s=[Lf,R];break;
+        case 4:case 11:s=[T,R];break;
+        case 5:s=[Lf,T,B,R];break;
+        case 6:case 9:s=[T,B];break;
+        case 7:case 8:s=[Lf,T];break;
+        case 10:s=[T,R,Lf,B];break;
+      }
+      path.moveTo(s[0][0],s[0][1]);path.lineTo(s[1][0],s[1][1]);
+      if(s.length>2){path.moveTo(s[2][0],s[2][1]);path.lineTo(s[3][0],s[3][1])}
+    }
+  }
+  cx.lineWidth=1;cx.strokeStyle=cMinor;cx.stroke(minor);
+  cx.lineWidth=1.7;cx.strokeStyle=cMajor;cx.stroke(major);
+}
+
+/* ---------- events ---------- */
+addEventListener("pointermove",function(e){
+  if(e.pointerType==="touch")return;
+  if(ptr.target===0){ptr.x=e.clientX;ptr.y=e.clientY}
+  ptr.tx=e.clientX;ptr.ty=e.clientY;ptr.target=.22;dirty();
+},{passive:true});
+document.addEventListener("pointerleave",function(){ptr.target=0;dirty()});
+function setHover(el){
+  hov.el=el;
+  if(el){var r=el.querySelector(".thumb").getBoundingClientRect();hov.x=r.left+r.width/2;hov.y=r.top+r.height/2;hov.target=.75}
+  else hov.target=0;
+  dirty();
+}
+stns.forEach(function(s){
+  s.addEventListener("pointerenter",function(e){if(e.pointerType!=="touch")setHover(s)});
+  s.addEventListener("pointerleave",function(){setHover(null)});
+  s.addEventListener("focusin",function(){setHover(s)});
+  s.addEventListener("focusout",function(){setHover(null)});
+});
+var ticking=false;
+addEventListener("scroll",function(){
+  if(ticking)return;ticking=true;
+  requestAnimationFrame(function(){ticking=false;updateRail();if(hov.el)setHover(hov.el);else dirty()});
+},{passive:true});
+addEventListener("resize",function(){size();buildAnchors();updateRail();dirty()});
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change",dirty);
+new MutationObserver(dirty).observe(root,{attributes:true,attributeFilter:["data-theme"]});
+document.querySelectorAll("details.notes").forEach(function(d){d.addEventListener("toggle",function(){buildAnchors();updateRail()})});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){buildAnchors();updateRail()});
+
+size();applyFilter();updateRail();
+})();
+</script>
+</body>
+</html>
