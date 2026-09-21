@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Controla Asistencia · Cody Trinkaus</title>
+<meta name="description" content="Case study: front-end and back-end development of an HR web application enabling remote work for Ecuador&#x27;s SAE.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<canvas id="terrain" aria-hidden="true"></canvas>
+<header class="bar g"><a class="brand" href="index.html">C. Trinkaus</a><a href="index.html#work">← Back to timeline</a></header>
+<main>
+<section class="hero g">
+  <p class="mono" style="margin:0">Case study · El. 2024 · Development</p>
+  <h1>Controla Asistencia</h1>
+  <p class="sub">Front and backend development of an HR application for a government agency in Ecuador.</p>
+  <dl class="facts"><div><dt>Position</dt><dd>Development Intern</dd></div><div><dt>Team</dt><dd>1 Project Manager, 1 Lead Developer, 1 Development Intern (me)</dd></div><div><dt>Duration</dt><dd>3 months</dd></div><div><dt>Tools</dt><dd>Figma, Vue.js, Laravel, MySQL, ReadyKit</dd></div></dl>
+  <button type="button" class="frame cover" aria-label="Enlarge image"><img src="assets/controla/01-frame-3465174-min-2048x1378.png" width="2048" height="1378" alt="Controla Asistencia cover image"></button>
+  <p class="note" style="margin:28px 0 0">Please note that due to the current energy crisis in Ecuador, SAE’s Servers are down, so I cannot link the live site to this case study.</p>
+</section>
+<div class="layout g">
+  <nav class="toc" aria-label="Contents"><h2>Contents</h2><ol><li><a href="#problem-space">Problem Space</a></li><li><a href="#understanding-the-problem">Understanding the Problem</a></li><li><a href="#pain-points">Pain Points</a></li><li><a href="#design-question">Design Question</a></li><li><a href="#ideation-and-prototyping">Ideation and Prototyping</a></li><li><a href="#front-end-development">Front-end Development</a></li><li><a href="#iteration">Iteration</a></li><li><a href="#back-end-development">Back-end Development</a></li><li><a href="#reflection">Reflection</a></li><li><a href="#what-i-would-do-differently">What I would do differently…</a></li></ol></nav>
+  <article>
+<section id="problem-space"><h2><span class="n mono">Section 01</span>Problem Space</h2>
+<p>In Ecuador, a strict government employee attendance policy creates a rigid and inefficient workplace culture around attendance that does not afford remote work. Therefore, it fails to keep up with the private sector and creates unnecessary barriers and stress for employees to complete their work.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/controla/02-eb080e31-21e6-4cea-b38e-9f7032a02038-1.jpeg" width="1280" height="531" alt="Problem Space" loading="lazy"></button><figcaption>Click the image above to view the <a href="https://www.acreditacion.gob.ec/" target="_blank" rel="noopener">SAE Website</a>. SAE employees on National Public Servants Day spelling “SAE”. Find me at the very top of the A”.</figcaption></figure>
+</section>
+<section id="understanding-the-problem"><h2><span class="n mono">Section 02</span>Understanding the Problem</h2>
+<p>Because my team was made up of long-time SAE employees, they understood the system well. To get up to speed, I set up formal interviews with SAE employees and had informal conversations about the pain points of the clock-in process.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/controla/03-biometric-scanner-1.jpg" width="715" height="521" alt="Understanding the Problem" loading="lazy"></button><figcaption>Biometric face scanner, similar to SAE’s.</figcaption></figure>
+</section>
+<section id="pain-points"><h2><span class="n mono">Section 03</span>Pain Points</h2>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/controla/04-painpoints-2-e1732674829215.png" width="1526" height="1235" alt="Pain Points" loading="lazy"></button></figure>
+</section>
+<section id="design-question"><h2><span class="n mono">Section 04</span>Design Question</h2>
+<p>How might we improve the clock-in/out experience and enable remote work for SAE employees while adhereing to the strict attendance policies of the Ecuadorian government?</p>
+</section>
+<section id="ideation-and-prototyping"><h2><span class="n mono">Section 05</span>Ideation and Prototyping</h2>
+<p>Using Figma, I generated varying prototype fidelities, which I delivered regularly to the lead developer and project manager who gave feedback and guidance on the direction of the next iteration.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/controla/05-initial-design.png" width="1262" height="762" alt="Ideation and Prototyping" loading="lazy"></button><figcaption>Early “out of the box” interface prototype</figcaption></figure>
+<figure><video class="vid" src="assets/controla/06-recording-2024-12-02-085903-1.mp4" controls muted loop playsinline preload="metadata" autoplay></video><figcaption>Desktop Flow Prototype.</figcaption></figure>
+<figure><video class="vid" src="assets/controla/07-untitled-video-made-with-clipchamp.mp4" controls muted loop playsinline preload="metadata" autoplay></video><figcaption>Mobile Flow Prototype.</figcaption></figure>
+</section>
+<section id="front-end-development"><h2><span class="n mono">Section 06</span>Front-end Development</h2>
+<p>While designing and prototyping Controla Asistencia, I simultaneously self-taught VUE.js, a Javascript, HTML, and CSS framework. I followed the W3 Schools VUE Tutorial, studied VUE documentation, and watched lots of supplemental videos. To solidify the skills I developed, I hardcoded a prototype of the website.</p>
+<figure><video class="vid" src="assets/controla/08-untitled-video-made-with-clipchamp-1.mp4" controls muted loop playsinline preload="metadata"></video><figcaption>View Site Prototype</figcaption></figure>
+<p>Hardcoded VUE Prototype. Please note that site quality may have degraded. Plugins, such as the clock that occupied the space on the left of the Teletrabajo page and the data table that occupied the space on the right are no longer functioning.</p>
+</section>
+<section id="iteration"><h2><span class="n mono">Section 07</span>Iteration</h2>
+<p>Designing from scratch proved to be frustrating and time-consuming. However, this exercise revealed the challenges of converting design to deliverable and equipped me to design for development and develop from conceptual designs. As a team, we implemented ReadyKit to streamline front-end development and back-end integration.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/controla/09-readykit-prototype.png" width="2826" height="1506" alt="Iteration" loading="lazy"></button><figcaption>Final Clock-in Page</figcaption></figure>
+<p>I coded the final front-end of the Controla Asistencia using ReadyKit, a collection of template components that utilize VUE and allow for easy integration with a Laravel Back-end.</p>
+</section>
+<section id="back-end-development"><h2><span class="n mono">Section 08</span>Back-end Development</h2>
+<p>Before working on this application, I had no experience with back-end development. learning on the fly, I simultaneously gained an understanding of Javascript, MYSQL, and Laravel. I am grateful to have a patient feedback-oriented lead developer to lead me through this process in a series of clinics, which I supplemented with Laravel tutorials and lots of documentation reading. The culmination of my learning was programming all of the backend for the pages that I designed.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/controla/10-untitled-1.png" width="895" height="330" alt="Back-end Development" loading="lazy"></button><figcaption>Javascript function corresponding to a clock-in button press.</figcaption></figure>
+<p>Back-end development presented me with a unique challenge that prompted massive growth in my programming skills.</p>
+</section>
+<section id="reflection"><h2><span class="n mono">Section 09</span>Reflection</h2>
+<p>This application is more than a project to me. It represents the immense growth that I underwent living and working in Ecuador. Each prototype, page, and mistake in this application correlates to an adventure and skill in my tool belt. Beyond the coding of this application, I filled the gaps between my theoretical knowledge of design and interfaces and the demanding, fast-paced development of an application.</p>
+<p>I am a confident designer and developer who would do a million things differently if given the chance to go back in time.</p>
+</section>
+<section id="what-i-would-do-differently"><h2><span class="n mono">Section 10</span>What I would do differently…</h2>
+<ol class="list"><li>Utilize more formal methods of research and talk to other government agencies about their struggles and innovation.</li><li>Create personas and a user journey map.</li><li>Define design requirements.</li><li>Lay out an in-depth project timeline before beginning.</li><li>Spend less time worrying about perfection and more time iterating.</li></ol>
+</section>
+  </article>
+</div>
+</main>
+<footer class="g">
+  <nav class="pager" aria-label="More work">
+    <a href="index.html#work"><span class="mono">All stations</span><b>Timeline</b></a>
+    <a href="cookd.html"><span class="mono">Next case study · UX Design · 2025</span><b>Cook&#x27;d</b></a>
+  </nav>
+  <p class="mono">© 2026 Cody Trinkaus · <a href="mailto:ctrink@uw.edu">ctrink@uw.edu</a> · <a href="https://linkedin.com/in/codytrinkaus" target="_blank" rel="noopener">LinkedIn</a></p>
+</footer>
+<dialog id="zoom" aria-label="Enlarged image"><button type="button" autofocus>Close ✕</button><img alt=""></dialog>
+<script src="case.js"></script>
+</body>
+</html>

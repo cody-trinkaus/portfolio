@@ -11,3 +11,7 @@ A single-file design portfolio (`index.html`) whose interface borrows from topog
 ## Edit
 
 All content lives in the `P` array near the bottom of `index.html`, plus the hero, About and Contact copy in the markup. Content is Cody Trinkaus's; the project years (2024, 2025) are assumptions, so update them.
+
+## Case studies
+
+`cookd.html` and `controla-asistencia.html` hold the full case studies, with their images and videos under `assets/`. They share `case.css` and `case.js`.
