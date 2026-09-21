@@ -35,7 +35,7 @@ function draw(){
       path.moveTo(s[0][0],s[0][1]);path.lineTo(s[1][0],s[1][1]);if(s.length>2){path.moveTo(s[2][0],s[2][1]);path.lineTo(s[3][0],s[3][1])}
     }
   }
-  cx.lineWidth=1;cx.strokeStyle=cMin;cx.stroke(minor);cx.lineWidth=1.7;cx.strokeStyle=cMaj;cx.stroke(major);
+  cx.lineWidth=1;cx.strokeStyle=cMin;cx.stroke(minor);cx.lineWidth=1.2;cx.strokeStyle=cMaj;cx.stroke(major);
 }
 addEventListener("resize",size);addEventListener("scroll",req,{passive:true});
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change",req);
