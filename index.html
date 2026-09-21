@@ -20,6 +20,7 @@
   --contour:#9DB8AD;
   --contour-index:#5B8477;
   --accent:#E8471F;
+  --accent-text:#B5300F;
   --on-accent:#fff;
   --rail:56px;
   --display:"Anybody","Arial Narrow",Impact,sans-serif;
@@ -30,17 +31,17 @@
   :root:not([data-theme="light"]){
     --ground:#0D1815;--paper:#132420;--ink:#DCE9E3;--ink-soft:#8CA89F;
     --line:rgba(220,233,227,.16);--line-strong:rgba(220,233,227,.45);
-    --contour:#22413A;--contour-index:#3F7263;--accent:#FF6A3A;--on-accent:#1a0a04;
+    --contour:#22413A;--contour-index:#3F7263;--accent:#FF6A3A;--accent-text:#FF8F63;--on-accent:#1a0a04;
   }
 }
 :root[data-theme="dark"]{
   --ground:#0D1815;--paper:#132420;--ink:#DCE9E3;--ink-soft:#8CA89F;
   --line:rgba(220,233,227,.16);--line-strong:rgba(220,233,227,.45);
-  --contour:#22413A;--contour-index:#3F7263;--accent:#FF6A3A;--on-accent:#1a0a04;
+  --contour:#22413A;--contour-index:#3F7263;--accent:#FF6A3A;--accent-text:#FF8F63;--on-accent:#1a0a04;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:var(--ground);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body{text-shadow:0 0 3px var(--ground),0 0 9px var(--ground);background:var(--ground);color:var(--ink);font:400 16px/1.6 var(--body);-webkit-font-smoothing:antialiased}
 #terrain{position:fixed;inset:0;width:100%;height:100%;z-index:-1;display:block}
 a{color:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:3px}
@@ -60,7 +61,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .flag:hover{transform:scale(1.35)}
 .flag[hidden]{display:none}
 .marker{position:absolute;left:0;right:0;height:2px;background:var(--accent);top:0;will-change:top}
-.marker output{position:absolute;left:5px;bottom:4px;font:500 10.5px/1 var(--mono);color:var(--accent);font-variant-numeric:tabular-nums}
+.marker output{position:absolute;left:5px;bottom:4px;font:600 10.5px/1 var(--mono);color:var(--accent-text);font-variant-numeric:tabular-nums}
 .rail-cap{position:absolute;left:0;right:0;font:500 9px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);text-align:center}
 .rail-cap.t{top:9px}.rail-cap.b{bottom:9px}
 
@@ -95,7 +96,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .legend button{display:inline-flex;align-items:center;gap:9px;padding:8px 14px 8px 12px;border:1px solid var(--line-strong);background:color-mix(in srgb,var(--ground) 80%,transparent);
   font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase}
 .legend button:hover{border-color:var(--ink)}
-.legend button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+.legend button[aria-pressed="true"]{text-shadow:none;background:var(--ink);color:var(--ground);border-color:var(--ink)}
 .sym{display:inline-block;width:11px;height:11px;background:var(--accent);flex:none}
 .sym[data-d="Development"]{clip-path:polygon(50% 0,100% 100%,0 100%)}
 .sym.all{background:linear-gradient(90deg,var(--accent) 50%,var(--ink-soft) 50%);border-radius:0}
@@ -112,9 +113,9 @@ button{font:inherit;color:inherit;cursor:pointer}
 .yr{font:800 clamp(2.6rem,5vw,4.2rem)/.9 var(--display);font-stretch:60%;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .thumb{position:relative;display:block;aspect-ratio:16/10;max-width:100%;border:1px solid var(--line-strong);overflow:hidden;background:var(--paper)}
 .thumb canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
-.thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.5))}
+.thumb::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18) 0,transparent 25%,rgba(0,0,0,.72) 100%)}
 .thumb h3{position:absolute;left:18px;right:18px;bottom:14px;z-index:1;margin:0;font:800 clamp(2rem,5.5vw,3.8rem)/.9 var(--display);font-stretch:60%;text-transform:uppercase;color:#fff;letter-spacing:.01em;text-shadow:0 2px 18px rgba(0,0,0,.35)}
-.thumb .spot{position:absolute;top:14px;right:14px;z-index:1;color:#fff;font:500 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.thumb .spot{position:absolute;top:12px;right:12px;z-index:1;color:#fff;background:rgba(0,0,0,.6);padding:5px 8px;font:500 10.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;text-shadow:0 1px 8px rgba(0,0,0,.5)}
 .meta h4{margin:0 0 8px;font:600 1.2rem/1.3 var(--body);text-wrap:balance}
 .meta p{margin:0 0 18px;color:var(--ink-soft);max-width:38em}
 .facts{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;padding-top:14px;border-top:1px solid var(--line);font-size:14px}
@@ -128,7 +129,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .notes[open] summary::after{content:"\2212"}
 .notes summary:hover{border-color:var(--accent)}
 .notes .body{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:24px 36px;margin-top:22px;padding:24px;background:color-mix(in srgb,var(--paper) 92%,transparent);border:1px solid var(--line)}
-.notes h5{margin:0 0 6px;font:500 11.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.notes h5{margin:0 0 6px;font:500 11.5px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-text)}
 .notes p{margin:0;font-size:15px;max-width:34em}
 @media(min-width:980px){
   .stn{grid-template-columns:130px minmax(0,1.6fr) minmax(230px,1fr)}
@@ -149,7 +150,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .contact .bm .sym{clip-path:none;border-radius:50%;width:15px;height:15px;box-shadow:0 0 0 5px var(--ground),0 0 0 6.5px var(--accent)}
 .mail{display:inline-block;margin-top:24px;font:800 clamp(1.7rem,7vw,5.6rem)/1 var(--display);font-stretch:62%;text-transform:uppercase;text-decoration:none;
   background:linear-gradient(var(--accent),var(--accent)) 0 100%/100% .09em no-repeat;padding-bottom:.08em;overflow-wrap:anywhere}
-.mail:hover{background-size:100% 100%;color:var(--on-accent)}
+.mail:hover{text-shadow:none;background-size:100% 100%;color:var(--on-accent)}
 .contact p{max-width:34em;margin:14px 0 0;font-size:1.1rem}
 .margin-note{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px 40px;margin-top:64px;padding-top:16px;border-top:1px solid var(--line-strong)}
 .scalebar{display:flex;align-items:center;gap:10px}
