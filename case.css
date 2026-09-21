@@ -1,5 +1,5 @@
 :root{
-  --ground:#E1E9E4;--paper:#EDF3EF;--ink:#14302A;--ink-soft:#4A645D;
+  --ground:#F3F4F1;--paper:#FBFBF9;--ink:#14302A;--ink-soft:#4A645D;
   --line:rgba(20,48,42,.18);--line-strong:rgba(20,48,42,.5);
   --contour:#DBD8FF;--contour-index:#DBD8FF;--accent:#E8471F;--accent-text:#B5300F;--on-accent:#fff;
   --gut:clamp(16px,4.5vw,64px);
