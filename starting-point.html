@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Starting Point · Cody Trinkaus</title>
+<meta name="description" content="Case study: a service design process for a peer-to-peer community cooking service that trades isolation for belonging.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<canvas id="terrain" aria-hidden="true"></canvas>
+<header class="bar g"><a class="brand" href="index.html">C. Trinkaus</a><a href="index.html#work">← Back to timeline</a></header>
+<main>
+<section class="hero g">
+  <p class="mono" style="margin:0">Case study · El. 2026 · Service Design</p>
+  <h1>Starting Point</h1>
+  <p class="sub">A peer-to-peer community cooking service that trades isolation for belonging — cook, connect, community.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Service designer: research, co-design, blueprinting and prototyping across every phase</dd></div>
+    <div><dt>Team</dt><dd>Cody Trinkaus, Valentina Filizola, Jane Pietsch, Dreyden Brown</dd></div>
+    <div><dt>Course</dt><dd>HCDE 418, Service Design, Spring 2026</dd></div>
+    <div><dt>Model</dt><dd>Free · donate as you can · Seattle, WA</dd></div>
+  </dl>
+  <div class="stats"><span>6 design requirements</span><span>8 journey phases</span><span>3 co-design findings</span></div>
+  <button type="button" class="frame cover" aria-label="Enlarge image"><img src="assets/startingpoint/starting-point-logo.png" width="824" height="355" alt="Starting Point logo" style="background:var(--ink);padding:48px"></button>
+</section>
+<div class="layout g">
+  <nav class="toc" aria-label="Contents"><h2>Contents</h2><ol>
+    <li><a href="#value">Value Statement</a></li>
+    <li><a href="#research">Research Insights</a></li>
+    <li><a href="#codesign">Co-Design Outcomes</a></li>
+    <li><a href="#ecosystem">Ecosystem Map</a></li>
+    <li><a href="#blueprint">Service Blueprint</a></li>
+    <li><a href="#journey">Customer Journey</a></li>
+    <li><a href="#prototype">Prototype</a></li>
+    <li><a href="#artifacts">Design Artifacts</a></li>
+    <li><a href="#narrative">Narrative Workshop</a></li>
+    <li><a href="#principles">Principles &amp; Requirements</a></li>
+  </ol></nav>
+  <article>
+
+<section id="value"><h2><span class="n mono">Section 01</span>Value Statement</h2>
+<p><b>What value does Starting Point offer?</b> Starting Point delivers value beyond sustenance — it creates spaces where people discover belonging, reignite creativity, and step into leadership roles through collaborative cooking.</p>
+<div class="cols2">
+<div><h5>For participants</h5><ul class="list">
+<li><b>Belonging:</b> recurring, judgment-free friendships</li>
+<li><b>Skill acquisition:</b> hands-on cooking and peer knowledge exchange</li>
+<li><b>Creative expression:</b> post-meal artistic activities</li>
+<li><b>Psychological safety:</b> a low-pressure, welcoming space to learn</li>
+<li><b>Economic access:</b> no financial gatekeeping</li>
+<li><b>Identity:</b> the transition from learner to expert builder</li>
+</ul></div>
+<div><h5>For volunteers &amp; staff</h5><ul class="list">
+<li><b>Purpose:</b> meaningful mentorship</li>
+<li><b>Leadership:</b> a path from participant to contributor to facilitator</li>
+<li><b>Cultural affirmation:</b> sharing heritage recipes in an affirming context</li>
+<li><b>Ownership:</b> long-term members guide how the service evolves</li>
+<li><b>Network:</b> connections with sponsors and allied organizations</li>
+</ul></div>
+</div>
+<h5>For the broader community</h5>
+<ul class="list"><li>Reduced social isolation, and the health costs that come with it</li><li>Cross-cultural understanding built over shared meals</li><li>A pipeline of civically engaged community members</li><li>A replicable, low-barrier model for community infrastructure</li></ul>
+<h5>Core animating values</h5>
+<ul class="list"><li><b>Growth:</b> every meal offers something new to learn</li><li><b>Fulfillment:</b> nourishing others nourishes yourself</li><li><b>Discomfort:</b> honoring the courage it takes to show up</li><li><b>Passion:</b> enthusiasm that's contagious</li><li><b>Connection:</b> every table starts a new relationship</li></ul>
+</section>
+
+<section id="research"><h2><span class="n mono">Section 02</span>Research Insights</h2>
+<p><b>What we learned about reciprocal learning.</b> We used mixed methods: two semi-structured interviews, three observational studies (an art studio portfolio review, LinkedIn Learning workshops), a competitive platform analysis, a two-hour co-design workshop, and AI-assisted synthesis across four large language models.</p>
+<h4>Shared routines create return</h4>
+<blockquote>"They always know to start with scales, so much so that I don't even have to tell them, and they'll sit down and they'll start."<cite>Music teacher interview</cite></blockquote>
+<p>Predictable rituals build newcomer confidence and give veterans a sense of ownership.</p>
+<h4>Belonging is the primary need</h4>
+<blockquote>"Space fulfills the need of&nbsp;… yeah, like, belonging and, like, not being alone, and having a place to create."<cite>Pottery volunteer interview, P1</cite></blockquote>
+<p>Participants consistently framed community spaces as meeting a fundamental need, not a secondary one.</p>
+<h4>Skilled volunteering requires scaffolding</h4>
+<p>Expert volunteers need orientation and trust-building before they can safely contribute (manager of makerspaces interview).</p>
+<h4>People watch before they ask</h4>
+<p>Participants default to observation over inquiry in learning environments (HCDE portfolio review field observation).</p>
+<h4>Safety unlocks participation</h4>
+<p>Playful, low-stakes framing encouraged experimentation; competitive framing caused people to withdraw (co-design sessions).</p>
+<h4>Informal teaching works best</h4>
+<p>Expert teachers naturally used analogies, physical demonstration, and humor — and produced better engagement than formal instruction (co-design sessions).</p>
+<h4>Synthesis</h4>
+<p>People seek practical skill development and interest-based connection but rarely find a clear path to contribute. Existing platforms emphasize content consumption and expert instruction, which limits reciprocal exchange and community stewardship. Starting Point addresses that gap with a visible progression: newcomer → participant → contributor → leader.</p>
+</section>
+
+<section id="codesign"><h2><span class="n mono">Section 03</span>Co-Design Outcomes</h2>
+<p><b>What a two-hour co-design session revealed.</b> Nine participants, from freshmen to post-grads, brought skills from piano to fly fishing to dance. The goal: reduce perceived stakes, demonstrate universal value, and observe how skills get passed informally.</p>
+<h4>Party trick share</h4>
+<p>Each participant presented a niche skill, which normalized informal expertise and put lived experience ahead of credentials.</p>
+<h4>Balloon &amp; dance: teaching what you just learned</h4>
+<p>Teams learned a skill — balloon animals, or a dance — then peer-taught it five minutes later, to assess how people pass on a skill before they feel they've mastered it.</p>
+<h4>Drawing telephone: telestrations</h4>
+<p>Participants cycled written phrases through rounds of drawing and reinterpretation, to reveal how communication degrades through a chain of interpretation.</p>
+<h4>Sneaky skill: untrained teaching in action</h4>
+<p>One participant taught finger-snapping using natural analogies, hands-on help, and humor, with no formal training — to observe how effective unscripted teaching can be.</p>
+<h4>Spaghetti tower: building with different goals</h4>
+<p>Two teams built towers under different framings of success — tallest versus coolest — to see how framing shapes participation, creativity, and engagement.</p>
+<h4>Ten insights from the session</h4>
+<ol class="list">
+<li>Peer teaching requires very little expertise</li>
+<li>Informal strategies — analogies, demonstration, humor — increase engagement</li>
+<li>Meaning shifts quickly through a chain of interpretation</li>
+<li>Group dynamics outweigh individual skill level</li>
+<li>Psychological safety has to come before participation</li>
+<li>Reflection deepens insight beyond what observation alone gives</li>
+<li>Peer observation needs design support, not just an open invitation to ask</li>
+<li>How success is framed shapes effort and creativity</li>
+<li>Teaching something unfamiliar builds empathy for the learner</li>
+<li>Diverse backgrounds generate unexpected connections</li>
+</ol>
+<h4>Reflection</h4>
+<p>Energy stayed high throughout; sequencing the activities prevented repetition; a warm icebreaker created psychological safety early. The richest insights came out during debriefs. Spaghetti Tower sparked the strongest conversation about group dynamics; Sneaky Skill revealed the most organic teaching approaches.</p>
+<h4>What we'd do differently</h4>
+<p>Recruit beyond university age ranges next time, especially adults who lose hobby-building after college and feel that loss acutely. And record or transcribe the debriefs, so quotes get captured without pulling the facilitator's attention away.</p>
+</section>
+
+<section id="ecosystem"><h2><span class="n mono">Section 04</span>Ecosystem Map</h2>
+<p>An intermediary deliverable that visualized the peer-to-peer skill-sharing process, to guide our understanding of the principles Starting Point is built on.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/startingpoint/ecosystem-map.png" width="1843" height="2000" alt="Ecosystem map of the peer-to-peer skill-sharing process" loading="lazy"></button></figure>
+</section>
+
+<section id="blueprint"><h2><span class="n mono">Section 05</span>Service Blueprint</h2>
+<p>How the service works: the blueprint maps the core experience across six journey phases, from first discovery through ongoing membership, and lays the front-stage experience over the back-stage operations that support it.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/startingpoint/service-blueprint.png" width="2000" height="1435" alt="Service blueprint showing front-stage and back-stage operations" loading="lazy"></button></figure>
+</section>
+
+<section id="journey"><h2><span class="n mono">Section 06</span>Customer Journey Map</h2>
+<p>Alex's journey through Starting Point: one participant's path through the service, tracking the emotional arc alongside each system interaction.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/startingpoint/journey-map.png" width="2000" height="1719" alt="Customer journey map tracking Alex's emotional arc through the service" loading="lazy"></button></figure>
+</section>
+
+<section id="prototype"><h2><span class="n mono">Section 07</span>Prototype</h2>
+<p><b>From blueprint to reality.</b> A high-fidelity, live website prototype demonstrating the discovery and sign-up phases — the moments that matter most for converting a newcomer. Every decision in it reinforces accessibility, warmth, and a low barrier to entry.</p>
+<h4>Home — Cook. Connect. Begin</h4>
+<p>Communicates the mission immediately and gives an obvious first action: finding a session.</p>
+<h4>Our Chefs</h4>
+<p>Introduces the community's leaders, to build trust and a cultural connection before anyone arrives.</p>
+<h4>Session Finder</h4>
+<p>Filterable by category — cooking, art, music — so people can self-select by their own comfort level.</p>
+<h4>Volunteer &amp; Donate</h4>
+<p>Clear paths to contribute, with transparent impact: "$125 supports 10 meal seats, 5 creative kits, and 1 session moment."</p>
+<dl class="facts" style="margin-top:28px"><div><dt>When</dt><dd>Spring 2026</dd></div><div><dt>Where</dt><dd>Seattle area</dd></div><div><dt>Cost</dt><dd>Free — donate as you can</dd></div><div><dt>Sessions</dt><dd>Family Recipe Night, Kitchen Jam, Craft After Dinner</dd></div></dl>
+<p style="margin-top:18px"><a class="btn" href="https://valentinafilizola.github.io/startingpoint/" target="_blank" rel="noopener">View the live prototype ↗</a></p>
+</section>
+
+<section id="artifacts"><h2><span class="n mono">Section 08</span>Design Artifacts</h2>
+<p>The physical and digital assets that support the full service experience. The complete set of deliverables is also in <a href="https://www.figma.com/design/rBe6rzHAneqCqgcFJl1TGg/Starting-point-designs" target="_blank" rel="noopener">this Figma file</a>.</p>
+<h4>Transition Cards</h4>
+<p>A three-level game that eases the table from eating into skill-sharing or a creative activity, by prompting personal conversation along the way.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/startingpoint/transition-cards.png" width="1137" height="2000" alt="Transition Cards, a three-level conversation game" loading="lazy"></button></figure>
+<h4>Experience Cards</h4>
+<p>A visual sequence that communicates the emotional arc of the experience, from discovery through continuation.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/startingpoint/experience-cards.png" width="2000" height="488" alt="Experience Cards showing the participant's emotional arc" loading="lazy"></button></figure>
+<h4>Community Flyer</h4>
+<p>Communicates the value proposition, logistics, and how to sign up, with a QR code for registration and dietary intake.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/startingpoint/community-flyer.png" width="1189" height="1600" alt="Community flyer with registration QR code" loading="lazy"></button></figure>
+<h4>Donation Poster</h4>
+<p>An end-of-event display that explains how donations sustain the service, and gives the community a chance to give back.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/startingpoint/donation-poster.png" width="1293" height="1600" alt="Donation poster displayed at the end of an event" loading="lazy"></button></figure>
+<h4>Starting Point Website</h4>
+<p>The live prototype: discovery, chef introductions, session finder, volunteer sign-up, and donations in one flow.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/startingpoint/website-screenshot.png" width="1600" height="808" alt="Screenshot of the Starting Point website homepage" loading="lazy"></button></figure>
+</section>
+
+<section id="narrative"><h2><span class="n mono">Section 09</span>Narrative Workshop</h2>
+<p><b>Role-playing the service in a real kitchen.</b> A 2.5-hour roleplay with 10 participants, including the design team. We taught the history of empanadas, prepared the ingredients, shaped and baked them, then shared the meal.</p>
+<p>Cooking worked as a social lubricant — it broke the ice, sparked conversation, started connections, and opened the door to creative expression and sharing.</p>
+<h4>Narrative insight</h4>
+<p>The ambient conversation in the kitchen turned out to be more valuable than polished video documentation, despite how hard the audio and video were to produce.</p>
+<h4>Service gap</h4>
+<p>Planning and organization emerged as the real complexity, and the blueprint needed more detail on staffing, materials, timing, and who carries the facilitation burden.</p>
+<h4>A future artifact</h4>
+<p>An organizer's journey map would make the resourcing and staffing needs visible.</p>
+<h4>An audience shift</h4>
+<p>Feedback from participants pushed the demographic focus toward people facing food insecurity.</p>
+<h4>Repositioning the service</h4>
+<p>This distinguishes Starting Point from a food-provision service: it addresses Maslow's hierarchy through dignity, belonging, skill-building, and the chance to contribute.</p>
+<h4>Sustainability</h4>
+<p>The value to the community is enough to justify donations and grants that support a dedicated physical space.</p>
+<h4>How the design question evolved</h4>
+<p>What began as a broad inquiry into skill-sharing narrowed into a specific challenge: <i>How might we create a financially accessible, human-centered cooking service where people facing food insecurity can gain practical skills, share cultural knowledge, feel dignity instead of need, and eventually transition from guest to contributor?</i></p>
+</section>
+
+<section id="principles"><h2><span class="n mono">Section 10</span>Principles &amp; Requirements</h2>
+<p>Six requirements, drawn from research, co-design, and field observation, each grounded in evidence and tied to the principles that keep the design honest.</p>
+<h4>Service values</h4>
+<ul class="list"><li><b>Community:</b> validated, interest-based user communities</li><li><b>User flexibility:</b> agency and freedom in how people engage</li><li><b>Financial accessibility:</b> free, or suggested donation</li><li><b>Accessible experience:</b> WCAG compliance, color audits, usability testing</li><li><b>Engaging design:</b> validated satisfaction and meaningful engagement</li><li><b>Trustworthy service:</b> safe, credible skill development</li><li><b>Meaningful experience:</b> participants feel their time was worthwhile</li><li><b>Perspective widening:</b> exposure to new skills, cultures, and ways of thinking</li></ul>
+
+<div class="req"><h4>1. Build shared routines that bring people back</h4>
+<blockquote>"They always know to start with scales, so much so that I don't even tell them, and they'll sit down and they'll start."<cite>Music teacher interview</cite></blockquote>
+<p>Recurring, predictable rituals reduce a newcomer's anxiety and build a returning member's sense of ownership. The service needs consistent structures that participants come to internalize.</p></div>
+
+<div class="req"><h4>2. Foster community &amp; belonging</h4>
+<blockquote>"Space fulfills the need of&nbsp;… yeah, like, belonging and, like, not being alone, and having a place to create."<cite>Pottery volunteer, P1</cite></blockquote>
+<p>Community-building is the output, not a byproduct of it. Every design decision should be asked whether it supports belonging.</p></div>
+
+<div class="req"><h4>3. Support skilled volunteers</h4>
+<blockquote>"They need to know a lot to be a woodshop volunteer&nbsp;… it's kind of a big commitment."<cite>Manager of makerspaces, P2</cite></blockquote>
+<p>Expert contributors need onboarding, trust-building, and ongoing support. The service has to build a path from participant to skilled volunteer.</p></div>
+
+<div class="req"><h4>4. Balance instruction with open practice</h4>
+<blockquote>"Students frequently interact with each other by sharing feedback, observing others' reviews, and building off shared critiques."<cite>HCDE portfolio review field observation</cite></blockquote>
+<p>Learning deepens through peer interaction, not just expert instruction. Event formats need to make room for peer observation, sharing, and building together.</p></div>
+
+<div class="req"><h4>5. Limit barriers to entry</h4>
+<blockquote>"Even this, like, having free drop-in programs, like, that is mutual aid&nbsp;… and that is, like, a really big core of who we are."<cite>Pottery volunteer</cite></blockquote>
+<p>Pay-what-you-can pricing, dietary accommodation, multilingual support, and welcoming framing aren't optional extras — they're structural, and they define who Starting Point is.</p></div>
+
+<div class="req"><h4>6. Enable the move from learner to contributor</h4>
+<blockquote>"There is a clear mix of nervousness and excitement, as students want to make a strong impression while also being eager to learn."<cite>HCDE portfolio review field observation</cite></blockquote>
+<p>The most powerful moment is the first time a participant teaches someone else. The service should deliberately create that moment, and honor it when it happens.</p></div>
+
+<h4>Design principles</h4>
+<ul class="list">
+<li><b>The table is the interface.</b> Every touchpoint should feel warm, unhurried, human — like a shared meal. If an interaction would feel cold at a dinner table, it doesn't belong in Starting Point.</li>
+<li><b>Make watching easy, asking optional.</b> Since observation comes before participation, design has to make peer-watching effortless. Asking directly is one path in, never the only one.</li>
+<li><b>Confidence over perfection.</b> Send people home feeling capable, not necessarily skilled. Celebrate progress over polish.</li>
+<li><b>Design for the transition, not just the event.</b> Each event is one step in a longer path. The service should actively design the move from participant to regular to volunteer to leader, not leave it to chance.</li>
+</ul>
+
+<h4>AI decision: keep the core service human</h4>
+<p>Starting Point prioritizes person-to-person interaction, human mentorship, community leadership, and belonging. Adding AI would add training, maintenance, and support burden without strengthening the in-person service at its core. A person should welcome a first-timer, not a chatbot. Any future AI tool could only support the humans doing that work — with transparency, human oversight, and a user's ability to override it — never replace them.</p>
+</section>
+
+  </article>
+</div>
+</main>
+<footer class="g">
+  <nav class="pager" aria-label="More work">
+    <a href="index.html#work"><span class="mono">All stations</span><b>Timeline</b></a>
+    <a href="cookd.html"><span class="mono">Next case study · UX Design · 2025</span><b>Cook'd</b></a>
+  </nav>
+  <p class="mono">© 2026 Cody Trinkaus · <a href="mailto:ctrink@uw.edu">ctrink@uw.edu</a> · <a href="https://linkedin.com/in/codytrinkaus" target="_blank" rel="noopener">LinkedIn</a></p>
+</footer>
+<dialog id="zoom" aria-label="Enlarged image"><button type="button" autofocus>Close ✕</button><img alt=""></dialog>
+<script src="case.js"></script>
+</body>
+</html>
