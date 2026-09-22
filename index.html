@@ -84,7 +84,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sym{display:inline-block;width:11px;height:11px;background:var(--accent);flex:none}
 .sym[data-d="Development"]{clip-path:polygon(50% 0,100% 100%,0 100%)}
 .sym[data-d="Service Design"]{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
-.sym.all{background:linear-gradient(90deg,var(--accent) 33%,var(--ink-soft) 33% 66%,var(--ink) 66%);border-radius:0}
+.sym[data-d="New Media Art"]{clip-path:polygon(30% 0,100% 0,70% 100%,0 100%)}
+.sym.all{background:linear-gradient(90deg,var(--accent) 25%,var(--ink-soft) 25% 50%,var(--ink) 50% 75%,var(--accent-text) 75%);border-radius:0}
 .count{margin:14px 0 0}
 
 .tl-bar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px 24px;margin-top:6px}
@@ -256,9 +257,12 @@ var P=[
   seed:52,scale:2.6,rough:.6,f:[{x:.7,y:.4,s:.22,a:-.5},{x:.25,y:.7,s:.3,a:.45}],ramp:["#0B1F4B","#173A80","#2A63B8","#5E93D6","#E7C64A","#F4DE7A"]},
  {name:"Starting Point",year:2026.25,d:"Service Design",page:"starting-point.html",title:"A peer-to-peer community cooking service that trades isolation for belonging",sum:"A service design process from research through a live prototype: shared meals, skill-sharing and a path from guest to contributor.",role:"Service designer: research, co-design, blueprinting and prototyping",client:"HCDE 418, Service Design, University of Washington",time:"One quarter, team of four",out:"Live prototype, service blueprint and a set of physical artifacts",
   notes:["People seek practical skill development and interest-based connection but rarely find a clear path to contribute. Existing platforms reward content consumption over reciprocal exchange.","Two interviews, three observational studies, a competitive analysis and a two-hour co-design workshop with nine participants, distilled into an ecosystem map, a service blueprint and a customer journey.","A live website prototype for discovery and sign-up, plus transition cards, experience cards, a flyer and a donation poster. A narrative workshop cooking empanadas with ten participants reframed the audience toward people facing food insecurity."],
-  seed:68,scale:1.8,rough:.48,f:[{x:.35,y:.35,s:.28,a:.5},{x:.75,y:.65,s:.24,a:.4}],ramp:["#3A1B12","#6B3420","#A8582D","#D6863F","#EFB768","#F7DBA0","#FFF3D6"]}
+  seed:68,scale:1.8,rough:.48,f:[{x:.35,y:.35,s:.28,a:.5},{x:.75,y:.65,s:.24,a:.4}],ramp:["#3A1B12","#6B3420","#A8582D","#D6863F","#EFB768","#F7DBA0","#FFF3D6"]},
+ {name:"On the Bias",year:2025.79,d:"New Media Art",page:"on-the-bias.html",title:"Two studio projects on bias, read as statistical error and as a tailor's deliberate skew",sum:"A speculative-map design fiction built on real cycling data, and a garment-and-collage archive of the ski industry's contradictions.",role:"Student artist: design fiction and wearable sculpture",client:"DXARTS, University of Washington",time:"One quarter, midterm and final project",out:"A zine, a video, a rebuilt garment and seven collages",
+  notes:["Existing platforms and industries rarely document their own contradictions. Speculative Strava speculates an AI-driven future onto a real cycling route; Contradictory Collages archives what the ski industry says about itself against what it does.","Satellite imagery and real Strava data speculated forward through six maps and an ungrounded language model; ski pants imploded, researched, and rebuilt from reclaimed and durable materials, alongside seven researched, interview-sourced collages.","A zine of three personas, a demo video, and a rebuilt pair of ski pants shown with seven collages at the DXARTS Gallery show — an argument that documentation is itself part of the critique."],
+  seed:84,scale:1.6,rough:.52,f:[{x:.4,y:.3,s:.26,a:.45},{x:.68,y:.72,s:.3,a:.4}],ramp:["#241333","#432764","#6B4396","#9C72C4","#C9A3DE","#E7C468","#FFF0C2"]}
 ];
-var DISC=["UX Design","Development","Service Design"];
+var DISC=["UX Design","Development","Service Design","New Media Art"];
 function yl(y){
   if(Math.abs(y%1)<.001)return""+y;
   var f=y-Math.floor(y),s=f<.13?"Winter":f<.38?"Spring":f<.63?"Summer":f<.88?"Fall":"Winter";

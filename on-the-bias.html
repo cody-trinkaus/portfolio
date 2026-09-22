@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>On the Bias · Cody Trinkaus</title>
+<meta name="description" content="Case study: two DXARTS studio projects on bias — a speculative-map design fiction and a garment-and-collage archive of the ski industry's contradictions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<canvas id="terrain" aria-hidden="true"></canvas>
+<header class="bar g"><a class="brand" href="index.html">C. Trinkaus</a><a href="index.html#work">← Back to timeline</a></header>
+<main>
+<section class="hero g">
+  <p class="mono" style="margin:0">Case study · El. Fall 2025 · New Media Art</p>
+  <h1>On the Bias</h1>
+  <p class="sub">Two studio projects for a course that reads "bias" two ways at once: the statistician's systematic error, and the tailor's deliberate skew.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Student artist: design fiction and wearable sculpture</dd></div>
+    <div><dt>Studio</dt><dd>DXARTS, University of Washington</dd></div>
+    <div><dt>Term</dt><dd>Fall 2025, Sept 24 – Dec 5</dd></div>
+    <div><dt>Format</dt><dd>Midterm and final project, critique-based studio</dd></div>
+  </dl>
+</section>
+<div class="layout g">
+  <nav class="toc" aria-label="Contents"><h2>Contents</h2><ol>
+    <li><a href="#studio">The Studio</a></li>
+    <li><a href="#strava">Speculative Strava</a></li>
+    <li><a href="#collages">Contradictory Collages</a></li>
+  </ol></nav>
+  <article>
+
+<section id="studio"><h2><span class="n mono">Section 01</span>The Studio</h2>
+<p>This course puts data science and arts practice in the same room to examine bias in the algorithms that rank, sort and recommend — and it does that by holding two technical definitions of the word side by side. In statistics, bias is a systematic error. In textiles, bias is an intentional skew, the diagonal a tailor cuts fabric on to make it drape. The studio spent a quarter reading, theorizing and making across that gap: textile manipulation as a bias metaphor, the anatomy of an AI system, labor and automation, computer vision and deepfakes, and the non-neutrality of data.</p>
+<p>Monday sessions were lecture and discussion; Wednesdays were studio and workshop time, with visiting artists across the quarter — Allison Parrish and Aramo Álvarez on language technology, Tivon Rice on synthetic imagery, Jihan Sherman ahead of the final show. The quarter closed with a public exhibition at the DXARTS Gallery. Both projects below came out of that studio: a midterm design fiction and a final "re-invented artifact."</p>
+</section>
+
+<section id="strava"><h2><span class="n mono">Section 02</span>Speculative Strava</h2>
+<p><b>Midterm project — Design Fiction.</b> Inspired by a geology class, this project asks what a design fiction looks like drawn as a map. I scoped it to my North Lake Washington Loop cycling route, sticking to cycling entries only to keep the underlying data consistent, then built six maps from satellite imagery of the area, each one speculating two years further into a bleak, AI-driven future.</p>
+<dl class="facts"><div><dt>Assignment</dt><dd>Midterm — Design Fiction</dd></div><div><dt>Medium</dt><dd>Speculative maps, LLM-generated data, zine, video</dd></div><div><dt>Method</dt><dd>Satellite imagery, Strava ride data, Llama 3 8B in GPT4All</dd></div></dl>
+
+<figure><div class="embed"><iframe src="https://www.youtube.com/embed/UuWXvCDFX28" title="Speculative Strava" loading="lazy" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div><figcaption>Speculative Strava · <a href="https://youtu.be/UuWXvCDFX28" target="_blank" rel="noopener">Watch on YouTube</a></figcaption></figure>
+
+<h4>The six maps</h4>
+<p>I let imagination drive the maps and left most of my own reasoning out of them, to leave room for a viewer to speculate their own future. A few of the turns:</p>
+<ol class="list">
+<li>A datacenter appears between Kirkland and Kenmore.</li>
+<li>The datacenter grows more pronounced; foliage browns and water levels drop.</li>
+<li>Further browning, and the Strava route quietly reroutes around the datacenter's own route to the water.</li>
+<li>The 520 bridge disappears and the route follows a ferry instead; a grey outline sequesters Clyde Hill.</li>
+<li>War. Dark silhouettes dot the map, engulfing the datacenter, Clyde Hill and the key bridges.</li>
+<li>A return to something closer to the original route, with a more direct ferry. The silhouettes are still there, but tinted green — hope, and a nod to how much the map's green space ends up mattering to both human and ecological resilience.</li>
+</ol>
+
+<h4>Data, and a language model that couldn't fake it</h4>
+<p>I logged distance, elevation and grade at five-minute intervals across all six rides, and worked out average segment speed, elevation change, and overall climbing and descending speed. I'd hoped to zoom into smaller chunks of each ride for more detailed predictions, but time pushed me straight into the language model stage.</p>
+<p>I fed that real ride data to Llama 3 8B Instruct, running in GPT4All, and described each map's scenario to have it generate a speculative dataset to match. It half-worked: I got numbers back, but they weren't grounded in how a person actually rides a bike. Average speed barely moved between wildly different scenarios, values looked close to randomly assigned, and elevation kept climbing no matter what the rest of the stats were doing. That failure became its own small finding — a demonstration of how much context an AI model needs, and doesn't have, to speculate convincingly about a physical world. I turned the ungrounded numbers into Strava-style activity cards anyway, and paired them with their maps.</p>
+
+<h4>Personas &amp; the zine</h4>
+<p>I collected three personas — Helena (map four), Leo (map five) and Alia (map six) — into a zine called <i>Speculative Strava</i>. Helena, living through the AI boom, is being trained into decontextualized work. Leo, living through the war, moves from that decontextualized work into something closer to horrified observation. Alia looks back on the ecological, psychological and political cost of it. Together they're meant to hand a viewer just enough material to build their own fictional dystopia out of an AI boom — and enough gaps to fill in a different one.</p>
+<p style="margin-top:18px"><a class="btn" href="https://docs.google.com/spreadsheets/d/1hSq2LpYRXsYyB4yusR2EIynZ4XElELIYUYkvKEXC1Co/edit?usp=sharing" target="_blank" rel="noopener">View the ride data ↗</a></p>
+</section>
+
+<section id="collages"><h2><span class="n mono">Section 03</span>Contradictory Collages: Imploding the Ski Industry</h2>
+<p><b>Final project — The (Re)Invented Artifact.</b> I redesigned a pair of ski pants to blend ski racing and freestyle skiing, as a counter-performance of the exclusionary cultures on both sides of ski competition, and made seven collages to archive the contradictions I found across the ski industry.</p>
+<dl class="facts"><div><dt>Assignment</dt><dd>Final — The (Re)Invented Artifact</dd></div><div><dt>Medium</dt><dd>An altered garment and seven collages</dd></div><div><dt>Materials</dt><dd>Reclaimed zippers, Seattle Fabrics linings, archival images</dd></div><div><dt>Interviews</dt><dd>Heather Hansman, Jess Jalbert, and my roommate Ruby</dd></div></dl>
+
+<h4>The pants</h4>
+<p>The project started by imploding my Arctica side-zip ski racing pants — the pair I've owned for nine years, entangled in my life through sport, livelihood, identity and injury, and in ski culture through its politics, economy and fashion. They were my first new pair of ski pants, bought to join the Whistler Mountain Ski Club, where the competitive and social stakes were both higher. Arctica is best known for a side-zip design that lets racers strip to their race suit without taking off their boots.</p>
+<p>My relationship to the pants tracked my relationship to skiing. Two years in, I was forced to quit ski racing when my family's grocery store went out of business. I kept wearing them, working as a ski instructor and race-team coach to pay for my love of the sport. As my awareness of the industry grew, I started seeing them as a sign of its stratification — racers buying new, expensive, high-tech gear every year to shave hundredths off a time, in a sport whose gear and travel are already exclusionary. I've since kept racing on the Husky Ski Team, whose focus on inclusion — subsidized gear, subsidized competition, and reclaiming ski racing as a source of community — is what pulled me into working for change as team captain and as student representative to the United States Collegiate Ski Association.</p>
+<p>The pants became a container for that whole contradiction, and this past spring, for something more literal: I knocked my teeth out on my own knee, skiing in them. Part of this project is honoring a garment I've torn and bled in. Imploding them surfaced six threads to pull on — cultural, economic, fashion, exclusion, personal, and reuse.</p>
+
+<h4>Research</h4>
+<p>I traced the pants' material origins first: designed in Wisconsin, manufactured in China, most likely by the BOWINS Garment Co. — past that, I couldn't find Arctica in any import or export database. That dead end pushed me toward the reuse side of the industry instead: small businesses that mend, consign, alter and customize gear, like Madrona Wear in Bellingham, and Trove, the biggest player, which builds resale infrastructure for brands including Patagonia and Arc'teryx. There's also real innovation underway in recyclable, circular outdoor-gear materials, though as far as I could tell, Arctica isn't part of it.</p>
+<p>That research shaped how I planned the rebuild. I looked for used fabric at Seattle ReCreative first, and came away with zippers for the front pockets but no usable lining material, so I bought the inner and outer linings from Seattle Fabrics instead, choosing durable, high-quality fabric on the theory that "quality is the new sustainability" (Makower). I reused as much of the original pants as I could, including the side zippers themselves.</p>
+
+<h4>Making</h4>
+<p>The redesign is a baggy pant, deliberately — the grassroots, freestyle silhouette that grew out of thrift culture and a rebellion against the tight, expensive fashion of establishment ski racing. I kept the side zippers to call back to my racing background, and to hold up the need for change from inside that side of the sport, not just outside it.</p>
+
+<h4>Why the collages</h4>
+<p>The dominant story in ski fashion — and in skiing generally — is still one of wealth, sharpened by Patagonia, Arc'teryx and North Face crossing over into mainstream fashion. There's almost no real documentation of ski culture itself to push back against that story, so I built one: seven collages, sourced largely from Pinterest, posted publicly to make the archive visible. Woven through them are quotes from two published interviews with ski bums, Heather Hansman and Jess Jalbert, and one conversation of my own, with my roommate Ruby, who grew up in a ski town with both parents working in the local industry.</p>
+
+<h4>The seven collages</h4>
+<div class="req"><h5>I. The cowboy myth</h5>
+<p>The dominant fashion in skiing, built around competitive and fashion icons like Henrik Harlaut — the side that gets the media attention, the death-defying stunts, the party culture. Hansman's interview names the "cowboy myth" running through the industry: a rugged individualism that's colonially coded, exclusionary to women, and prone to injury and burnout. I centered women in this collage to push back on that. In the context of the exhibit, it's meant to critique the same attitudes entangled in the loss of my own teeth, while still holding onto the coolness and freedom this side of skiing genuinely offers.</p></div>
+<div class="req"><h5>II. Not your zoom background</h5>
+<blockquote>"My hometown is not your zoom background."<cite>Ruby, in conversation</cite></blockquote>
+<p>Ski tourism's glamor against the struggles of the locals who live in ski towns, and the gentrification underneath both. Hansman connects that gentrification to the same pattern playing out across the whole country. As a nod to the extractive side of luxury ski travel, the skiers pictured here are AI-generated, lifted from an article on 2026's ski fashion trends.</p></div>
+<div class="req"><h5>III. Gorp core</h5>
+<p>The aesthetic of outdoor gear crossing into mainstream fashion. It's driven prices up, but it's also put traditionally exclusive outdoor spaces in front of more people than before — the same tension Hansman raises when she asks who actually belongs in a ski town.</p></div>
+<div class="req"><h5>IV. The injuries</h5>
+<p>Apologies for the gore. Built from my own and my friends' ski injuries, meant to be a little shocking, this one sits in the tension between loving the sport and the risk it carries. A serious injury doesn't just hurt — it changes your relationship to the thing you already loved, in a more conflicted, more emotional way. The quote is from a sports psychologist Jalbert recalled speaking with. Making this collage was its own reckoning, a way of coming to terms with some of what I now associate with my favorite thing in the world.</p></div>
+<div class="req"><h5>V. Repair, not replace</h5>
+<p>Set against Backcountry Essentials, a first- and second-hand gear shop in Bellingham — a call to choose repair, to extend the life of what you already own instead of buying new.</p></div>
+<div class="req"><h5>VI. Pay to play</h5>
+<p>Built from words out of my conversation with Ruby, set against images of myself racing, the pants, and money. It's about the cost of ski racing, and the pay-to-play logic that runs through skiing more broadly. I expect it lands differently depending on which side of that cost you've stood on — and it reflects my own conflicted relationship to the sport I still race.</p></div>
+<div class="req"><h5>VII. Everyone welcome, until the lot's full</h5>
+<p>Everyone says they want skiing open to anyone. Then the lines get long, the lots fill up, and the worst of people comes out. Resorts like Epic answer overcrowding by raising prices, so the margins hold steady and only the wealthiest patrons get a more pleasant day. It's the clearest contradiction in the whole set: the one between what the industry says about inclusion and what it actually does when inclusion gets inconvenient.</p></div>
+
+<h4>Reflection</h4>
+<p>I'm grateful for the chance to make this. It let me untangle some of what I feel about my own sport, and put my pants to rest with some honor instead of just wearing them out. I only scratched the surface — I could have made a thousand more collages if I'd had the time, and in hindsight the project might have held together more tightly if I'd gone deep on just one contradiction instead of broad across six. But part of the point was documentation: there isn't much formal analysis of ski culture out there, and now there's a little more. I'm proud of what came out of it, and looking forward to actually skiing in the pants I made.</p>
+
+<h5 style="margin-top:32px">Works cited</h5>
+<ol class="list" style="font-size:13.5px;color:var(--ink-soft)">
+<li>Makower, Joel. "How Yerdle Helps Patagonia, REI and Eileen Fisher Do 'Recommerce.'" <i>Trellis</i>, 6 June 2018.</li>
+<li>Coté, Matt. "Waste Not Want Not." <i>SKI Magazine</i>, 12 Oct. 2020.</li>
+<li>Suffish, Zach. "What's with the Baggy Pants? The Cultural and Practical Reasoning Behind Modern Freestyle Outerwear." <i>SnowBrains</i>, 14 Nov. 2025.</li>
+<li>Doherty, Maggie Neal. "Powder Days — Ski Bums, Ski Towns and the Future of Chasing Snow." <i>Whitefish Review</i>, 13 Sept. 2023.</li>
+<li>Sonnick, Kate. "Betty Diaries: Tuning in to the Truth about Ski Bums." <i>Park Record</i>, 15 Feb. 2025.</li>
+<li>"15 Gorgeous Ski Outfits that will Rule The Slopes in 2026!" <i>The Pool and Deck</i>. Accessed 5 Dec. 2025.</li>
+</ol>
+</section>
+
+  </article>
+</div>
+</main>
+<footer class="g">
+  <nav class="pager" aria-label="More work">
+    <a href="index.html#work"><span class="mono">All stations</span><b>Timeline</b></a>
+    <a href="cookd.html"><span class="mono">Next case study · UX Design · 2025</span><b>Cook'd</b></a>
+  </nav>
+  <p class="mono">© 2026 Cody Trinkaus · <a href="mailto:ctrink@uw.edu">ctrink@uw.edu</a> · <a href="https://linkedin.com/in/codytrinkaus" target="_blank" rel="noopener">LinkedIn</a></p>
+</footer>
+<dialog id="zoom" aria-label="Enlarged image"><button type="button" autofocus>Close ✕</button><img alt=""></dialog>
+<script src="case.js"></script>
+</body>
+</html>
