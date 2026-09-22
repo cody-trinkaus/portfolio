@@ -55,4 +55,10 @@ document.addEventListener("click",function(e){
   var im=f.querySelector("img");big.src=im.currentSrc||im.src;big.alt=im.alt;dlg.showModal();
 });
 if(dlg){dlg.addEventListener("click",function(){dlg.close()})}
+
+/* tap a flip card to turn it over */
+document.addEventListener("click",function(e){
+  var c=e.target.closest(".flipcard");if(!c)return;
+  c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")==="true"?"false":"true");
+});
 })();
