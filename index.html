@@ -235,7 +235,7 @@ button{font:inherit;color:inherit;cursor:pointer}
     <div class="margin-note mono">
       <span class="scalebar"><i></i>0 · 1 · 2 yr</span>
       <span>Contour interval 1 year</span>
-      <span>Projection: left to right, oldest to newest</span>
+      <span>Projection: left to right, newest to oldest</span>
     </div>
   </section>
 </div>
@@ -292,15 +292,15 @@ function fbm(n,x,y,oct){var a=1,f=1,s=0,t=0;for(var o=0;o<oct;o++){s+=a*n(x*f,y*
    calendar distance — so cards never crowd or overlap; each still
    carries its own true year/season label. */
 var tl=$("#tl"),track=$("#track"),readout=$("#readout");
-var SP=P.slice().sort(function(a,b){return a.year-b.year});
+var SP=P.slice().sort(function(a,b){return b.year-a.year});
 track.style.setProperty("--now",SP.length);
 var h='<div class="axis-line"></div>';
+h+='<div class="yt now" style="--n:0"><i></i><b>Now</b></div>';
 SP.forEach(function(p,i){
-  h+='<div class="yt y" style="--n:'+i+'"><i></i><b>'+yl(p.year)+'</b></div>';
+  h+='<div class="yt y" style="--n:'+(i+1)+'"><i></i><b>'+yl(p.year)+'</b></div>';
 });
-h+='<div class="yt now" style="--n:'+SP.length+'"><i></i><b>Now</b></div>';
 SP.forEach(function(p,i){
-  h+='<article class="stn" data-i="'+i+'" data-d="'+p.d+'" style="--n:'+i+'">'+
+  h+='<article class="stn" data-i="'+i+'" data-d="'+p.d+'" style="--n:'+(i+1)+'">'+
    '<span class="sym" data-d="'+p.d+'"></span>'+
    '<div class="when mono">El. '+yl(p.year)+' · '+p.d+'</div>'+
    '<div class="thumb"><img src="'+p.thumb.src+'" width="'+p.thumb.w+'" height="'+p.thumb.h+'" alt="'+p.thumb.alt+'" loading="lazy"><span class="spot">▲ '+yl(p.year)+'</span><h3>'+p.name+'</h3></div>'+
@@ -310,7 +310,7 @@ SP.forEach(function(p,i){
      '<div><h5>Terrain</h5><p>'+p.notes[0]+'</p></div><div><h5>Route</h5><p>'+p.notes[1]+'</p></div><div><h5>Summit</h5><p>'+p.notes[2]+'</p></div>'+
    '<p><a class="mono" style="color:var(--ink)" href="'+p.page+'">Read the full case study →</a></p></div></details></article>';
 });
-h+='<article class="stn next" style="--n:'+SP.length+'"><span class="sym ring"></span><div class="when mono">Next station</div><div class="box"><h4>Your project</h4><p>Looking for research, design and development work. Tell me about the terrain.</p><a class="mono" href="mailto:ctrink@uw.edu">ctrink@uw.edu</a></div></article>';
+h+='<article class="stn next" style="--n:0"><span class="sym ring"></span><div class="when mono">Next station</div><div class="box"><h4>Your project</h4><p>Looking for research, design and development work. Tell me about the terrain.</p><a class="mono" href="mailto:ctrink@uw.edu">ctrink@uw.edu</a></div></article>';
 track.innerHTML=h;
 var stns=[].slice.call(track.querySelectorAll(".stn:not(.next)"));
 var allCards=[].slice.call(track.querySelectorAll(".stn"));
@@ -340,13 +340,13 @@ function fitTrack(){
   track.style.height=(m+40)+"px";
 }
 function yearMetrics(){
-  var t=track.querySelectorAll(".yt.y");
-  return {pad:t[0].offsetLeft,ppy:(t.length>1?t[1].offsetLeft-t[0].offsetLeft:200)};
+  var t=track.querySelectorAll(".yt.y"),ppy=(t.length>1?t[1].offsetLeft-t[0].offsetLeft:200);
+  return {pad:t[0].offsetLeft-ppy,ppy:ppy};
 }
 function updatePlayhead(){
   var m=yearMetrics(),v=(tl.scrollLeft+tl.clientWidth/2-m.pad)/m.ppy;
   var idx=Math.round(Math.max(0,Math.min(SP.length,v)));
-  readout.textContent=idx>=SP.length?"Now":yl(SP[idx].year);
+  readout.textContent=idx<=0?"Now":yl(SP[idx-1].year);
 }
 
 /* ---------- terrain ---------- */
