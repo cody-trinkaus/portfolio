@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Design portfolio organised as a topographic survey: one contour per year, one station per project.">
+<meta name="description" content="Design portfolio organised as a topographic survey: one contour per year, one marker per project.">
 <style>html{color-scheme:light dark}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Trinkaus Survey</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -194,8 +194,8 @@ button{font:inherit;color:inherit;cursor:pointer}
         <dt>Position</dt><dd>47.6553° N, 122.3035° W</dd>
         <dt>Interval</dt><dd>1 contour = 1 year</dd>
         <dt>Summit</dt><dd>Spring 2026 · Starting Point</dd>
-        <dt>Datum</dt><dd>2024 · Earliest station</dd>
-        <dt>Stations</dt><dd id="stationTotal">5 surveyed</dd>
+        <dt>Datum</dt><dd>2024 · Earliest project</dd>
+        <dt>Projects</dt><dd id="stationTotal">5 surveyed</dd>
       </dl>
     </div>
   </section>
@@ -206,7 +206,7 @@ button{font:inherit;color:inherit;cursor:pointer}
       <div class="legend" role="group" aria-label="Filter by discipline" id="legend"></div>
     </div>
     <div class="tl-bar g">
-      <p class="mono count" id="count" aria-live="polite">Showing 1 of 5 stations · UX Design</p>
+      <p class="mono count" id="count" aria-live="polite">Showing 1 of 5 projects · UX Design</p>
       <div class="ctl"><span class="mono">Drag or scroll sideways</span><button type="button" id="prev" aria-label="Earlier">←</button><button type="button" id="next" aria-label="Later">→</button></div>
     </div>
     <div class="tl-wrap">
@@ -308,7 +308,7 @@ SP.forEach(function(p,i){
      '<div><h5>Terrain</h5><p>'+p.notes[0]+'</p></div><div><h5>Route</h5><p>'+p.notes[1]+'</p></div><div><h5>Summit</h5><p>'+p.notes[2]+'</p></div>'+
    '<p><a class="mono" style="color:var(--ink)" href="'+p.page+'">Read the full case study →</a></p></div></details></article>';
 });
-h+='<article class="stn next" style="--n:0"><span class="sym ring"></span><div class="when mono">Next station</div><div class="box"><h4>Your project</h4><p>Looking for research, design and development work. Tell me about the terrain.</p><a class="mono" href="mailto:ctrink@uw.edu">ctrink@uw.edu</a></div></article>';
+h+='<article class="stn next" style="--n:0"><span class="sym ring"></span><div class="when mono">Next up</div><div class="box"><h4>Your project</h4><p>Looking for research, design and development work. Tell me about the terrain.</p><a class="mono" href="mailto:ctrink@uw.edu">ctrink@uw.edu</a></div></article>';
 track.innerHTML=h;
 var stns=[].slice.call(track.querySelectorAll(".stn:not(.next)"));
 var allCards=[].slice.call(track.querySelectorAll(".stn"));
@@ -330,7 +330,7 @@ legend.addEventListener("click",function(e){
 function applyFilter(){
   var shown=0;
   stns.forEach(function(s,i){var on=active==="All"||SP[i].d===active;s.hidden=!on;if(on)shown++});
-  $("#count").textContent="Showing "+shown+" of "+P.length+" stations"+(active==="All"?"":" · "+active);
+  $("#count").textContent="Showing "+shown+" of "+P.length+" projects"+(active==="All"?"":" · "+active);
   fitTrack();
 }
 $("#stationTotal").textContent=P.length+" surveyed";
