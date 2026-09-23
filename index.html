@@ -64,10 +64,10 @@ button{font:inherit;color:inherit;cursor:pointer}
   -webkit-background-clip:text;background-clip:text}
 .hero-row{margin-top:clamp(6px,1vw,12px)}
 .hero{position:relative}
-.reveal{position:absolute;right:max(var(--gut),calc((100% - 1320px)/2));top:clamp(48px,8vh,88px);width:clamp(220px,24.5vw,340px);aspect-ratio:3/4;margin:0;touch-action:pan-y;text-shadow:none}
-.reveal .tiles{--mx:50%;--my:50%;--r:0px;position:absolute;inset:0;display:grid;grid-template:repeat(3,1fr)/repeat(3,1fr);gap:3px;-webkit-mask-image:radial-gradient(circle var(--r) at var(--mx) var(--my),#000 50%,transparent 100%);mask-image:radial-gradient(circle var(--r) at var(--mx) var(--my),#000 50%,transparent 100%)}
-.reveal img{width:100%;height:100%;min-width:0;min-height:0;object-fit:cover;display:block;max-width:none;-webkit-user-drag:none;user-select:none}
-@media(max-width:899px){.reveal{position:relative;right:auto;top:auto;width:min(100%,340px);margin:26px 0 0}}
+.reveal{position:absolute;right:max(var(--gut),calc((100% - 1320px)/2));top:0;bottom:0;width:min(58%,780px);margin:0;touch-action:pan-y;text-shadow:none}
+.reveal .tiles{--mx:50%;--my:50%;--r:0px;position:absolute;inset:0;-webkit-mask-image:radial-gradient(circle var(--r) at var(--mx) var(--my),#000 45%,transparent 100%);mask-image:radial-gradient(circle var(--r) at var(--mx) var(--my),#000 45%,transparent 100%)}
+.reveal img{position:absolute;aspect-ratio:3/4;height:auto;object-fit:cover;display:block;max-width:none;transform:rotate(var(--rot,0deg));box-shadow:0 6px 24px rgba(20,48,42,.18);-webkit-user-drag:none;user-select:none}
+@media(max-width:899px){.reveal{position:relative;right:auto;top:auto;bottom:auto;width:100%;height:clamp(340px,90vw,460px);margin:22px 0 0}}
 .subhead{margin:clamp(14px,2vw,24px) 0 0;font:600 clamp(1.3rem,2.6vw,2rem)/1.2 var(--body);letter-spacing:-.01em}
 .lede{font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.45;max-width:36em;margin:0;color:var(--ink-soft);text-wrap:pretty}
 .sheetinfo{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;font-family:var(--mono);font-size:12px;line-height:1.5}
@@ -199,7 +199,7 @@ button{font:inherit;color:inherit;cursor:pointer}
         <a class="descend mono" href="#work"><i></i>Follow the timeline</a>
       </div>
     </div>
-    <figure class="reveal" id="reveal" role="img" aria-label="A collage of snapshots of Cody skiing, hiking and graduating, uncovered by moving the cursor over it"><div class="tiles"><img src="assets/hero/c1-cave.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"><img src="assets/hero/c2-mustache.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"><img src="assets/hero/c3-husky.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"><img src="assets/hero/c4-ski-flag.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"><img src="assets/hero/c5-purple-pants.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"><img src="assets/hero/c6-pink-fur.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"><img src="assets/hero/c7-sweater-lake.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"><img src="assets/hero/c8-ecuador.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"><img src="assets/hero/c9-fence.jpg" width="420" height="560" alt="" loading="lazy" draggable="false"></div></figure>
+    <figure class="reveal" id="reveal" role="img" aria-label="Snapshots of Cody skiing, hiking and graduating, scattered across the page and uncovered by moving the cursor over them"><div class="tiles"><img src="assets/hero/c1-cave.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:22%;top:6%;width:17%;--rot:-4deg"><img src="assets/hero/c2-mustache.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:35%;top:46%;width:21%;--rot:3deg"><img src="assets/hero/c3-husky.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:50%;top:3%;width:17%;--rot:5deg"><img src="assets/hero/c4-ski-flag.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:74%;top:32%;width:23%;--rot:-3deg"><img src="assets/hero/c5-purple-pants.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:21%;top:63%;width:14%;--rot:6deg"><img src="assets/hero/c6-pink-fur.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:56%;top:57%;width:16%;--rot:-6deg"><img src="assets/hero/c7-sweater-lake.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:38%;top:14%;width:15%;--rot:2deg"><img src="assets/hero/c8-ecuador.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:84%;top:2%;width:13%;--rot:7deg"><img src="assets/hero/c9-fence.jpg" width="420" height="560" alt="" loading="lazy" draggable="false" style="left:66%;top:60%;width:17%;--rot:-2deg"></div></figure>
   </section>
 
   <section id="work" aria-labelledby="workTitle">
@@ -525,7 +525,7 @@ tl.addEventListener("click",function(e){if(moved){e.preventDefault();e.stopPropa
   }
   function go(){if(!run){run=true;requestAnimationFrame(tick)}}
   function at(e){
-    var b=rv.getBoundingClientRect();tx=e.clientX-b.left;ty=e.clientY-b.top;tr=Math.max(b.width*.44,110);
+    var b=rv.getBoundingClientRect();tx=e.clientX-b.left;ty=e.clientY-b.top;tr=Math.max(130,Math.min(b.width,b.height)*.34);
     if(first){x=tx;y=ty;first=false}
     go();
   }
