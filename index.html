@@ -63,6 +63,15 @@ button{font:inherit;color:inherit;cursor:pointer}
   background:repeating-radial-gradient(circle at 34% 62%,var(--ink) 0 2.5px,transparent 2.5px 9px);
   -webkit-background-clip:text;background-clip:text}
 .hero-row{margin-top:clamp(6px,1vw,12px)}
+.hero{position:relative}
+.reveal{position:absolute;right:max(var(--gut),calc((100% - 1320px)/2));top:clamp(48px,8vh,88px);width:clamp(220px,24.5vw,340px);aspect-ratio:1100/1341;margin:0;overflow:hidden;border:1px solid var(--line-strong);background:color-mix(in srgb,var(--paper) 55%,transparent);cursor:crosshair;touch-action:pan-y;text-shadow:none}
+.reveal img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;max-width:none}
+.reveal .ghost{filter:grayscale(1);opacity:.13}
+.reveal .full{--mx:50%;--my:50%;--r:0px;-webkit-mask-image:radial-gradient(circle var(--r) at var(--mx) var(--my),#000 52%,transparent 100%);mask-image:radial-gradient(circle var(--r) at var(--mx) var(--my),#000 52%,transparent 100%)}
+.reveal figcaption{position:absolute;left:10px;bottom:9px;padding:4px 7px;background:var(--ground);transition:opacity .4s;pointer-events:none}
+.reveal.seen figcaption{opacity:0}
+@media(max-width:899px){.reveal{position:relative;right:auto;top:auto;width:min(100%,340px);margin:26px 0 0}}
+@media(prefers-reduced-motion:reduce){.reveal .full{-webkit-mask-image:none;mask-image:none}.reveal .ghost,.reveal figcaption{display:none}}
 .subhead{margin:clamp(14px,2vw,24px) 0 0;font:600 clamp(1.3rem,2.6vw,2rem)/1.2 var(--body);letter-spacing:-.01em}
 .lede{font-size:clamp(1.05rem,1.6vw,1.25rem);line-height:1.45;max-width:36em;margin:0;color:var(--ink-soft);text-wrap:pretty}
 .sheetinfo{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;font-family:var(--mono);font-size:12px;line-height:1.5}
@@ -194,6 +203,11 @@ button{font:inherit;color:inherit;cursor:pointer}
         <a class="descend mono" href="#work"><i></i>Follow the timeline</a>
       </div>
     </div>
+    <figure class="reveal" id="reveal">
+      <img class="ghost" src="assets/hero/portrait.jpg" width="1100" height="1341" alt="">
+      <img class="full" src="assets/hero/portrait.jpg" width="1100" height="1341" alt="Cody smiling into the camera in a snow-crusted ski helmet, mid-slope">
+      <figcaption class="mono">Move over the photo</figcaption>
+    </figure>
   </section>
 
   <section id="work" aria-labelledby="workTitle">
@@ -507,6 +521,25 @@ addEventListener("pointermove",function(e){
 addEventListener("pointerup",function(){drag=null;tl.classList.remove("drag")});
 tl.addEventListener("click",function(e){if(moved){e.preventDefault();e.stopPropagation();moved=false}},true);
 
+/* photo reveal: the picture shows through a soft window that follows the cursor */
+(function(){
+  var rv=document.getElementById("reveal");if(!rv)return;
+  var full=rv.querySelector(".full"),x=0,y=0,r=0,tx=0,ty=0,tr=0,run=false;
+  function tick(){
+    run=false;
+    x+=(tx-x)*.25;y+=(ty-y)*.25;r+=(tr-r)*.14;
+    full.style.setProperty("--mx",x+"px");full.style.setProperty("--my",y+"px");full.style.setProperty("--r",r+"px");
+    if(Math.abs(tx-x)>.4||Math.abs(ty-y)>.4||Math.abs(tr-r)>.4)go();
+  }
+  function go(){if(!run){run=true;requestAnimationFrame(tick)}}
+  function at(e){
+    var b=rv.getBoundingClientRect();tx=e.clientX-b.left;ty=e.clientY-b.top;tr=Math.max(b.width*.42,120);
+    if(!rv.classList.contains("seen")){x=tx;y=ty;rv.classList.add("seen")}
+    go();
+  }
+  rv.addEventListener("pointerenter",at);rv.addEventListener("pointermove",at);
+  rv.addEventListener("pointerleave",function(){tr=0;go()});
+})();
 size();applyFilter();updatePlayhead();
 })();
 </script>

@@ -65,6 +65,7 @@ function cleanHTML(){
   c.classList.remove("editing");if(!c.getAttribute("class"))c.removeAttribute("class");
   q("canvas").forEach(function(e){e.removeAttribute("width");e.removeAttribute("height")});
   q(".flipcard").forEach(function(e){e.setAttribute("aria-pressed","false")});
+  q(".reveal .full").forEach(function(e){e.removeAttribute("style")});q(".reveal.seen").forEach(function(e){e.classList.remove("seen")});
   q("[aria-current]").forEach(function(e){e.removeAttribute("aria-current")});
   q("dialog").forEach(function(d){d.removeAttribute("open");var i=d.querySelector("img");if(i){i.removeAttribute("src");i.setAttribute("alt","")}});
   var tr=c.querySelector("#track");if(tr){tr.innerHTML="";tr.removeAttribute("style")}   /* timeline cards are built from data in the page script */
