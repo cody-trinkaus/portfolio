@@ -48,7 +48,7 @@ function draw(){
     grid[j*gw+i]=v;
   }
   cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,W,H);
-  var minor=new Path2D(),major=new Path2D(),glows=peaks.map(function(){return {N:new Path2D(),M:new Path2D(),F:new Path2D()}}),STEP=.05;
+  var minor=new Path2D(),major=new Path2D(),STEP=.05;
   for(j=0;j<rows;j++)for(i=0;i<cols;i++){
     var a=grid[j*gw+i],b=grid[j*gw+i+1],c=grid[(j+1)*gw+i+1],d=grid[(j+1)*gw+i];
     var k0=Math.ceil(Math.min(a,b,c,d)/STEP),k1=Math.floor(Math.max(a,b,c,d)/STEP);
@@ -59,25 +59,9 @@ function draw(){
       switch(m){case 1:case 14:s=[Lf,B];break;case 2:case 13:s=[B,R];break;case 3:case 12:s=[Lf,R];break;case 4:case 11:s=[T,R];break;
         case 5:s=[Lf,T,B,R];break;case 6:case 9:s=[T,B];break;case 7:case 8:s=[Lf,T];break;case 10:s=[T,R,Lf,B];break}
       path.moveTo(s[0][0],s[0][1]);path.lineTo(s[1][0],s[1][1]);if(s.length>2){path.moveTo(s[2][0],s[2][1]);path.lineTo(s[3][0],s[3][1])}
-      for(var q2=0;q2<peaks.length;q2++){
-        var pk2=peaks[q2],gd=Math.hypot(x0+CELL/2-pk2[0],y0+CELL/2-pk2[1])/pk2[3];
-        if(gd<1){
-          var gs=glows[q2],gp=gd<.34?gs.N:gd<.67?gs.M:gs.F;
-          gp.moveTo(s[0][0],s[0][1]);gp.lineTo(s[1][0],s[1][1]);
-          if(s.length>2){gp.moveTo(s[2][0],s[2][1]);gp.lineTo(s[3][0],s[3][1])}
-        }
-      }
     }
   }
   cx.lineWidth=1;cx.strokeStyle=cMin;cx.stroke(minor);cx.lineWidth=1.2;cx.strokeStyle=cMaj;cx.stroke(major);
-  cx.strokeStyle=cs.getPropertyValue("--accent-text").trim();cx.lineCap="round";
-  peaks.forEach(function(pk,q){
-    var ga=pk[2]/HOVFULL,gs=glows[q];
-    cx.globalAlpha=.16*ga;cx.lineWidth=2;cx.stroke(gs.F);
-    cx.globalAlpha=.34*ga;cx.lineWidth=1.6;cx.stroke(gs.M);
-    cx.globalAlpha=.6*ga;cx.lineWidth=1.3;cx.stroke(gs.N);
-  });
-  cx.globalAlpha=1;
 }
 addEventListener("resize",size);addEventListener("scroll",req,{passive:true});
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change",req);

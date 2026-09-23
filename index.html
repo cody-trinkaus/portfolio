@@ -84,6 +84,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .sym{display:inline-block;width:11px;height:11px;background:var(--accent);flex:none}
 .sym[data-d="Development"]{clip-path:polygon(50% 0,100% 100%,0 100%)}
 .sym[data-d="Service Design"]{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.sym[data-d="Physical Computing"]{border-radius:50%}
 .sym[data-d="New Media Art"]{clip-path:polygon(30% 0,100% 0,70% 100%,0 100%)}
 .sym.all{background:linear-gradient(90deg,var(--accent) 25%,var(--ink-soft) 25% 50%,var(--ink) 50% 75%,var(--accent-text) 75%);border-radius:0}
 .count{margin:14px 0 0}
@@ -112,6 +113,8 @@ button{font:inherit;color:inherit;cursor:pointer}
 .playhead i{position:absolute;left:-6px;top:79px;width:12px;height:9px;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
 .stn{position:absolute;top:0;left:calc(var(--pad) + var(--n)*var(--ppy));width:var(--card);padding:108px 0 0 26px;scroll-snap-align:start;scroll-margin-left:var(--gut)}
 .stn[hidden]{display:none}
+.stn:not(.next){cursor:pointer}
+.stn:not(.next) details{cursor:auto}
 .stn::before{content:"";position:absolute;left:0;top:74px;bottom:0;border-left:1.5px dashed var(--line-strong)}
 .stn>.sym{position:absolute;left:-6.5px;top:67.5px;width:13px;height:13px;outline:5px solid var(--ground)}
 .sym.ring{background:none;border:2.5px solid var(--accent);border-radius:50%;background:var(--ground)}
@@ -260,9 +263,12 @@ var P=[
   thumb:{src:"assets/startingpoint/website-screenshot.png",w:1600,h:808,alt:"Starting Point website homepage"}},
  {name:"On the Bias",year:2025.79,d:"New Media Art",page:"on-the-bias.html",title:"Two studio projects on bias, read as statistical error and as a tailor's deliberate skew",sum:"A speculative-map design fiction built on real cycling data, and a garment-and-collage archive of the ski industry's contradictions.",role:"Student artist: design fiction and wearable sculpture",client:"DXARTS, University of Washington",time:"One quarter, midterm and final project",out:"A zine, a video, a rebuilt garment and seven collages",
   notes:["Existing platforms and industries rarely document their own contradictions. Speculative Strava speculates an AI-driven future onto a real cycling route; Contradictory Collages archives what the ski industry says about itself against what it does.","Satellite imagery and real Strava data speculated forward through six maps and an ungrounded language model; ski pants imploded, researched, and rebuilt from reclaimed and durable materials, alongside seven researched, interview-sourced collages.","A zine of three personas, a demo video, and a rebuilt pair of ski pants shown with seven collages at the DXARTS Gallery show — an argument that documentation is itself part of the critique."],
-  thumb:{src:"assets/onthebias/00-exhibit.jpeg",w:885,h:1180,alt:"The rebuilt ski pants installed for the DXARTS show"}}
+  thumb:{src:"assets/onthebias/00-exhibit.jpeg",w:885,h:1180,alt:"The rebuilt ski pants installed for the DXARTS show"}},
+ {name:"Slow Engagement",year:2025.3,d:"Physical Computing",page:"mimosa.html",title:"A sensitivity plant that sets the pace for the person caring for it",sum:"A Mimosa pudica in a 3D-printed pot, with sensors, a wind chime and affirmations that answer the plant's own rhythm.",role:"Designer, one of four on the team",client:"HCDE 418, Slow Design, University of Washington",time:"One quarter, team of four",out:"A working prototype: sensors, speaker, screen and printed pot",
+  notes:["Everyday technology rewards speed and instant feedback. A plant that folds its leaves on its own schedule offers a different rhythm to pause and engage with.","Ultrasonic sensors read the distance to a leaf, so each movement triggers a wind-chime sound and an affirmation. The pot was modeled and 3D printed to hide the Arduino and sensors, and a garden marker introduces the idea.","A prototype that runs on the plant's time, not the person's: care for the plant in exchange for affirmation, read through Odom's slow design qualities."],
+  thumb:{src:"assets/mimosa/06-pot-marker.jpeg",w:1613,h:1210,alt:"The 3D-printed pot with the Mimosa pudica and garden marker"}}
 ];
-var DISC=["UX Design","Development","Service Design","New Media Art"];
+var DISC=["UX Design","Development","Service Design","New Media Art","Physical Computing"];
 function yl(y){
   if(Math.abs(y%1)<.001)return""+y;
   var f=y-Math.floor(y),s=f<.13?"Winter":f<.38?"Spring":f<.63?"Summer":f<.88?"Fall":"Winter";
@@ -389,7 +395,7 @@ function draw(){
     }
   }
   cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,W,H);
-  var minor=new Path2D(),major=new Path2D(),glows=peaks.map(function(){return {N:new Path2D(),M:new Path2D(),F:new Path2D()}}),STEP=.05;
+  var minor=new Path2D(),major=new Path2D(),STEP=.05;
   for(j=0;j<rows;j++)for(i=0;i<cols;i++){
     var a=grid[j*gw+i],b=grid[j*gw+i+1],c=grid[(j+1)*gw+i+1],d=grid[(j+1)*gw+i]; // tl,tr,br,bl
     var lo=Math.min(a,b,c,d),hi=Math.max(a,b,c,d);
@@ -411,26 +417,10 @@ function draw(){
       }
       path.moveTo(s[0][0],s[0][1]);path.lineTo(s[1][0],s[1][1]);
       if(s.length>2){path.moveTo(s[2][0],s[2][1]);path.lineTo(s[3][0],s[3][1])}
-      for(var q2=0;q2<peaks.length;q2++){
-        var pk2=peaks[q2],gd=Math.hypot(x0+CELL/2-pk2[0],y0+CELL/2-pk2[1])/pk2[3];
-        if(gd<1){
-          var gs=glows[q2],gp=gd<.34?gs.N:gd<.67?gs.M:gs.F;
-          gp.moveTo(s[0][0],s[0][1]);gp.lineTo(s[1][0],s[1][1]);
-          if(s.length>2){gp.moveTo(s[2][0],s[2][1]);gp.lineTo(s[3][0],s[3][1])}
-        }
-      }
     }
   }
   cx.lineWidth=1;cx.strokeStyle=cMinor;cx.stroke(minor);
   cx.lineWidth=1.2;cx.strokeStyle=cMajor;cx.stroke(major);
-  cx.strokeStyle=cs.getPropertyValue("--accent-text").trim();cx.lineCap="round";
-  peaks.forEach(function(pk,q){
-    var ga=pk[2]/HOVFULL,gs=glows[q];
-    cx.globalAlpha=.16*ga;cx.lineWidth=2;cx.stroke(gs.F);
-    cx.globalAlpha=.34*ga;cx.lineWidth=1.6;cx.stroke(gs.M);
-    cx.globalAlpha=.6*ga;cx.lineWidth=1.3;cx.stroke(gs.N);
-  });
-  cx.globalAlpha=1;
 }
 
 /* ---------- events ---------- */
@@ -484,6 +474,12 @@ function setHover(el){
   else hov.target=0;
   dirty();
 }
+stns.forEach(function(s,i){
+  s.addEventListener("click",function(e){
+    if(e.target.closest("a,summary,details,button"))return;
+    location.href=SP[i].page;
+  });
+});
 stns.forEach(function(s){
   s.addEventListener("pointerenter",function(e){if(e.pointerType!=="touch")setHover(s)});
   s.addEventListener("pointerleave",function(){setHover(null)});

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Slow Engagement · Cody Trinkaus</title>
+<meta name="description" content="Case study: a slow design project that pairs a Mimosa pudica with sensors, a wind chime and affirmations, so a person keeps the plant's schedule instead of their own.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<canvas id="terrain" aria-hidden="true"></canvas>
+<canvas id="tracks" aria-hidden="true"></canvas>
+<header class="bar g"><a class="brand" href="index.html">C. Trinkaus</a><a href="index.html#work">← Back to timeline</a></header>
+<main>
+<section class="hero g">
+  <p class="mono" style="margin:0">Case study · El. Spring 2025 · Physical Computing</p>
+  <h1>Slow Engagement</h1>
+  <p class="sub">A reciprocal relationship between a person and a <i>Mimosa pudica</i>, kept on the plant's schedule, not the person's.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Designer, one of four on the team</dd></div>
+    <div><dt>Team</dt><dd>Cody Trinkaus, Lia Mar-Lundeen, Ria Goyal, Irene Huang</dd></div>
+    <div><dt>Course</dt><dd>HCDE 418, Slow Design, Spring 2025</dd></div>
+    <div><dt>Built with</dt><dd>Arduino, ultrasonic sensors, speaker, LCD screen, 3D-printed pot</dd></div>
+  </dl>
+  <button type="button" class="frame cover" aria-label="Enlarge image"><img src="assets/mimosa/01-prototype.jpeg" width="1121" height="1400" alt="The prototype: a Mimosa pudica in a white pot, with an LCD screen reading a message and wires running behind it"></button>
+</section>
+<div class="layout g">
+  <nav class="toc" aria-label="Contents"><h2>Contents</h2><ol>
+    <li><a href="#idea">The Idea</a></li>
+    <li><a href="#features">How It Works</a></li>
+    <li><a href="#pot">The Pot</a></li>
+    <li><a href="#marker">The Garden Marker</a></li>
+    <li><a href="#slow">Slow Design Lenses</a></li>
+    <li><a href="#scenarios">Scenarios</a></li>
+    <li><a href="#efficiency">Against Efficiency</a></li>
+  </ol></nav>
+  <article>
+
+<section id="idea"><h2><span class="n mono">Section 01</span>The Idea</h2>
+<p>The <i>Mimosa pudica</i>, the sensitivity plant, curls its leaves in response to the time of day, temperature and touch. Our design builds a reciprocal relationship between a person and that plant. It opens its leaves in the morning and closes them at night, and the experience unfolds on the plant's own schedule. That creates a gentle awareness that the plant exists, and invites people to pause and engage with a different rhythm of life.</p>
+</section>
+
+<section id="features"><h2><span class="n mono">Section 02</span>How It Works</h2>
+<p>Three parts carry the experience: ultrasonic sensors, a speaker and an LCD screen. The plant follows its own circadian rhythm, opening and folding its leaves. Ultrasonic sensors measure the distance to a leaf, which lets the design capture that movement. Each movement triggers a chime on the speaker and a message on the screen.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/mimosa/08-sensor-lcd.jpeg" width="898" height="1200" alt="Close view of the LCD screen mounted on the pot, with an ultrasonic sensor among the leaves" loading="lazy"></button><figcaption>The screen sits on the pot's front rim; an ultrasonic sensor looks at the leaves from behind.</figcaption></figure>
+<h4>Ultrasonic sensors</h4>
+<p>We chose them for precise short-range distance sensing, fast read time, and a design that is unobtrusive and non-invasive, so we could watch the plant's natural movement without interfering with it. Those qualities line up with the project's core values: reciprocity, presence and slowness.</p>
+<h4>A speaker</h4>
+<p>The chime plays on the plant's schedule, not the human's, which builds slowness into the design. We chose sound because it's the most effective way to invite someone who is busy with their own work to turn toward the plant.</p>
+<h4>An LCD screen</h4>
+<p>The screen cycles through affirmations that encourage introspection, emotional awareness and slowness:</p>
+<blockquote>"You are growing, even when it's not visible."</blockquote>
+<blockquote>"Stillness is not stagnation — it's rest."</blockquote>
+<blockquote>"Water yourself — you deserve care, too."</blockquote>
+<blockquote>"You don't have to bloom all the time to be worthy."</blockquote>
+</section>
+
+<section id="pot"><h2><span class="n mono">Section 03</span>The Pot</h2>
+<p>The plant lives in a pot we designed and 3D printed to house the electronics. It's split in half: the front half holds the plant and the back half holds the computer parts, the Arduino board and the sensors. A protrusion on the front rim mounts the LCD screen where it can be seen, and a drainage hole under the soil section keeps the plant healthy.</p>
+<figure><div class="gallery"><button type="button" class="frame" style="--ar:0.989" aria-label="Enlarge image"><img src="assets/mimosa/02-model-top.png" width="1062" height="1074" alt="3D model of the pot from above, showing the split interior and drainage hole" loading="lazy"></button><button type="button" class="frame" style="--ar:1.161" aria-label="Enlarge image"><img src="assets/mimosa/03-model-side.png" width="924" height="796" alt="3D model of the pot from the side" loading="lazy"></button></div><figcaption>3D model of the pot.</figcaption></figure>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/mimosa/04-pot-annotated.jpeg" width="1600" height="1200" alt="The printed pot with the plant, annotated: ledge for Arduino, garden marker, mount for LED screen" loading="lazy"></button><figcaption>The final printed pot, annotated: ledge for the Arduino, garden marker, mount for the LED screen.</figcaption></figure>
+<figure><div class="gallery"><button type="button" class="frame" style="--ar:1.333" aria-label="Enlarge image"><img src="assets/mimosa/06-pot-marker.jpeg" width="1613" height="1210" alt="The printed pot with the plant and garden marker against a white wall" loading="lazy"></button><button type="button" class="frame" style="--ar:.75" aria-label="Enlarge image"><img src="assets/mimosa/07-pot-detail.jpeg" width="900" height="1200" alt="The printed pot from above, showing the front rim protrusion" loading="lazy"></button></div></figure>
+</section>
+
+<section id="marker"><h2><span class="n mono">Section 04</span>The Garden Marker</h2>
+<p>To introduce the design, a garden marker sticks out of the soil. It carries the plant's name, how the design works, suggested interactions, and care instructions: indirect sunlight, water until it drains every two to three days, well-draining loamy soil, and fertilizer every two to four weeks in the growing season.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/mimosa/05-garden-marker.png" width="727" height="249" alt="Both sides of the garden marker: A Living Presence and Let it Set the Pace, and How to Care" loading="lazy"></button><figcaption>Both sides of the garden marker.</figcaption></figure>
+<blockquote>"When it moves, you may hear a wind chime and see a message on the screen. Wake with it in the morning, wind down with it at night. These quiet moments are invitations to pause, reflect, and just be."<cite>Garden marker</cite></blockquote>
+</section>
+
+<section id="slow"><h2><span class="n mono">Section 05</span>Slow Design Lenses</h2>
+<p>We read the design through Odom's slow design qualities and two slow design principles.</p>
+<h4>Explicit slowness</h4>
+<p>Aligning people with the plant's circadian rhythm and senses makes the slowness explicit. When the plant opens or closes in response to time, temperature or touch, a wind chime sounds and the screen offers an affirmation.</p>
+<h4>Temporal drift</h4>
+<p>By running on the plant's schedule, the design drops the usual measures of time. The marker invites people to wake up with the plant and go to sleep with it.</p>
+<h4>Pre-interaction</h4>
+<p>Nobody knows when a sound will play or which affirmation will appear, so the experience is anticipatory before anything happens.</p>
+<h4>Thoughtfulness</h4>
+<p>Temporal drift and explicit slowness cultivate a plant-and-person ecosystem. Caring for the plant, and the affirmations it shows, both encourage reflection and awareness.</p>
+<h4>Longevity</h4>
+<p>Ongoing care builds commitment and responsibility, and over time a deeper appreciation of natural rhythms. Unpredictable interactions remind the user that growth is an unfolding process with meaning, presence and care.</p>
+</section>
+
+<section id="scenarios"><h2><span class="n mono">Section 06</span>Scenarios</h2>
+<ol class="list">
+<li><b>A nice, affirming surprise every day.</b> The screen's messages aim to bring comfort and peace, and to build a routine with the plant that adds meaning to the day.</li>
+<li><b>Environmental plant responses.</b> The plant also responds to touch and temperature. A person can prompt an affirmation by touching its open leaves.</li>
+<li><b>Reflection with the plant's circadian rhythm.</b> When the plant wakes or goes to sleep, the person is invited to spend a mindful moment with it and receive an affirmation.</li>
+<li><b>Plant care.</b> The relationship is reciprocal: care, through watering and feeding, is exchanged for affirmation. Looking after the plant is how a meaningful relationship forms.</li>
+</ol>
+</section>
+
+<section id="efficiency"><h2><span class="n mono">Section 07</span>Against Efficiency</h2>
+<p>The artifact invites people into a shared experience with the <i>Mimosa pudica</i>. The plant expresses itself by folding and opening its leaves, which makes the interaction lived and embodied. It isn't always immediate. When the plant is resting or stressed, the wait for a response asks the user to slow down and observe, which pushes back on the need for instant feedback.</p>
+<p>When the plant is stimulated, an affirmation gives a moment to pause and reflect. When it moves, the wind chime follows, drawing attention to the plant's presence and making space for acknowledgement and care.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/mimosa/09-window.jpeg" width="1613" height="1210" alt="The potted plant on a sunny windowsill" loading="lazy"></button></figure>
+</section>
+
+  </article>
+</div>
+</main>
+<footer class="g">
+  <nav class="pager" aria-label="More work">
+    <a href="index.html#work"><span class="mono">All stations</span><b>Timeline</b></a>
+    <a href="cookd.html"><span class="mono">Next case study · UX Design · 2025</span><b>Cook'd</b></a>
+  </nav>
+  <p class="mono">© 2026 Cody Trinkaus · <a href="mailto:ctrink@uw.edu">ctrink@uw.edu</a> · <a href="https://linkedin.com/in/codytrinkaus" target="_blank" rel="noopener">LinkedIn</a></p>
+</footer>
+<dialog id="zoom" aria-label="Enlarged image"><button type="button" autofocus>Close ✕</button><img alt=""></dialog>
+<script src="case.js"></script>
+</body>
+</html>
