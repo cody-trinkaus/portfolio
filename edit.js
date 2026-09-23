@@ -78,23 +78,31 @@ function gh(url,opt,tok){
   opt.headers=Object.assign({"Accept":"application/vnd.github+json","Authorization":"Bearer "+tok},opt.headers||{});
   return fetch(url,opt).then(function(r){return r.json().then(function(j){if(!r.ok){var e=new Error(j.message||r.status);e.status=r.status;throw e}return j})});
 }
-save.addEventListener("click",function(){
-  var tok=null;try{tok=localStorage.getItem(TOK)}catch(x){}
-  if(!tok){
-    tok=prompt("Paste a GitHub token for "+REPO+" (fine-grained, Contents: read and write).\nIt is kept in this browser only.");
-    if(!tok)return;tok=tok.trim();
-  }
+function ask(){
+  var t=prompt("Paste a GitHub token for "+REPO+" (fine-grained, Contents: read and write).\nIt is kept in this browser only.");
+  return t&&t.trim()||null;
+}
+function fail(t){say(t);alert(t)}
+function doSave(tok,retry){
   var file=fileName(),api="https://api.github.com/repos/"+REPO+"/contents/"+file;
   save.disabled=true;say("Saving…");
-  gh(api+"?ref="+BRANCH,{},tok).then(function(cur){
+  return gh(api+"?ref="+BRANCH,{},tok).then(function(cur){
     return gh(api,{method:"PUT",body:JSON.stringify({message:"Edit "+file+" from the site",content:b64(cleanHTML()),sha:cur.sha,branch:BRANCH})},tok)
   }).then(function(){
     try{localStorage.setItem(TOK,tok)}catch(x){}
     say("Saved. Live in about a minute.");
   }).catch(function(err){
-    if(err.status===401||err.status===403||err.status===404){try{localStorage.removeItem(TOK)}catch(x){}say("GitHub refused the token. Click Save to try another.")}
-    else say("Could not save: "+err.message);
+    if(err.status===401||err.status===403||err.status===404){
+      try{localStorage.removeItem(TOK)}catch(x){}
+      if(retry){var t=ask();if(t)return doSave(t,false)}
+      fail("GitHub refused the token ("+err.message+"). It may be expired or revoked, or lack Contents: read and write on "+REPO+". Make a new one and click Save again.");
+    }else fail("Could not save: "+(err.message||"network error"));
   }).then(function(){save.disabled=false});
+}
+save.addEventListener("click",function(){
+  var tok=null;try{tok=localStorage.getItem(TOK)}catch(x){}
+  if(!tok){tok=ask();if(!tok)return}
+  doSave(tok,true);
 });
 
 /* while editing, cards and images should not navigate, zoom or drag */
