@@ -14,6 +14,7 @@ function makeNoise(seed){var perm=[],i,j,s=(seed*2654435761)>>>0||1;for(i=0;i<25
 var nz=makeNoise(5),cv=document.getElementById("terrain"),cx=cv.getContext("2d"),W,H,DPR,CELL=14,grid,busy=false;
 var tk=document.getElementById("tracks"),tcx=tk&&tk.getContext("2d");
 var HOVFULL=.22,hov={x:0,y:0,amp:0,target:0,el:null,r:300};
+var ptr={x:-999,y:-999,tx:-999,ty:-999,amp:0,target:0,r:170,last:0};
 function fbm(x,y){var a=1,f=1,s=0,t=0;for(var o=0;o<3;o++){s+=a*nz(x*f,y*f);t+=a;a*=.5;f*=2}return s/t}
 function size(){
   DPR=Math.min(devicePixelRatio||1,2);W=innerWidth;H=innerHeight;
@@ -26,6 +27,11 @@ function frame(){
   hov.amp+=(hov.target-hov.amp)*(reduce?1:.1);
   if(Math.abs(hov.target-hov.amp)>.003)moving=true;else hov.amp=hov.target;
   if(hov.el)moving=true;
+  var pk=reduce?1:.2;ptr.x+=(ptr.tx-ptr.x)*pk;ptr.y+=(ptr.ty-ptr.y)*pk;
+  ptr.amp+=(ptr.target-ptr.amp)*(reduce?1:.12);
+  if(Math.abs(ptr.target-ptr.amp)>.003)moving=true;else ptr.amp=ptr.target;
+  if(Math.abs(ptr.tx-ptr.x)>.5||Math.abs(ptr.ty-ptr.y)>.5)moving=true;
+  if(ptr.target>0&&performance.now()-ptr.last<1500)moving=true;
   draw();
   if(moving)req();
 }
@@ -33,15 +39,16 @@ function draw(){
   var cs=getComputedStyle(root),cMin=cs.getPropertyValue("--contour").trim(),cMaj=cs.getPropertyValue("--contour-index").trim();
   var cols=Math.ceil(W/CELL)+1,rows=Math.ceil(H/CELL)+1,gw=cols+1,off=scrollY*.18,S=.0019,i,j;
   if(!grid||grid.length!==gw*(rows+1))grid=new Float32Array(gw*(rows+1));
-  var peak=null,now=reduce?0:performance.now();
-  if(hov.amp>.003)peak=[hov.x,hov.y,hov.amp,hov.r];
+  var peaks=[],now=reduce?0:performance.now();
+  if(hov.amp>.003)peaks.push([hov.x,hov.y,hov.amp,hov.r]);
+  if(ptr.amp>.003)peaks.push([ptr.x,ptr.y,ptr.amp,ptr.r]);
   for(j=0;j<=rows;j++)for(i=0;i<=cols;i++){
     var px=i*CELL,py=j*CELL,v=fbm(px*S+10,(py+off)*S+10);
-    if(peak){var dx=px-peak[0],dy=py-peak[1],d=Math.sqrt(dx*dx+dy*dy);v+=peak[2]*.14*Math.exp(-d/peak[3])*Math.cos(d*.06-now*.0022)}
+    for(var q=0;q<peaks.length;q++){var pk=peaks[q],dx=px-pk[0],dy=py-pk[1],d=Math.sqrt(dx*dx+dy*dy);v+=pk[2]*.14*Math.exp(-d/pk[3])*Math.cos(d*.06-now*.0022)}
     grid[j*gw+i]=v;
   }
   cx.setTransform(DPR,0,0,DPR,0,0);cx.clearRect(0,0,W,H);
-  var minor=new Path2D(),major=new Path2D(),glowN=new Path2D(),glowM=new Path2D(),glowF=new Path2D(),STEP=.05;
+  var minor=new Path2D(),major=new Path2D(),glows=peaks.map(function(){return {N:new Path2D(),M:new Path2D(),F:new Path2D()}}),STEP=.05;
   for(j=0;j<rows;j++)for(i=0;i<cols;i++){
     var a=grid[j*gw+i],b=grid[j*gw+i+1],c=grid[(j+1)*gw+i+1],d=grid[(j+1)*gw+i];
     var k0=Math.ceil(Math.min(a,b,c,d)/STEP),k1=Math.floor(Math.max(a,b,c,d)/STEP);
@@ -52,10 +59,10 @@ function draw(){
       switch(m){case 1:case 14:s=[Lf,B];break;case 2:case 13:s=[B,R];break;case 3:case 12:s=[Lf,R];break;case 4:case 11:s=[T,R];break;
         case 5:s=[Lf,T,B,R];break;case 6:case 9:s=[T,B];break;case 7:case 8:s=[Lf,T];break;case 10:s=[T,R,Lf,B];break}
       path.moveTo(s[0][0],s[0][1]);path.lineTo(s[1][0],s[1][1]);if(s.length>2){path.moveTo(s[2][0],s[2][1]);path.lineTo(s[3][0],s[3][1])}
-      if(peak){
-        var mx=x0+CELL/2,my=y0+CELL/2,gd=Math.hypot(mx-peak[0],my-peak[1])/peak[3];
+      for(var q2=0;q2<peaks.length;q2++){
+        var pk2=peaks[q2],gd=Math.hypot(x0+CELL/2-pk2[0],y0+CELL/2-pk2[1])/pk2[3];
         if(gd<1){
-          var gp=gd<.34?glowN:gd<.67?glowM:glowF;
+          var gs=glows[q2],gp=gd<.34?gs.N:gd<.67?gs.M:gs.F;
           gp.moveTo(s[0][0],s[0][1]);gp.lineTo(s[1][0],s[1][1]);
           if(s.length>2){gp.moveTo(s[2][0],s[2][1]);gp.lineTo(s[3][0],s[3][1])}
         }
@@ -63,14 +70,14 @@ function draw(){
     }
   }
   cx.lineWidth=1;cx.strokeStyle=cMin;cx.stroke(minor);cx.lineWidth=1.2;cx.strokeStyle=cMaj;cx.stroke(major);
-  if(peak){
-    var ga=hov.amp/HOVFULL;
-    cx.strokeStyle=cs.getPropertyValue("--accent-text").trim();cx.lineCap="round";
-    cx.globalAlpha=.16*ga;cx.lineWidth=2;cx.stroke(glowF);
-    cx.globalAlpha=.34*ga;cx.lineWidth=1.6;cx.stroke(glowM);
-    cx.globalAlpha=.6*ga;cx.lineWidth=1.3;cx.stroke(glowN);
-    cx.globalAlpha=1;
-  }
+  cx.strokeStyle=cs.getPropertyValue("--accent-text").trim();cx.lineCap="round";
+  peaks.forEach(function(pk,q){
+    var ga=pk[2]/HOVFULL,gs=glows[q];
+    cx.globalAlpha=.16*ga;cx.lineWidth=2;cx.stroke(gs.F);
+    cx.globalAlpha=.34*ga;cx.lineWidth=1.6;cx.stroke(gs.M);
+    cx.globalAlpha=.6*ga;cx.lineWidth=1.3;cx.stroke(gs.N);
+  });
+  cx.globalAlpha=1;
 }
 addEventListener("resize",size);addEventListener("scroll",req,{passive:true});
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change",req);
@@ -113,6 +120,16 @@ if(tk){
     needTrail();
   },{passive:true});
   document.addEventListener("pointerleave",function(){brk=true});
+}
+
+/* giggle follows the cursor anywhere on the page */
+if(!reduce){
+  addEventListener("pointermove",function(e){
+    if(e.pointerType==="touch")return;
+    if(ptr.target===0){ptr.x=e.clientX;ptr.y=e.clientY}
+    ptr.tx=e.clientX;ptr.ty=e.clientY;ptr.target=HOVFULL;ptr.last=performance.now();req();
+  },{passive:true});
+  document.addEventListener("pointerleave",function(){ptr.target=0;req()});
 }
 
 /* giggle: nearby contour lines glow when a card or image is hovered */
