@@ -7,10 +7,10 @@
 var SALT="f1c1d72cfa975f9e8d3a583460900372",ITER=600000,HASH="3f1af5bdcfbcbe724ca4449ac6ffc390d8cb781825b42202365a58b1473defd1";
 var REPO="cody-trinkaus/portfolio",BRANCH="main",TOK="pwTok";
 var css=document.createElement("style");css.id="pwStyle";
-css.textContent="#pw{position:fixed;right:max(10px,env(safe-area-inset-right,0px));bottom:max(10px,env(safe-area-inset-bottom,0px));z-index:9999;display:flex;align-items:center;gap:2px;opacity:.22;transition:opacity .2s;text-shadow:none;font:10px/1 ui-monospace,Menlo,monospace;color:var(--ink,#000)}"+
-"#pw:hover,#pw:focus-within,#pw.on{opacity:.9}"+
-"#pw input{width:58px;padding:3px 2px;border:0;border-bottom:1px solid var(--line-strong,#888);background:transparent;color:inherit;font:11px/1 ui-monospace,Menlo,monospace;outline:0;text-align:center}"+
-"#pw input:focus{width:110px}#pw input.bad{border-color:#c33}"+
+css.textContent="#pw{display:flex;align-items:center;gap:4px;width:max-content;max-width:100%;margin:18px 0 0 auto;padding:4px 8px;border:1px solid var(--line-strong,#888);background:color-mix(in srgb,var(--ground,#fff) 70%,transparent);opacity:.7;transition:opacity .2s;text-shadow:none;font:10px/1 ui-monospace,Menlo,monospace;color:var(--ink,#000)}"+
+"#pw:hover,#pw:focus-within,#pw.on{opacity:1}"+
+"#pw input{width:92px;padding:3px 2px;border:0;border-bottom:1px solid var(--line-strong,#888);background:transparent;color:inherit;font:11px/1 ui-monospace,Menlo,monospace;outline:0}"+
+"#pw input::placeholder{letter-spacing:.08em;text-transform:uppercase}#pw input.bad{border-color:#c33}"+
 "#pw button{border:0;background:transparent;color:inherit;font:inherit;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:3px 5px}"+
 "#pw button:disabled{opacity:.5;cursor:default}#pw output{padding:0 6px;max-width:220px;text-align:right}"+
 ".editing [contenteditable=true]:hover{box-shadow:0 0 0 1px var(--line-strong,#888)}"+
@@ -19,11 +19,12 @@ document.head.appendChild(css);
 
 var box=document.createElement("div");box.id="pw";
 var inp=document.createElement("input");
-inp.type="password";inp.id="pwInput";inp.autocomplete="off";inp.setAttribute("aria-label","Editor password");inp.placeholder="·";
+inp.type="password";inp.id="pwInput";inp.autocomplete="off";inp.setAttribute("aria-label","Editor password");inp.placeholder="edit";
 var msg=document.createElement("output");msg.hidden=true;msg.setAttribute("aria-live","polite");
 function btn(t,l){var b=document.createElement("button");b.type="button";b.textContent=t;b.hidden=true;b.setAttribute("aria-label",l);return b}
 var save=btn("Save","Save changes to the site"),lock=btn("Lock","Stop editing");
-[inp,msg,save,lock].forEach(function(e){box.appendChild(e)});document.body.appendChild(box);
+[inp,msg,save,lock].forEach(function(e){box.appendChild(e)});
+(document.querySelector("footer")||document.querySelector(".contact")||document.body).appendChild(box);
 
 var root=document.documentElement,editing=false;
 function targets(){return [].filter.call(document.body.children,function(el){return !/^(CANVAS|SCRIPT|STYLE|DIALOG)$/.test(el.tagName)&&el!==box})}
@@ -31,7 +32,7 @@ function say(t){msg.textContent=t;msg.hidden=!t}
 function setEditing(on){
   editing=on;root.classList.toggle("editing",on);
   targets().forEach(function(el){if(on)el.setAttribute("contenteditable","true");else el.removeAttribute("contenteditable")});
-  if(on){[].forEach.call(document.querySelectorAll(".legend button,.ctl button,.playhead,iframe,video,img"),function(el){el.setAttribute("contenteditable","false")})}
+  if(on){box.setAttribute("contenteditable","false");[].forEach.call(document.querySelectorAll(".legend button,.ctl button,.playhead,iframe,video,img"),function(el){el.setAttribute("contenteditable","false")})}
   else{[].forEach.call(document.querySelectorAll("[contenteditable=false]"),function(el){el.removeAttribute("contenteditable")})}
   inp.hidden=on;save.hidden=lock.hidden=!on;box.classList.toggle("on",on);say("");
   if(!on){inp.value="";inp.blur()}

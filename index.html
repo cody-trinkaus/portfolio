@@ -331,6 +331,9 @@ legend.addEventListener("click",function(e){
   active=b.dataset.f;
   [].forEach.call(legend.children,function(x){x.setAttribute("aria-pressed",x===b)});
   applyFilter();
+  /* bring the first project of this kind into view */
+  var first=stns.filter(function(c){return !c.hidden})[0],m=yearMetrics();
+  tl.scrollTo({left:(first&&active!=="All")?Math.max(0,first.offsetLeft-m.pad):0,behavior:reduce?"auto":"smooth"});
 });
 function applyFilter(){
   var shown=0;
