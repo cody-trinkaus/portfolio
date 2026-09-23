@@ -439,7 +439,7 @@ function drawTrail(){
     L.push([trail[i].x-dy/d*GAP,trail[i].y+dx/d*GAP]);R.push([trail[i].x+dy/d*GAP,trail[i].y-dx/d*GAP]);
   }
   tcx.strokeStyle=getComputedStyle(root).getPropertyValue("--accent-text").trim();
-  tcx.lineCap="round";tcx.lineJoin="round";
+  tcx.lineCap="butt";tcx.lineJoin="round";
   for(i=1;i<n-1;i++){
     if(trail[i].brk||trail[i+1].brk)continue;
     var age=(now-trail[i].t)/LIFE,f=Math.max(0,1-age);
