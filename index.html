@@ -114,9 +114,6 @@ button{font:inherit;color:inherit;cursor:pointer}
 .yt b{position:absolute;left:8px;bottom:8px;font:800 1.9rem/1 var(--display);font-stretch:60%;font-variant-numeric:tabular-nums;letter-spacing:.01em}
 .yt.now i{background:var(--accent);width:2px}
 .yt.now b{font-size:1.2rem;color:var(--accent-text);bottom:10px;text-transform:uppercase}
-.playhead{position:absolute;top:0;left:50%;width:0;z-index:3;pointer-events:none}
-.playhead output{position:absolute;left:0;top:6px;transform:translateX(-50%);padding:4px 8px;background:var(--ink);color:var(--ground);font:500 11px/1 var(--mono);font-variant-numeric:tabular-nums;text-shadow:none;letter-spacing:.04em}
-.playhead i{position:absolute;left:-6px;top:79px;width:12px;height:9px;background:var(--accent);clip-path:polygon(50% 0,100% 100%,0 100%)}
 .stn{position:absolute;top:0;left:calc(var(--pad) + var(--n)*var(--ppy));width:var(--card);padding:108px 0 0 26px;scroll-snap-align:start;scroll-margin-left:var(--gut)}
 .stn[hidden]{display:none}
 .stn:not(.next){cursor:pointer}
@@ -212,7 +209,6 @@ button{font:inherit;color:inherit;cursor:pointer}
       <div class="ctl"><span class="mono">Drag or scroll sideways</span><button type="button" id="prev" aria-label="Earlier">←</button><button type="button" id="next" aria-label="Later">→</button></div>
     </div>
     <div class="tl-wrap">
-      <div class="playhead" aria-hidden="true"><output id="readout">Spring 2026</output><i></i></div>
       <div class="tl" id="tl" tabindex="0" role="region" aria-label="Project timeline. Scrolls sideways.">
         <div class="track" id="track"></div>
       </div>
@@ -291,7 +287,7 @@ function fbm(n,x,y,oct){var a=1,f=1,s=0,t=0;for(var o=0;o<oct;o++){s+=a*n(x*f,y*
 /* Stations sit at even, one-per-slot intervals — not scaled to real
    calendar distance — so cards never crowd or overlap; each still
    carries its own true year/season label. */
-var tl=$("#tl"),track=$("#track"),readout=$("#readout");
+var tl=$("#tl"),track=$("#track");
 var SP=P.slice().sort(function(a,b){return b.year-a.year});
 track.style.setProperty("--now",SP.length);
 var h='<div class="axis-line"></div>';
@@ -337,7 +333,7 @@ function applyFilter(){
 }
 $("#stationTotal").textContent=P.length+" surveyed";
 
-/* track height follows the tallest card; playhead reads the year under the centre */
+/* track height follows the tallest card */
 function fitTrack(){
   var m=0;allCards.forEach(function(c){if(!c.hidden)m=Math.max(m,c.offsetHeight)});
   track.style.height=(m+40)+"px";
@@ -345,11 +341,6 @@ function fitTrack(){
 function yearMetrics(){
   var t=track.querySelectorAll(".yt.y"),ppy=(t.length>1?t[1].offsetLeft-t[0].offsetLeft:200);
   return {pad:t[0].offsetLeft-ppy,ppy:ppy};
-}
-function updatePlayhead(){
-  var m=yearMetrics(),v=(tl.scrollLeft+tl.clientWidth/2-m.pad)/m.ppy;
-  var idx=Math.round(Math.max(0,Math.min(SP.length,v)));
-  readout.textContent=idx<=0?"Now":yl(SP[idx-1].year);
 }
 
 /* ---------- terrain ---------- */
@@ -486,15 +477,15 @@ stns.forEach(function(s){
 var ticking=false;
 function onScroll(){
   if(ticking)return;ticking=true;
-  requestAnimationFrame(function(){ticking=false;xoff=tl.scrollLeft*.3;updatePlayhead();if(hov.el)setHover(hov.el);else dirty()});
+  requestAnimationFrame(function(){ticking=false;xoff=tl.scrollLeft*.3;if(hov.el)setHover(hov.el);else dirty()});
 }
 addEventListener("scroll",onScroll,{passive:true});
 tl.addEventListener("scroll",onScroll,{passive:true});
-addEventListener("resize",function(){size();fitTrack();updatePlayhead();dirty()});
+addEventListener("resize",function(){size();fitTrack();dirty()});
 matchMedia("(prefers-color-scheme: dark)").addEventListener("change",dirty);
 new MutationObserver(dirty).observe(root,{attributes:true,attributeFilter:["data-theme"]});
 if(window.ResizeObserver){var ro=new ResizeObserver(fitTrack);allCards.forEach(function(c){ro.observe(c)})}
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(function(){fitTrack();updatePlayhead()});
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fitTrack);
 
 /* step buttons + drag to scroll */
 function step(dir){tl.scrollBy({left:dir*yearMetrics().ppy,behavior:reduce?"auto":"smooth"})}
@@ -532,7 +523,7 @@ tl.addEventListener("click",function(e){if(moved){e.preventDefault();e.stopPropa
   rv.addEventListener("pointerenter",at);rv.addEventListener("pointermove",at);
   rv.addEventListener("pointerleave",function(){tr=0;go()});
 })();
-size();applyFilter();updatePlayhead();
+size();applyFilter();
 })();
 </script>
 <script src="edit.js"></script>

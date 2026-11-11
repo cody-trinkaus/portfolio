@@ -34,7 +34,7 @@ a{color:inherit}
 .facts dt{font:500 11px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
 .facts dd{margin:0;font-size:15px;line-height:1.45}
 .cover{margin-top:34px}
-.frame{border:1px solid var(--line-strong);background:var(--paper);display:block;padding:0;width:100%;cursor:zoom-in;text-shadow:none}
+.frame{display:block;padding:0;width:100%;cursor:zoom-in;text-shadow:none}
 .frame img{width:100%}
 .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:0 56px;padding-block:24px 40px}
 .toc{display:none}
