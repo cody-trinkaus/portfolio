@@ -34,7 +34,7 @@ a{color:inherit}
 .facts dt{font:500 11px/1.5 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:4px}
 .facts dd{margin:0;font-size:15px;line-height:1.45}
 .cover{margin-top:34px}
-.frame{display:block;padding:0;width:100%;cursor:zoom-in;text-shadow:none}
+.frame{display:block;padding:0;width:100%;border:0;background:none;appearance:none;cursor:zoom-in;text-shadow:none}
 .frame img{width:100%}
 .layout{display:grid;grid-template-columns:minmax(0,1fr);gap:0 56px;padding-block:24px 40px}
 .toc{display:none}
@@ -109,9 +109,9 @@ dialog::backdrop{background:rgba(5,12,10,.86)}
 dialog img{max-width:96vw;max-height:92vh;width:auto;height:auto;background:var(--paper)}
 dialog button{position:absolute;right:0;top:-40px;background:none;border:0;color:#fff;font:500 12px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;cursor:pointer;text-shadow:none}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-.cover img{max-height:68vh;object-fit:contain;margin-inline:auto}
+.cover img{max-height:68vh;object-fit:contain;object-position:left;margin-inline:0}
 figcaption a{color:var(--ink)}
-article .frame img{max-height:78vh;object-fit:contain;margin-inline:auto}
+article .frame img{max-height:78vh;object-fit:contain;object-position:left;margin-inline:0}
 article .gallery .frame img{max-height:none}
 
 /* ---------- status badge (in-progress case studies) ---------- */
