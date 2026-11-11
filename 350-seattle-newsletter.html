@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>350 Seattle Newsletter · Cody Trinkaus</title>
+<meta name="description" content="Case study: a grassroots climate org's newsletter system, redesigned from research as a UW capstone and now being rebuilt, as an independent contractor, to run without a communications director. In progress.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<canvas id="terrain" aria-hidden="true"></canvas>
+<canvas id="tracks" aria-hidden="true"></canvas>
+<header class="bar g"><a class="brand" href="index.html">C. Trinkaus</a><a href="index.html#work">← Back to timeline</a></header>
+<main>
+<section class="hero g">
+  <p class="mono" style="margin:0">Case study · El. Fall 2026 · Service Design</p>
+  <h1>350 Seattle Newsletter</h1>
+  <p class="sub">A grassroots climate org's newsletter system, redesigned from research and now being rebuilt to run without a communications director.</p>
+  <p class="status-badge"><i aria-hidden="true"></i>In progress · implementation underway, Nov–Dec 2026</p>
+  <p class="mono" style="margin:10px 0 0">Last updated November 11, 2026</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>UX researcher &amp; designer (capstone, team of four) → independent contractor and sole implementer</dd></div>
+    <div><dt>Timeline</dt><dd>Spring 2026 capstone; implementation Nov–Dec 2026</dd></div>
+    <div><dt>Methods</dt><dd>Field study, interviews, CSQ survey, in-vivo coding, affinity mapping, co-design, journey mapping, service blueprinting, prototyping</dd></div>
+    <div><dt>Tools</dt><dd>Figma, Google Forms/Sheets, Google Apps Script, Claude API, WordPress, EveryAction CRM</dd></div>
+  </dl>
+  <button type="button" class="frame cover" aria-label="Enlarge image" style="margin-top:28px"><img src="assets/350newsletter/hero-newsletter.png" width="1600" height="1137" alt="The 350 Seattle Newsletter prototype: masthead and the start of the interactive News Board tile grid"></button>
+</section>
+<div class="layout g">
+  <nav class="toc" aria-label="Contents"><h2>Contents</h2><ol>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#context">Context</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#synthesis">Synthesis</a></li>
+    <li><a href="#definition">Definition</a></li>
+    <li><a href="#design">Key Decisions</a></li>
+    <li><a href="#outcome">The Capstone Outcome</a></li>
+    <li><a href="#pivot">The Pivot</a></li>
+    <li><a href="#status">Current Status</a></li>
+    <li><a href="#measures">How I'll Know It's Working</a></li>
+    <li><a href="#reflection">Reflection So Far</a></li>
+    <li><a href="#credits">Team &amp; Credits</a></li>
+  </ol></nav>
+  <article>
+
+<section id="tldr"><h2><span class="n mono">Section 01</span>TL;DR</h2>
+<p>350 Seattle's leadership named internal communication as its biggest unsolved problem. Our research traced it to one gap: members have no shared, low-effort way to see what the organization is doing, who is doing it, and how to get involved. We redesigned the newsletter, the org's most trusted channel, into a submission form, an interactive news board and a companion podcast. When the communications director role was eliminated, I took on a contract to rebuild the system so it no longer depends on one person, and I'm implementing it now.</p>
+</section>
+
+<section id="context"><h2><span class="n mono">Section 02</span>Context</h2>
+<ul class="list">
+<li>350 Seattle is a grassroots, non-hierarchical climate justice organization: 8 staff collective members, 9+ teams and campaigns, thousands of supporters. Coordination runs on informal networks and the goodwill of volunteers who are already stretched thin.</li>
+<li>After COVID, the in-person, word-of-mouth channels gave way to asynchronous tools, and communication never adapted as the org added paid staff and team leads.</li>
+<li>The newsletter had the <b>lowest unsubscribe rate of any 350 channel</b> and was the <b>only email type that consistently generated donations</b>. So we redesigned within it rather than replacing it.</li>
+</ul>
+<blockquote>"How might we use existing streams of communication at 350 Seattle to intervene creatively in support of team-to-team understanding?"<cite>Guiding design question</cite></blockquote>
+</section>
+
+<section id="research"><h2><span class="n mono">Section 03</span>Research</h2>
+<div class="stats"><span>8 semi-structured interviews</span><span>17 survey participants</span><span>3 field observations</span><span>7 thematic pain points</span></div>
+<p>Interviews ran 45–60 minutes with five staff, three volunteers and one team lead, recruited by snowball sampling. Field observations covered a Policy Action Zoom meeting, a volunteer-pathways discussion, and Climate Community Night, including sitting in on New Member Orientation to feel the onboarding experience firsthand.</p>
+<h4>Horizontal communication scored lowest, for every role</h4>
+<p>We used a reduced Communication Satisfaction Questionnaire, adapted from Fields (2002), rating five dimensions — Communication Climate, Supervisory Communication, Horizontal &amp; Informal Communication, Organizational Integration, and Media Quality — on a 1–7 scale. Team leads were most satisfied, then volunteers, then staff. But across every role, horizontal communication — communication across teams — scored the lowest. That confirmed cross-team invisibility as the core issue, not a symptom, and pointed the design squarely at it.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/350newsletter/survey-table.png" width="1004" height="612" alt="Table of Communication Satisfaction Questionnaire scores for four horizontal-communication items — horizontal communication free-flowing, informal communication accurate, grapevine activity, and coworker communication effective — broken out by staff, team lead and volunteer roles. Staff and volunteers scored consistently lower than team leads on every item." loading="lazy"></button>
+<figcaption>Horizontal communication, average score (1–7). Team leads scored highest on every item; the gap widens lower in the org.</figcaption></figure>
+<blockquote>"People don't actually know the other people in the organization or even what other teams exist."<cite>Participant 8</cite></blockquote>
+<h4>A deliberate, critical use of AI</h4>
+<p>We in-vivo coded our interviews so our findings stayed tied to participants' own words. When we asked Claude to check transcripts for anything we'd missed, its output stayed grounded in what people actually said, which guarded against hallucination.</p>
+</section>
+
+<section id="synthesis"><h2><span class="n mono">Section 04</span>Synthesis</h2>
+<h4>Seven thematic pain points</h4>
+<ul class="list">
+<li><b>Teams operate in silos:</b> little awareness of what other teams do; collaboration only via pre-existing relationships.</li>
+<li><b>Limited capacity:</b> past coordination efforts collapsed from lack of bandwidth, not bad ideas.</li>
+<li><b>Onboarding failures:</b> joining is exciting but overwhelming, with no consistent pathway across teams.</li>
+<li><b>Desire for a central hub:</b> information is fragmented across Signal, Slack, email, Zoom and Docs.</li>
+<li><b>In-person as irreplaceable:</b> digital tools supplement relationships; they don't substitute for them.</li>
+<li><b>Implicit norms:</b> no documented, org-wide norms for sharing information; each team improvises.</li>
+<li><b>Relational trust:</b> people don't communicate across teams largely because they don't know each other.</li>
+</ul>
+<h4>Co-design: Climate Community Night</h4>
+<p>We asked participants to draw and write their answer to: <i>"If there was one place to find all active projects at 350, what would it look like?"</i> Four themes emerged: <b>centralized info</b> (a single, low-effort place to see active projects, teams, contacts and ways to get involved), <b>community beyond tasks</b> (rebuilding the informal connection lost since the pandemic), <b>cross-team fluidity</b> (discovering other teams and finding a real foothold in them, not a static directory), and <b>personality &amp; energy</b> (members want 350 to feel "fun," "silly" and "warm" — culture, not just logistics).</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/350newsletter/codesign-poster.jpg" width="1558" height="510" alt="Large paper poster from the co-design exercise at Climate Community Night, covered in handwritten and sticky-note responses to prompts like 'what should it include' and 'how would it make you feel,' including ideas like trash art, team reels, and spinning a wheel to select a random project." loading="lazy"></button>
+<figcaption>Co-design poster from Climate Community Night.</figcaption></figure>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/350newsletter/ecosystem-map.jpg" width="2000" height="1500" alt="Whiteboard photo of the team's ecosystem map from ideation, with defined pain points listed at left and branching diagrams for ideas like Redesign Newsletter, Merch, Open 350 Creative Space and Community Event, using squares for pain points, circles for touchpoints and triangles for concerns." loading="lazy"></button>
+<figcaption>A modified ecosystem map: pain points in squares, touchpoints in circles, concerns in triangles, connected ideas in matching colors.</figcaption></figure>
+</section>
+
+<section id="definition"><h2><span class="n mono">Section 05</span>Definition</h2>
+<p>We practiced participatory design with the communications director, looping him into the process for feedback, and later brought in the executive director and another staff contributor. We weren't able to recruit a volunteer, but every member of our design team was also a newsletter reader, so that stakeholder group was covered from inside the team.</p>
+<h4>Stakeholder journeys</h4>
+<div class="cols2">
+<div><h5>Communications director</h5><p><b>Key pain point:</b> a 4–6 hour process consolidating inconsistent submissions into one voice; staff are late, and prioritization creates an unintended hierarchy.</p><p><b>Opportunity:</b> a single-voice resource; one place for submissions; a better solution for information hierarchy.</p></div>
+<div><h5>Reader</h5><p><b>Key pain point:</b> dense content and inconsistent formatting cause information overload; most readers engage with only the first item or two.</p><p><b>Opportunity:</b> keep content concise and scannable; organize sections consistently; clear, even formatting.</p></div>
+<div><h5>Contributor</h5><p><b>Key pain point:</b> no submission format or length guidance; negotiating a spot is fraught, with no feedback on whether a contribution mattered.</p><p><b>Opportunity:</b> a simple submission template with writing guidance; report impact back to contributors.</p></div>
+</div>
+<h4>Design requirements</h4>
+<div class="cols2">
+<div><h5>Requirements to fix</h5><ul class="list">
+<li>Provide equitable visibility for team activity; make prioritization transparent</li>
+<li>Increase publishing cadence beyond once a month</li>
+<li>Streamline submissions into a unified voice and consistent layout</li>
+<li>Strengthen cross-org understanding of teams' work</li>
+<li>Give contributors direct feedback on submissions</li>
+<li>Encourage readers to explore work across teams</li>
+<li>Deliver concise updates, clear CTAs, discoverable events</li>
+</ul></div>
+<div><h5>Requirements to keep</h5><ul class="list">
+<li>Solicit content from every part of the organization</li>
+<li>Keep content curated and approved by the communications director</li>
+<li>Serve as a consistent home for current happenings</li>
+<li>Function as a system for sharing on a set cadence</li>
+</ul></div>
+</div>
+<p><b>Guiding principles:</b> reduce effort to stay informed · consolidate rather than add channels · integrate with existing channels · stay readable and non-pestering.</p>
+</section>
+
+<section id="design"><h2><span class="n mono">Section 06</span>Key Decisions</h2>
+<div class="req"><h4>1. Where to intervene</h4><p>Alternatives considered: redesigning Climate Community Night, a dedicated outreach team, merch, a lending library, a new event.</p><p><b>What decided it: capacity.</b> Past coordination efforts collapsed from lack of bandwidth, so we chose an avenue 350 already maintained rather than adding a new channel.</p></div>
+<div class="req"><h4>2. Newsletter over bulletin board, app or event</h4><p>Alternatives considered: a digital or physical bulletin board, a team-updates app, a standalone event — each another destination to maintain.</p><p><b>What decided it: trust.</b> The newsletter had the lowest unsubscribe rate of any channel and reliably generated donations, so we redesigned within it rather than replacing it.</p></div>
+<div class="req"><h4>3. Three features, not one</h4><p>A single change, like reformatting alone, would fix readability but leave submission burden and reader fatigue untouched.</p><p><b>What decided it: stakeholders.</b> Each pain point mapped to a different stakeholder — the form, the news board and the podcast together balanced clarity, representation and engagement.</p></div>
+</section>
+
+<section id="outcome"><h2><span class="n mono">Section 07</span>The Capstone Outcome</h2>
+<p>The capstone converged on a redesigned newsletter system built on three interconnected features, each tied to a stakeholder's pain point.</p>
+<h4>1. Interactive news board</h4>
+<p>A visual collage where every team got an equally prominent tile that expanded into a fuller update — addressing reader overload and the unintended hierarchy of top-of-email placement. It included an embedded calendar and an archive of past issues.</p>
+<h4>2. Structured submission form</h4>
+<p>A Google Form that replaced ad hoc email and Slack submissions, so content arrived close to publication-ready and gave contributors a consistent template to work from.</p>
+<h4>3. Companion podcast</h4>
+<p>Solo-host and team-interview formats, for members who wanted a synchronous way to connect with the organization.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/350newsletter/news-board-mobile.png" width="1400" height="1415" alt="Mobile prototype of the News Board: a grid of tiles for different 350 teams and events, each a different color and shape, representing the interactive collage layout." loading="lazy"></button>
+<figcaption>The News Board, as prototyped: every team gets an equally prominent tile.</figcaption></figure>
+<h5>A few tiles, live</h5>
+<p>The real board uses native <code>&lt;details&gt;</code> elements so tiles expand with no JavaScript — try it below, built with 350's own brand colors.</p>
+<div class="board-mini">
+<details><summary>Civic Action Team</summary><div class="body">The Civic Action Team (CAT) is wrapping up its 10th year! Join online on Monday, April 20th from 6–7pm to celebrate.</div></details>
+<details><summary>Climate Community Night</summary><div class="body">You and yours are invited to come together and chat about a new season of organizing possibilities — new volunteer orientation, a potluck, and mini-skills training.</div></details>
+<details class="podcast"><summary>350 Seattle Podcast</summary><div class="body">Solo-host and team-interview formats for members who want a synchronous way to connect with the organization. <a href="https://www.youtube.com/watch?v=pddN1cyJSMY" target="_blank" rel="noopener">Listen to the pilot ↗</a></div></details>
+</div>
+<figure><div class="gallery">
+<button type="button" class="frame" style="--ar:0.471" aria-label="Enlarge image"><img src="assets/350newsletter/submission-form-preview.png" width="754" height="1600" alt="Screens of the Google Form submission flow: intake instructions, a preview of the News Board layout, and an example of one tile expanded into its full text." loading="lazy"></button>
+<button type="button" class="frame" style="--ar:0.508" aria-label="Enlarge image"><img src="assets/350newsletter/submission-form-questions.png" width="670" height="1318" alt="The structured submission form's specific questions: team name, point of contact, upcoming events, a file upload, and a description prompt with guiding sub-questions." loading="lazy"></button>
+</div><figcaption>The submission form: intake, a preview of the board, and the specific questions it asks.</figcaption></figure>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/350newsletter/podcast-cover.png" width="1972" height="1100" alt="350 Seattle Podcast cover art: a microphone icon in the brand's blue, with three evergreen trees, beside the wordmark '350 Seattle Podcast.'" loading="lazy"></button>
+<figcaption>Podcast cover art, from the capstone's brand guidelines.</figcaption></figure>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/350newsletter/service-blueprint.png" width="2400" height="1511" alt="Service blueprint mapping the newsletter across six journey phases — discovery, subscription, finalizing, reading, interacting and following through — with reader actions, front-stage actions, back-stage actions and supporting systems listed in each column." loading="lazy"></button>
+<figcaption>Service blueprint: the newsletter's full system, front-stage and back-stage.</figcaption></figure>
+<h4>Links</h4>
+<ul class="list">
+<li><a href="https://www.figma.com/proto/zrUy1RkveQjTvT2sU4E3Fm/Newsletter?node-id=176-162&amp;p=f&amp;t=phozh2sze4Exzd97-1&amp;scaling=scale-down&amp;content-scaling=fixed&amp;page-id=110%3A154&amp;starting-point-node-id=176%3A162&amp;show-proto-sidebar=1" target="_blank" rel="noopener">Figma prototype ↗</a></li>
+<li><a href="https://docs.google.com/forms/d/e/1FAIpQLSfkWz8cqsqFTWxUcWWide7QIlOhWbBqMu3u5bi7LQZqhHq3ew/viewform" target="_blank" rel="noopener">News submission form ↗</a></li>
+<li><a href="https://www.youtube.com/watch?v=pddN1cyJSMY" target="_blank" rel="noopener">Podcast pilot ↗</a></li>
+<li><a href="https://www.youtube.com/watch?v=aGFt9Ov06KI" target="_blank" rel="noopener">Capstone video ↗</a></li>
+</ul>
+<h4>The rollout plan we agreed on with the communications director</h4>
+<ol class="list">
+<li>Add the news board and move to a biweekly cadence</li>
+<li>Launch the podcast</li>
+<li>Fully adopt the new layout and submission form</li>
+</ol>
+</section>
+
+<section id="pivot"><h2><span class="n mono">Section 08</span>The Pivot</h2>
+<h4>What happened</h4>
+<p>After the capstone, 350 Seattle had to eliminate its communications director position in layoffs. The whole design assumed that person would curate submissions, keep one voice, and send each issue. The process book had already flagged 350's limited technical capacity, and EveryAction's limits, as the biggest risks to the design. Now the person the system depended on was gone.</p>
+<h4>What I did</h4>
+<p>I signed an independent contractor agreement with 350 Seattle (Nov 5 – Dec 31, 2026) to implement the system myself. The design question shifted from <i>"how do we make the comms director's job easier?"</i> to <i>"how does this run with no comms director, maintained by volunteers who aren't developers?"</i></p>
+<h4>How the design changed</h4>
+<table class="compare">
+<caption>Capstone plan vs. implementation now</caption>
+<thead><tr><th scope="col">Capstone plan</th><th scope="col">Implementation now</th></tr></thead>
+<tbody>
+<tr><td data-label="Capstone plan">Comms director chases late submissions</td><td data-label="Implementation now">Automated reminders to teams that haven't submitted, from a roster in the Sheet</td></tr>
+<tr><td data-label="Capstone plan">Comms director rewrites submissions into one voice (4–6 hrs)</td><td data-label="Implementation now">Submissions validated on intake — contributors are emailed automatically if something is missing or too long — then AI-drafted into a house voice with the Claude API, for a human to review and approve</td></tr>
+<tr><td data-label="Capstone plan">Comms director lays out the issue</td><td data-label="Implementation now">A custom newsletter-builder site compiles approved content into the news board in the brand style</td></tr>
+<tr><td data-label="Capstone plan">Comms director approves and sends</td><td data-label="Implementation now">A volunteer does one final check of the compiled board</td></tr>
+<tr><td data-label="Capstone plan">Newsletter built in EveryAction's email editor</td><td data-label="Implementation now">EveryAction can't produce the news board aesthetic, and Gmail strips much of the CSS anyway — so the interactive board lives on 350's WordPress site, and the EveryAction email carries a short summary plus a clickable preview image linking to it</td></tr>
+<tr><td data-label="Capstone plan">Archive maintained by hand</td><td data-label="Implementation now">Publishing to WordPress is automated through its REST API, so each issue becomes a post and the archive builds itself</td></tr>
+</tbody>
+</table>
+<h4>The ten-step workflow</h4>
+<ol class="workflow">
+<li class="auto"><span class="i">01</span>Reminders go out<span class="tag">Automated</span></li>
+<li><span class="i">02</span>Teams submit through the form<span class="tag">Volunteer</span></li>
+<li class="auto"><span class="i">03</span>AI drafts blurbs and the email summary<span class="tag">Automated</span></li>
+<li><span class="i">04</span>Volunteer reviews and approves<span class="tag">Volunteer</span></li>
+<li class="auto"><span class="i">05</span>Builder site compiles the news board<span class="tag">Automated</span></li>
+<li><span class="i">06</span>Volunteer final check<span class="tag">Volunteer</span></li>
+<li class="auto"><span class="i">07</span>Publish to WordPress<span class="tag">Automated</span></li>
+<li><span class="i">08</span>Volunteer exports the preview image<span class="tag">Volunteer</span></li>
+<li><span class="i">09</span>Volunteer builds and sends the email in EveryAction — summary, image, link<span class="tag">Volunteer</span></li>
+<li><span class="i">10</span>Row marked Sent<span class="tag">Volunteer</span></li>
+</ol>
+<p class="note">Automation takes the rote work; the volunteer keeps the judgment calls. Volunteers review, approve, check and send.</p>
+<h4>Constraints I designed around</h4>
+<ul class="list">
+<li><b>No developer on staff:</b> every setting a volunteer might need to change lives in one config file, plus a custom menu in the Sheet and a plain-language README.</li>
+<li><b>EveryAction stays the system of record</b> for the list and unsubscribes, so there's no list sync and no compliance risk.</li>
+<li><b>WordPress can strip scripts from posts:</b> the tiles expand with native <code>&lt;details&gt;</code> elements and need no JavaScript.</li>
+<li><b>Accessibility:</b> an image-based email is invisible to screen readers and to clients that block images. So the email has descriptive alt text, a text summary, and a plain "view in browser" link.</li>
+</ul>
+</section>
+
+<section id="status"><h2><span class="n mono">Section 09</span>Current Status</h2>
+<ol class="phase-track">
+<li class="done"><span class="mono">01</span><b>Research</b></li>
+<li class="done"><span class="mono">02</span><b>Synthesis</b></li>
+<li class="done"><span class="mono">03</span><b>Definition</b></li>
+<li class="done"><span class="mono">04</span><b>Design</b></li>
+<li class="done"><span class="mono">05</span><b>Pivot</b></li>
+<li class="now" aria-current="step"><span class="mono">06</span><b>Implementation</b></li>
+<li class="upcoming"><span class="mono">07</span><b>Launch &amp; evaluation</b></li>
+</ol>
+<!-- EDITABLE: update the three lists below as work moves. No layout changes needed. -->
+<div class="cols2">
+<div><h5>Done</h5><ul class="list">
+<li>Capstone research, design and prototype (Spring 2026)</li>
+<li>Contract signed (Nov 5, 2026)</li>
+<li>Automation workflow designed; Apps Script project scaffolded <span class="mono">TODO: Cody to confirm</span></li>
+<li>Workflow presented to 350 <span class="mono">TODO: Cody to confirm</span></li>
+</ul></div>
+<div><h5>In progress</h5><ul class="list">
+<li>Building the intake, reminder and AI-drafting automations <span class="mono">TODO: Cody to confirm</span></li>
+<li>Building the newsletter-builder site <span class="mono">TODO: Cody to confirm</span></li>
+</ul></div>
+<div><h5>Up next</h5><ul class="list">
+<li>WordPress publishing automation</li>
+<li>First issue in the new format</li>
+<li>Volunteer handoff and documentation</li>
+<li>Podcast (deferred phase from the original rollout)</li>
+</ul></div>
+</div>
+<!-- END EDITABLE -->
+</section>
+
+<section id="measures"><h2><span class="n mono">Section 10</span>How I'll Know It's Working</h2>
+<p>These are planned measures, not results — nothing below has been tracked yet.</p>
+<ul class="list">
+<li>Time to produce an issue (baseline: 4–6 hours of communications-director work)</li>
+<li>Share of teams submitting each cycle</li>
+<li>Click-through from the email to the full board</li>
+<li>Tile-level engagement across teams, compared with the old top-of-email drop-off</li>
+<li>Unsubscribe rate holding steady</li>
+<li>Whether volunteers can run an issue without me</li>
+</ul>
+</section>
+
+<section id="reflection"><h2><span class="n mono">Section 11</span>Reflection So Far</h2>
+<p class="note">TODO: Cody to revise in my voice — the draft below is a starting point, not final copy.</p>
+<p>Losing the comms director put a principle from our own research to the test: past efforts at 350 collapsed from a lack of capacity. A design that depends on one person risks repeating that pattern, and I only recognized how real that risk was once I was the one left holding the system.</p>
+<p>"Consolidate rather than add" held up. Keeping EveryAction and WordPress instead of introducing new tools is what made the pivot workable at all — there was no new platform to teach anyone, just a new way of filling the ones they already use.</p>
+<p>Moving from designer to implementer changed what "done" means to me. A prototype persuades people that an idea could work. A system has to survive handoff — to volunteers, to time, to the org forgetting I was ever involved.</p>
+<p>The work isn't finished, and I don't want this page to read like it is. There's no launch yet, no evaluation, and the first real test is whether a volunteer who isn't me can run an issue.</p>
+</section>
+
+<section id="credits"><h2><span class="n mono">Section 12</span>Team &amp; Credits</h2>
+<p>The capstone was a collaboration with <b>Olivia Cowan, Ruby Steiner and Tucker Swarens</b> (UW HCDE, 2026). All four of us worked on every part of it — research, synthesis, definition and design.</p>
+<p>The post-capstone implementation documented in the Pivot section is my own independent contract work, separate from the capstone team.</p>
+<p>Thank you to 350 Seattle's staff and community for the time, trust and feedback that made this project possible.</p>
+</section>
+
+  </article>
+</div>
+</main>
+<footer class="g">
+  <nav class="pager" aria-label="More work">
+    <a href="index.html#work"><span class="mono">All projects</span><b>Timeline</b></a>
+    <a href="starting-point.html"><span class="mono">Next case study · Service Design · 2026</span><b>Starting Point</b></a>
+  </nav>
+  <p class="mono">© 2026 Cody Trinkaus · <a href="mailto:ctrink@uw.edu">ctrink@uw.edu</a> · <a href="https://linkedin.com/in/codytrinkaus" target="_blank" rel="noopener">LinkedIn</a></p>
+</footer>
+<dialog id="zoom" aria-label="Enlarged image"><button type="button" autofocus>Close ✕</button><img alt=""></dialog>
+<script src="case.js"></script>
+<script src="edit.js"></script>
+</body>
+</html>

@@ -113,3 +113,53 @@ dialog button{position:absolute;right:0;top:-40px;background:none;border:0;color
 figcaption a{color:var(--ink)}
 article .frame img{max-height:78vh;object-fit:contain;margin-inline:auto}
 article .gallery .frame img{max-height:none}
+
+/* ---------- status badge (in-progress case studies) ---------- */
+.status-badge{display:inline-flex;align-items:center;gap:8px;margin:14px 0 0;padding:7px 14px;border:1.5px solid var(--accent);border-radius:999px;font:500 11.5px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent-text)}
+.status-badge i{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none}
+
+/* ---------- phase timeline ---------- */
+.phase-track{display:flex;flex-wrap:wrap;gap:0;margin:22px 0 0;padding:0;list-style:none}
+.phase-track li{position:relative;flex:1 1 130px;padding:20px 14px 2px 2px;font-size:12.5px;color:var(--ink-soft)}
+.phase-track li::before{content:"";position:absolute;top:6px;left:0;right:10px;height:1.5px;background:var(--line-strong)}
+.phase-track li::after{content:"";position:absolute;top:1px;left:0;width:11px;height:11px;border-radius:50%;background:var(--ground);border:2px solid var(--line-strong)}
+.phase-track li.done{color:var(--ink)}
+.phase-track li.done::after{background:var(--ink);border-color:var(--ink)}
+.phase-track li.now{font-weight:700;color:var(--ink)}
+.phase-track li.now::after{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+.phase-track li.upcoming::before{background-image:repeating-linear-gradient(90deg,var(--line-strong) 0 4px,transparent 4px 9px);background-color:transparent}
+.phase-track b{display:block;margin-top:2px;color:inherit}
+
+/* ---------- responsive compare table (stacks to cards under 640px) ---------- */
+table.compare{width:100%;border-collapse:collapse;margin:22px 0;font-size:14.5px}
+table.compare caption{text-align:left;margin:0 0 10px;color:var(--ink-soft);font-size:13px}
+table.compare th,table.compare td{text-align:left;vertical-align:top;padding:12px 16px;border-bottom:1px solid var(--line)}
+table.compare thead th{font:500 11px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1.5px solid var(--ink)}
+table.compare tbody tr:nth-child(odd){background:color-mix(in srgb,var(--paper) 94%,transparent)}
+@media(max-width:640px){
+  table.compare thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  table.compare,table.compare tbody,table.compare tr,table.compare td{display:block;width:100%}
+  table.compare tr{margin-bottom:14px;border:1px solid var(--line-strong)}
+  table.compare td{border-bottom:1px solid var(--line);padding:10px 14px}
+  table.compare td:last-child{border-bottom:0}
+  table.compare td::before{content:attr(data-label);display:block;margin-bottom:4px;font:500 10.5px/1.4 var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
+}
+
+/* ---------- workflow steps (automated vs volunteer) ---------- */
+ol.workflow{list-style:none;margin:20px 0;padding:0;display:grid;gap:10px}
+ol.workflow li{display:flex;align-items:baseline;gap:14px;padding:12px 16px;border-left:3px solid var(--line-strong);background:color-mix(in srgb,var(--paper) 94%,transparent)}
+ol.workflow li.auto{border-left-color:var(--accent)}
+ol.workflow li .i{font:700 12px/1 var(--mono);color:var(--ink-soft);flex:none;width:1.6em}
+ol.workflow li .tag{margin-left:auto;flex:none;font:500 10px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--line-strong);color:var(--ink-soft);white-space:nowrap}
+ol.workflow li.auto .tag{color:var(--accent-text);border-color:var(--accent)}
+
+/* ---------- mini news-board demo: 350 Seattle's own brand colors, scoped to this component only ---------- */
+.board-mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:18px 0;--b-ocean:#4254B0;--b-ocean-text:#2F3C82;--b-air:#005D93;--b-fog:#E8E6E0;--b-lichen:#D6E4DA;--b-ink:#000}
+.board-mini details{border:1px solid var(--line-strong);background:var(--b-fog);color:var(--b-ink);overflow:hidden}
+.board-mini summary{list-style:none;cursor:pointer;padding:14px;font:700 1rem/1.2 var(--display);font-stretch:62%;text-transform:uppercase;color:#fff;background:var(--b-ocean)}
+.board-mini summary::-webkit-details-marker{display:none}
+.board-mini summary:hover,.board-mini summary:focus-visible{background:var(--b-ocean-text)}
+.board-mini .body{padding:14px;font-size:13.5px;color:var(--b-ink)}
+.board-mini .body a{color:var(--b-air)}
+.board-mini details.podcast summary{background:var(--b-lichen);color:var(--b-ink)}
+.board-mini details.podcast summary:hover,.board-mini details.podcast summary:focus-visible{background:color-mix(in srgb,var(--b-lichen) 70%,#000)}
