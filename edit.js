@@ -61,6 +61,12 @@ function cleanHTML(){
   var c=document.documentElement.cloneNode(true);
   function q(s){return [].slice.call(c.querySelectorAll(s))}
   q("#pw,#pwStyle").forEach(function(e){e.remove()});
+  /* browser extensions inject their own elements, styles and attributes into the live page; keep them out of the saved file */
+  q("*").forEach(function(e){if(e.tagName.indexOf("-")>0)e.remove()});
+  q("style").forEach(function(e){if(!e.parentNode)return;var t=e.textContent||"";
+    if(e.attributes.length||/^:is\(\[id\*=|^@property --tw-|^\s*@font-face/.test(t))e.remove()});
+  q("[popover],[id*='extension-root'],[id*='extension']").forEach(function(e){e.remove()});
+  [].slice.call(c.attributes).forEach(function(a){if(a.name!=="lang")c.removeAttribute(a.name)});
   q("[contenteditable]").forEach(function(e){e.removeAttribute("contenteditable")});
   c.classList.remove("editing");if(!c.getAttribute("class"))c.removeAttribute("class");
   q("canvas").forEach(function(e){e.removeAttribute("width");e.removeAttribute("height")});
