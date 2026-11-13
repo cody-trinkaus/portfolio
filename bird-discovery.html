@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bird Discovery · Cody Trinkaus</title>
+<meta name="description" content="Case study: a Raspberry Pi bird identifier built with AI as a creative partner and primary coder, iterated from a detection dashboard to a habitat-health app, while reflecting on five design competencies.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="case.css">
+</head>
+<body>
+<canvas id="terrain" aria-hidden="true"></canvas>
+<canvas id="tracks" aria-hidden="true"></canvas>
+<header class="bar g"><a class="brand" href="index.html">C. Trinkaus</a><a href="index.html#work">← Back to timeline</a></header>
+<main>
+<section class="hero g">
+  <p class="mono" style="margin:0">Case study · El. Summer 2025 · Physical Computing</p>
+  <h1>Bird Discovery</h1>
+  <p class="sub">A Raspberry Pi bird identifier built with AI as my creative partner and primary coder. Over four iterations it went from a detection dashboard to an app about the health of the habitat outside your window.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>Designer, builder and reflective research participant</dd></div>
+    <div><dt>Context</dt><dd>Summer research on AI-assisted learning and reflection in design education, University of Washington</dd></div>
+    <div><dt>Time</dt><dd>Two and a half months, Summer 2025, solo</dd></div>
+    <div><dt>Stack</dt><dd>Raspberry Pi, webcam, Python, OpenCV, random forest classifier, Flask, Anthropic API</dd></div>
+  </dl>
+  <div class="stats"><span>4 iterations</span><span>5 design competencies</span><span>3 reflections per competency</span><span>1 process log</span></div>
+  <button type="button" class="frame cover" aria-label="Enlarge image"><img src="assets/birdid/06-discovery-collection.png" width="1600" height="900" alt="Pacific Northwest Bird Discovery app showing a collection grid of discovered species: 7 discovered of 24, 29% complete"></button>
+</section>
+<div class="layout g">
+  <nav class="toc" aria-label="Contents"><h2>Contents</h2><ol>
+    <li><a href="#setup">The Research Setup</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#seeing">01 · Seeing Birds</a></li>
+    <li><a href="#stories">02 · Bird Stories</a></li>
+    <li><a href="#flockr">03 · Flockr</a></li>
+    <li><a href="#discovery">04 · Bird Discovery</a></li>
+    <li><a href="#reflection">Reflection</a></li>
+  </ol></nav>
+  <article>
+
+<section id="setup"><h2><span class="n mono">Section 01</span>The Research Setup</h2>
+<p>In summer 2025 I joined research on whether AI can help with learning, reflection and metacognition in design education. My role was the reflective guinea pig. I picked five design competencies to grow, then explored them by building a computer vision bird identification tool, with AI as both creative partner and primary coder. I wrote three reflections on each competency over the summer and a final reflection on the whole project.</p>
+<p>The bird identifier was the vehicle and the competencies were the point. Several of my definitions changed as I worked, and those changes are the clearest record of what I learned:</p>
+<table class="compare">
+<caption>The five competencies, how my definitions changed, and how I practiced each</caption>
+<thead><tr><th>Competency</th><th>Where my definition ended up</th><th>How I practiced it</th></tr></thead>
+<tbody>
+<tr><td data-label="Competency"><b>Originality</b></td><td data-label="Where my definition ended up">The combination of concepts and practices to communicate an idea that is an authentic expression of my experiences and values, pushing the envelope of what's possible or conceivable.</td><td data-label="How I practiced it">Visited museums, listened to contemporary music, composed music, documented my process</td></tr>
+<tr><td data-label="Competency"><b>Physical computing</b></td><td data-label="Where my definition ended up">Started as systems that physically interact with <i>a user</i>. Ended as systems that interact with <i>the physical world</i> by processing data from sensors, video or other ways of digitizing it.</td><td data-label="How I practiced it">Prototyped with Arduino, set up the computer vision system, did a deep dive on model training</td></tr>
+<tr><td data-label="Competency"><b>Process awareness</b></td><td data-label="Where my definition ended up">Understanding, explaining and documenting the design process and how it fits project goals, reflecting on its effectiveness <i>and the project's impact</i> (added later).</td><td data-label="How I practiced it">Kept a process log, checked in with mentors about process</td></tr>
+<tr><td data-label="Competency"><b>Systems thinking</b></td><td data-label="Where my definition ended up">Understanding the interconnected social, political, theoretical and environmental systems in a design space <i>and their mental models</i> (added later), and designing with that awareness.</td><td data-label="How I practiced it">Read <i>Closing the Loop</i>, listened to the Cabrera Lab podcast, analyzed the project through a systems lens</td></tr>
+<tr><td data-label="Competency"><b>Storytelling</b></td><td data-label="Where my definition ended up">Conveying the context, planning, process and product of a project creatively, following the general shape of a narrative.</td><td data-label="How I practiced it">Read <i>Understanding Comics</i>, made a comic, told the project's story in my final reflection and presentation</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="process"><h2><span class="n mono">Section 02</span>Process</h2>
+<p>I started with a process log. It recorded failures and their fixes, systems-thinking epiphanies, general notes, and "process interrupts": reflections triggered by transitions between tasks or by random timers. The log opened with the questions that framed the work:</p>
+<blockquote>"We have entered a new era, akin to the transition of the industrial revolution … Should we even pursue this technology? Are there only certain applications that can bring positive change? … This is an opportunity to reinvent the wheel."<cite>Opening of my process log</cite></blockquote>
+<p>The plan ran in three stages: get computer vision and identification working, then build an interface, then build a relationship between the system and the person using it.</p>
+<ul class="phase-track">
+<li class="done">Iteration 1<b>Seeing birds</b>Detection dashboard</li>
+<li class="done">Iteration 2<b>Bird stories</b>AI-written story per bird</li>
+<li class="done">Iteration 3<b>Flockr</b>A mock bird dating site</li>
+<li class="done">Iteration 4<b>Bird Discovery</b>Habitat health</li>
+</ul>
+<h4>AI as primary coder</h4>
+<p style="margin-top:8px">AI wrote much of the code. I made sure I understood how it was organized and why it worked, and I did periodic deep dives into specific parts of the system: model training, computer vision and the interface. Writing that down mattered for the research too, because it pushed me to reflect on what originality means when you let AI write your code.</p>
+</section>
+
+<section id="seeing"><h2><span class="n mono">Iteration 01</span>Seeing Birds</h2>
+<p>The first version was a motion-activated computer vision system built from traditional techniques: pre-processing, feature extraction, dimensionality reduction and a random forest classifier. I chose that over deep learning because a Raspberry Pi has very little computing power.</p>
+<p>Even the lighter approach ran into hard limits:</p>
+<ul class="list">
+<li><b>Data:</b> I couldn't scrape a dataset big enough to train it well. An API like iNaturalist would have been ideal, but it and other large bird databases weren't publicly available to me.</li>
+<li><b>Camera:</b> a 10 fps webcam made birds that were far away or in bad lighting impossible to recognize.</li>
+</ul>
+<p>To keep the concept moving, I added an adjustable confidence threshold so the system could recognize birds from photos and other objects. That let me build and test everything downstream by holding pictures of birds up to the camera.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/birdid/01-detection-system.png" width="1600" height="900" alt="Bird Identification System dashboard: live camera feed of Cody holding up a phone with a bird photo, detection status with FPS, recent detections with confidence percentages, and confidence threshold and cooldown sliders" loading="lazy"></button><figcaption>The detection dashboard: a live camera feed, recent detections with top guesses and confidence, and sliders for the confidence threshold and detection cooldown. Here I'm testing it with a bird photo on my phone.</figcaption></figure>
+</section>
+
+<section id="stories"><h2><span class="n mono">Iteration 02</span>Bird Stories</h2>
+<p>With identification working behind a basic interface, I moved to the relationship stage. Stories shape memory, learning and personal connection, so each time a bird was identified, the system used the Anthropic API to write a 200-word story about it. Non-migratory birds got stories about home and local ecosystems. Migratory birds got stories about travel and discovery.</p>
+<figure><button type="button" class="frame" aria-label="Enlarge image"><img src="assets/birdid/02-story-generator.png" width="1600" height="900" alt="Unstyled page showing a Northern Flicker detection with habitat, diet, nesting and status facts, followed by a generated story and a list of recent detections with story excerpts" loading="lazy"></button><figcaption>A Northern Flicker detection with species facts, its generated story and earlier detections below.</figcaption></figure>
+<p>This taught me how to wire AI-generated content into a live system. It also showed me the stories weren't worth reading: they were repetitive and unpleasant. If AI was going to tell people about the birds they saw, it should be in short facts, not long prose.</p>
+</section>
+
+<section id="flockr"><h2><span class="n mono">Iteration 03</span>Flockr</h2>
+<p>Brainstorming with Claude as a creative partner, I landed on Flockr, a mock bird dating site. For every bird identified, Flockr generates a Tinder-style profile with an age, a match percentage, a bio, stats, territory, interests and red flags, plus Pass and Love buttons. The goal was to teach people about birds in a way that was engaging and funny.</p>
+<figure><div class="gallery">
+<button type="button" class="frame" style="--ar:1.778" aria-label="Enlarge image"><img src="assets/birdid/03-flockr-home.png" width="1600" height="900" alt="Flockr home screen: AI-powered bird identification and dating, with Detection, Dating Profiles, History and Settings tabs and detection controls" loading="lazy"></button>
+<button type="button" class="frame" style="--ar:1.778" aria-label="Enlarge image"><img src="assets/birdid/04-flockr-profiles.png" width="1600" height="900" alt="Flockr dating profiles for a Dark-eyed Junco and two Northern Flickers, with match percentages, bios, stats and territory" loading="lazy"></button>
+<button type="button" class="frame" style="--ar:1.778" aria-label="Enlarge image"><img src="assets/birdid/05-flockr-red-flags.png" width="1600" height="900" alt="Flockr profiles scrolled to interests and red flags, such as 'May poop on your car occasionally', with Pass and Love buttons" loading="lazy"></button>
+</div><figcaption>Flockr's detection screen, bird profiles, and the interests and red flags further down each card ("May poop on your car occasionally").</figcaption></figure>
+<p>Flockr leaned hard into building a relationship (pun intended) between people and birds. But it was a fun gimmick more than an impactful technology.</p>
+</section>
+
+<section id="discovery"><h2><span class="n mono">Iteration 04</span>Bird Discovery</h2>
+<p>Looking for a more meaningful application, I thought about the complex systems that make up the natural world, and how they reach into our yards and shared spaces. Biodiversity is a key indicator of habitat health, so I shifted the app's focus from individual birds to species. The result was Pacific Northwest Bird Discovery.</p>
+<p>The app keeps a collection of the species you've discovered. From the number and variety of birds identified, it calculates a habitat health score and a biodiversity score, suggests habitat improvements and awards achievements. I kept the per-bird cards, rewritten as short, funny species facts: the lesson from Iteration 02.</p>
+<figure><div class="gallery">
+<button type="button" class="frame" style="--ar:1.778" aria-label="Enlarge image"><img src="assets/birdid/07-discovery-species-cards.png" width="1600" height="900" alt="Species cards for a Northern Flicker and Dark-eyed Juncos with size, call and song, a humorous description and what attracts them to your yard" loading="lazy"></button>
+<button type="button" class="frame" style="--ar:1.778" aria-label="Enlarge image"><img src="assets/birdid/08-discovery-habitat-score.png" width="1600" height="900" alt="Quick habitat tips and a conservation impact panel: 4 species supported, habitat health 54 of 100, biodiversity 60 of 100, and progress toward a Habitat Supporter milestone" loading="lazy"></button>
+</div><figcaption>Species cards with call, size and what draws each bird to your yard. Below: habitat tips, habitat health and biodiversity scores, and progress toward the next conservation milestone.</figcaption></figure>
+<p>The scores aren't a perfect measure of habitat health. With more research, and a vision system that could also recognize plants and water, they could become genuinely useful to anyone trying to improve habitat for birds.</p>
+</section>
+
+<section id="reflection"><h2><span class="n mono">Section 03</span>Reflection</h2>
+<p>Each iteration answered a question the one before it raised. The dashboard proved the Pi could see birds, if barely. The stories showed that AI content has to earn its place, and that short facts beat long prose. Flockr proved a relationship with birds could be fun before it was useful. Bird Discovery tried to make it useful by tying each sighting to the health of a system bigger than one bird.</p>
+<p>The biggest constraints were physical and practical: a slow camera, a small computer and no access to large bird datasets. Working around them, instead of waiting for better hardware, is what moved the concept forward. Leaning on AI to write code let me get further in one summer than I could have alone. Keeping a process log and doing deep dives kept that from turning into code I couldn't explain. And watching my competency definitions shift was the most concrete evidence I've had of my own learning: physical computing grew from interacting with a user to interacting with the world, and systems thinking grew to include the mental models inside a system.</p>
+<p>If I took it further, I'd start with the inputs: a better camera, a real dataset and a vision model that sees the whole habitat, not just the birds in it.</p>
+</section>
+
+  </article>
+</div>
+</main>
+<footer class="g">
+  <nav class="pager" aria-label="More work">
+    <a href="index.html#work"><span class="mono">All projects</span><b>Timeline</b></a>
+    <a href="mimosa.html"><span class="mono">Next case study · Physical Computing · 2025</span><b>Slow Engagement</b></a>
+  </nav>
+  <p class="mono">© 2026 Cody Trinkaus · <a href="mailto:ctrink@uw.edu">ctrink@uw.edu</a> · <a href="https://linkedin.com/in/codytrinkaus" target="_blank" rel="noopener">LinkedIn</a></p>
+</footer>
+<dialog id="zoom" aria-label="Enlarged image"><button type="button" autofocus>Close ✕</button><img alt=""></dialog>
+<script src="case.js"></script>
+<script src="edit.js"></script>
+</body>
+</html>
