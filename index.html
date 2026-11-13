@@ -277,8 +277,8 @@ button{font:inherit;color:inherit;cursor:pointer}
     <p>Looking for research, design and development work? Tell me about the terrain.</p>
     <a class="mail" href="mailto:ctrink@uw.edu">ctrink@uw.edu</a>
     <div class="margin-note mono">
-      <span class="scalebar"><i></i>0 · 1 · 2 yr</span>
-      <span>Contour interval 1 year</span>
+      <span class="scalebar"><i></i><span id="scaleTxt">0 · 6 · 12 mo</span></span>
+      <span id="interval">Contour interval ≈ 6 months · one station</span>
       <span>Projection: left to right, newest to oldesT</span>
     </div>
   </section>
@@ -386,6 +386,17 @@ function applyFilter(){
   fitTrack();
 }
 $("#stationTotal").textContent=P.length+" surveyed";
+
+/* footer scale: stations are evenly spaced, so one station spans the
+   average real time between "Now" and the oldest project */
+(function(){
+  var d=new Date(),nowY=d.getFullYear()+(d.getMonth()+d.getDate()/31)/12;
+  var oldest=Math.min.apply(null,P.map(function(p){return p.year}));
+  var mo=Math.max(1,Math.round((nowY-oldest)/SP.length*12));
+  var unit=mo%12===0?"yr":"mo",n=unit==="yr"?mo/12:mo;
+  $("#scaleTxt").textContent="0 · "+n+" · "+(2*n)+" "+unit;
+  $("#interval").textContent="Contour interval ≈ "+n+(unit==="yr"?(n===1?" year":" years"):(n===1?" month":" months"))+" · one station";
+})();
 
 /* track height follows the tallest card */
 function fitTrack(){
