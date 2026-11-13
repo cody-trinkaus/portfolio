@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Reflecting With Machines · Cody Trinkaus</title>
+<meta name="description" content="Case study: a ten-week directed research group on LLM-scaffolded reflection in design education: what the chatbot helped with, where it misled, and why a human in the loop mattered.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,300..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="case.css">
+<style>
+.dotplot{width:100%;max-width:44em;height:auto;display:block;text-shadow:none;overflow:visible}
+.dotplot .grid{stroke:var(--line)}
+.dotplot .axis{stroke:var(--ink);stroke-width:1.5}
+.dotplot .stem{stroke:var(--line-strong);stroke-dasharray:2 4}
+.dotplot .dot{fill:var(--accent);stroke:var(--ground);stroke-width:2}
+.dotplot .hit{fill:transparent;cursor:default}
+.dotplot g.row:hover .dot{r:8}
+.dotplot text{fill:var(--ink);font:400 13px var(--body)}
+.dotplot .tick,.dotplot .val{font:400 11.5px var(--mono);fill:var(--ink-soft)}
+.dotplot .val{fill:var(--ink)}
+</style>
+</head>
+<body>
+<canvas id="terrain" aria-hidden="true"></canvas>
+<canvas id="tracks" aria-hidden="true"></canvas>
+<header class="bar g"><a class="brand" href="index.html">C. Trinkaus</a><a href="index.html#work">← Back to timeline</a></header>
+<main>
+<section class="hero g">
+  <p class="mono" style="margin:0">Case study · El. Summer 2026 · Research</p>
+  <h1>Reflecting With Machines</h1>
+  <p class="sub">A ten-week directed research group asking whether a chatbot can help design students reflect their way to real competency growth, and what changes when a human stays in the loop.</p>
+  <dl class="facts">
+    <div><dt>Role</dt><dd>DRG facilitator and qualitative researcher: facilitation, analysis, redesign</dd></div>
+    <div><dt>Setting</dt><dd>HCDE directed research group, University of Washington</dd></div>
+    <div><dt>Term</dt><dd>Summer 2026, ten weeks</dd></div>
+    <div><dt>Methods</dt><dd>Scaffolded reflections, weekly forms, HIL interviews, reflexive thematic analysis</dd></div>
+  </dl>
+  <div class="stats"><span>5 participants</span><span>10 weeks</span><span>86 scored form responses</span><span>3 human-in-the-loop rounds</span></div>
+</section>
+<div class="layout g">
+  <nav class="toc" aria-label="Contents"><h2>Contents</h2><ol>
+    <li><a href="#question">The Question</a></li>
+    <li><a href="#study">The Study</a></li>
+    <li><a href="#analysis">Analysis</a></li>
+    <li><a href="#llm">What the LLM Did</a></li>
+    <li><a href="#agreement">The Agreement Paradox</a></li>
+    <li><a href="#hil">The Human in the Loop</a></li>
+    <li><a href="#arcs">Participant Arcs</a></li>
+    <li><a href="#redesign">Redesigning the DRG</a></li>
+    <li><a href="#reflection">Limits &amp; Next Steps</a></li>
+  </ol></nav>
+  <article>
+
+<section id="question"><h2><span class="n mono">Section 01</span>The Question</h2>
+<p>Reflection is how designers learn from their mistakes, sharpen their skills and take on more ambiguous problems. In practice, though, course reflections often feel performative, and instructors have less and less time to read them closely. Generative AI is the obvious thing to try. But can a chatbot actually support the kind of thinking reflection depends on, or does it just hand students a judgment they should have formed themselves?</p>
+<p>Existing work frames the answer as conditional: AI scaffolds learning when it supports a learner's judgment and undermines it when it replaces that judgment. Research on AI feedback also finds that students discount identical feedback once they're told a machine wrote it, and that a human in the loop works more as a source of credibility than as quality control. What's less settled is how this plays out over time, inside real competency development, and with the human as an active participant in the reflection rather than an auditor of the AI. We took up two questions:</p>
+<ol class="list">
+<li><b>RQ1:</b> How can LLM-scaffolded reflection help students grow design-related competencies meaningfully?</li>
+<li><b>RQ2:</b> What is the impact of a human-in-the-loop (HIL) in this process?</li>
+</ol>
+</section>
+
+<section id="study"><h2><span class="n mono">Section 02</span>The Study</h2>
+<p>We recruited five HCDE students: a second-year, a third-year, two fourth-years and a first-year master's student. They appear here under mineral pseudonyms: Pyrite, Jasper, Strontianite, Halite and Malachite. Each chose a <i>thinking</i>, a <i>being</i> and a <i>creating</i> design competency to work on over the quarter. The group met weekly to read and discuss theory on reflection (Schön's reflective practitioner among it), to separate growth from progress, and to co-design and storyboard LLM reflection tools.</p>
+
+<h4>A weekly reflection loop</h4>
+<ol class="workflow">
+<li><span class="i">01</span>Frame the competency and the project used as evidence<span class="tag">Student</span></li>
+<li><span class="i">02</span>Describe what you did, what worked, what was hard and what you're unsure of<span class="tag">Student</span></li>
+<li class="auto"><span class="i">03</span>Paste it into a pre-written prompt: Copilot names a Bloom's Taxonomy level, strengths and 2–3 growth areas<span class="tag">LLM</span></li>
+<li><span class="i">04</span>Weekly form: define the competency, rate agreement with the LLM (1 totally agree to 5 totally disagree), rate your confidence and write a growth plan<span class="tag">Student</span></li>
+</ol>
+<p>We scaffolded the reflections on purpose so responses would be comparable across participants. Part five, "what I'm unsure about," asked students to surface their assumptions and mental models, which turned out to be where most of the interesting data lived.</p>
+
+<h4>Human-in-the-loop, every three weeks</h4>
+<p>Separately from the AI-mediated reflection, each participant met one-on-one with Tyler, the DRG instructor, in weeks 3, 6 and 9. Each round had a different focus, set against the arc of the quarter:</p>
+<ul class="phase-track">
+<li class="done">Week 3<b>Getting to know you</b>Course load, motivation, prior experience</li>
+<li class="done">Week 6<b>Connections</b>Competencies as interconnected</li>
+<li class="done">Week 8<b>Annotated portfolio</b>Introduced as the final project</li>
+<li class="done">Week 9<b>Treat him like an LLM</b>Students bring their own questions</li>
+<li class="done">Week 10<b>Close-out</b>Portfolios and a group interview</li>
+</ul>
+<p style="margin-top:22px">In round three, students were told to question Tyler the way they would a chatbot. Almost none did. They asked about his own experience, asked existential questions about their personalities and how they approach learning, and looked for validation. That was an early signal of how differently they related to the two sources.</p>
+<div class="note">One honest gap: Zoom auto-deleted most week 3 HIL recordings, so only Pyrite's first-round interview made it into the corpus.</div>
+</section>
+
+<section id="analysis"><h2><span class="n mono">Section 03</span>Analysis</h2>
+<p>I followed Braun and Clarke's reflexive thematic analysis, which treats themes as constructed by the analyst rather than discovered in the data. The primary corpus was the scaffolded reflections, form responses and HIL interviews. The final interview notes and annotated portfolios formed a secondary corpus. I coded in-vivo and for values (Saldaña), staying close to participants' own language about competence, confidence and the chatbot.</p>
+<ol class="workflow">
+<li><span class="i">01</span>Familiarization: read the full primary and secondary corpus</li>
+<li><span class="i">02</span>Coding: in-vivo and values coding, participant by participant</li>
+<li class="auto"><span class="i">02b</span>Competency matrix: form ratings tracked over time and compared across participants<span class="tag">Descriptive</span></li>
+<li><span class="i">03</span>Theme generation: codes grouped into themes about the LLM, HIL and the DRG, then written up with evidence</li>
+<li><span class="i">04</span>Review: themes tested in discussion with the research team</li>
+<li><span class="i">05</span>Connect: themes organized by RQ1, RQ2 and DRG experience into findings</li>
+</ol>
+<p>Coding density was uneven. Pyrite, whom I coded first, got the most granular scrutiny, and Malachite was coded more efficiently once patterns had stabilized. In reflexive TA that's a known part of the analyst's process rather than a reliability failure, so I addressed it during theme construction by cross-checking the sparser participants against the fuller coding. The form matrix stayed descriptive, not inferential, and I kept it methodologically separate from the qualitative coding, even though each informed how I read the other.</p>
+</section>
+
+<section id="llm"><h2><span class="n mono">Section 04</span>What the LLM Did</h2>
+<p>RQ1 came back with a genuinely mixed answer. The chatbot worked as an extension of class: a source of continuous, low-stakes feedback that students would otherwise have had to go looking for. It also had blind spots that, left unchecked, reinforced exactly the mental models reflection is supposed to disrupt.</p>
+<div class="cols2">
+<div><h5>Where it helped</h5><ul class="list">
+<li><b>Language:</b> matched students' experiences to competency vocabulary and clarified their developmental stage</li>
+<li><b>Structure:</b> catalogued reflections, summarized what was done and what remained, and supported goal setting</li>
+<li><b>Momentum:</b> suggested exercises, named strengths and gave immediate feedback that would otherwise have gone unnoticed</li>
+<li><b>Reassurance:</b> resolved uncertainty about class structure and design process</li>
+</ul></div>
+<div><h5>Where it fell short</h5><ul class="list">
+<li><b>No context:</b> it knew nothing of a student's history or intent, so its feedback felt uncredible</li>
+<li><b>Too agreeable:</b> it regurgitated content, told students what they wanted to hear and praised unhealthy peer comparison</li>
+<li><b>Doing over thinking:</b> it defined thinking and being competencies through technical output</li>
+<li><b>Tone-deaf to capacity:</b> it recommended tedious, regimented practice outside the scope of the class</li>
+</ul></div>
+</div>
+<h4>It rarely pushed back</h4>
+<p>The most consequential gap was that the chatbot let flawed thinking stand. It allowed thinking myths to persist, reinforced the idea that there is a single ideal design, misled students about their own competency, offered to finish tasks for struggling students instead of supporting the struggle, and missed chances to question their assumptions.</p>
+<h4>It taught Bloom's Taxonomy wrong</h4>
+<p>The prompt asked the LLM to place each student on Bloom's Taxonomy. It consistently presented the taxonomy as a strictly linear ladder and treated "making" something as evidence of "creating." Participants already tended to read it that way, and the chatbot confirmed the misconception instead of correcting it.</p>
+<h4>Distrusted, and leaned on anyway</h4>
+<p>Participants described the LLM as too nice, suspicious and easy to dismiss, "text on a screen" without a person's authority. Yet they still relied on it for structure and reassurance. Trust and authority, not just accuracy, shaped whether its feedback landed.</p>
+</section>
+
+<section id="agreement"><h2><span class="n mono">Section 05</span>The Agreement Paradox</h2>
+<p>The weekly forms told a different story from the interviews. Across all 86 scored responses, 85% landed at 1 or 2 on the five-point scale (mean 1.79). The strongest disagreement anyone recorded, a 4, appeared exactly once. And agreement rose with the level the LLM assigned.</p>
+<figure>
+<svg class="dotplot" viewBox="0 0 640 250" role="img" aria-labelledby="dpTitle dpDesc">
+<title id="dpTitle">Mean agreement with the LLM's assessment, by the Bloom's level it assigned</title>
+<desc id="dpDesc">On a scale where 1 is totally agree and 5 is totally disagree: Applying 2.05, Analyzing 1.80, Evaluating 1.67, Creating 1.56.</desc>
+<g class="grid"><line x1="150" y1="20" x2="150" y2="205"/><line x1="260" y1="20" x2="260" y2="205"/><line x1="370" y1="20" x2="370" y2="205"/><line x1="480" y1="20" x2="480" y2="205"/><line x1="590" y1="20" x2="590" y2="205"/></g>
+<line class="axis" x1="150" y1="205" x2="590" y2="205"/>
+<g text-anchor="middle"><text class="tick" x="150" y="224">1</text><text class="tick" x="260" y="224">2</text><text class="tick" x="370" y="224">3</text><text class="tick" x="480" y="224">4</text><text class="tick" x="590" y="224">5</text>
+<text class="tick" x="150" y="244" text-anchor="start">TOTALLY AGREE</text><text class="tick" x="590" y="244" text-anchor="end">TOTALLY DISAGREE</text></g>
+<g class="row"><title>Applying: mean agreement 2.05</title><rect class="hit" x="0" y="25" width="640" height="30"/><text x="135" y="44" text-anchor="end">Applying</text><line class="stem" x1="150" y1="40" x2="265.5" y2="40"/><circle class="dot" cx="265.5" cy="40" r="6"/><text class="val" x="278" y="44">2.05</text></g>
+<g class="row"><title>Analyzing: mean agreement 1.80</title><rect class="hit" x="0" y="70" width="640" height="30"/><text x="135" y="89" text-anchor="end">Analyzing</text><line class="stem" x1="150" y1="85" x2="238" y2="85"/><circle class="dot" cx="238" cy="85" r="6"/><text class="val" x="251" y="89">1.80</text></g>
+<g class="row"><title>Evaluating: mean agreement 1.67</title><rect class="hit" x="0" y="115" width="640" height="30"/><text x="135" y="134" text-anchor="end">Evaluating</text><line class="stem" x1="150" y1="130" x2="223.7" y2="130"/><circle class="dot" cx="223.7" cy="130" r="6"/><text class="val" x="236" y="134">1.67</text></g>
+<g class="row"><title>Creating: mean agreement 1.56</title><rect class="hit" x="0" y="160" width="640" height="30"/><text x="135" y="179" text-anchor="end">Creating</text><line class="stem" x1="150" y1="175" x2="211.6" y2="175"/><circle class="dot" cx="211.6" cy="175" r="6"/><text class="val" x="224" y="179">1.56</text></g>
+</svg>
+<figcaption>Mean agreement with the LLM's assessment, by the Bloom's level it named. Lower is stronger agreement. The higher the chatbot placed them, the more readily students agreed.</figcaption>
+</figure>
+<p>Students also disagreed concessively. No response scored 3 contains the phrase "I disagree." Dissent came wrapped in agreement first:</p>
+<blockquote>"I agree with the way the chatbot meant it, but I'm not sure in this case that I was 'creating.'"<cite>Halite, weekly form</cite></blockquote>
+<p>Students would tell an interviewer the LLM was too nice and easy to dismiss. On a form where the assessment was about <i>them</i>, and the higher placements were the flattering ones, they mostly agreed. I read the scale as measuring their willingness to contradict a flattering assessment at least as much as their agreement with it. They seem to have accepted "creating" on the form and contested it later, in reflection and in HIL, once Bloom's Taxonomy had been clarified. Four of the five recorded lower agreement in their final week than in their first.</p>
+</section>
+
+<section id="hil"><h2><span class="n mono">Section 06</span>The Human in the Loop</h2>
+<p>For RQ2, the HIL conversations consistently offset the LLM's gaps. Participants trusted Tyler more because he was a professional situated in their context, someone who knew their appropriate skill level, related to their struggles and gave validation that felt earned rather than automatic.</p>
+<div class="cols2">
+<div><h5>Why it worked</h5><ul class="list">
+<li><b>Relational warmth:</b> he was informal, shared his own experience and related to their struggles</li>
+<li><b>Easier to take in:</b> "there are things I'd rather hear from a human"</li>
+<li><b>Conceptual scaffolding:</b> he linked competencies, brought in theory and used students' interests as metaphors</li>
+<li><b>Co-definition:</b> he built competency definitions with students rather than imposing them</li>
+</ul></div>
+<div><h5>What it did that the LLM didn't</h5><ul class="list">
+<li>Caught problematic mental models the LLM had built or reinforced</li>
+<li>Challenged mindsets and problematized definitions</li>
+<li>Asked guiding questions and added onto students' ideas</li>
+<li>Offered his own opinion where it helped</li>
+</ul></div>
+</div>
+<p>Nobody raised concerns about the frequency. Pyrite noted that weekly sessions might start to feel monotonous, but every participant valued the chance to reflect with a person.</p>
+</section>
+
+<section id="arcs"><h2><span class="n mono">Section 07</span>Participant Arcs</h2>
+<p>The clearest evidence came from following individuals across the quarter. A common thread runs through several of them: HIL identifying and challenging a problematic mental model, often one the chatbot had started or reinforced.</p>
+<div class="req"><h4>Halite: from surface-level to intrinsically motivated</h4>
+<p>A self-described pragmatic student who found it easy to submit surface-level reflections, Halite called the DRG the first time they'd been challenged to reflect deeply. By the final HIL they placed the root of a reflective practitioner's motivation in a personal want to reflect. Their arc shows what supported, intentional time can do for students who aren't naturally reflective.</p></div>
+<div class="req"><h4>Malachite: where the chatbot can't go</h4>
+<p>Malachite's relationship to flexibility ran from instrumental, how to apply it, to existential, how their personality shapes it. They judged the LLM the wrong tool for the existential end. HIL gave them reassurance and clarity there.</p></div>
+<div class="req"><h4>Pyrite: a more sophisticated idea of confidence</h4>
+<p>Pyrite showed signs of low self-confidence throughout the quarter but came to hold a more nuanced view of what confidence means. I attribute that shift to HIL, where Tyler built their confidence while pushing their understanding of it.</p></div>
+<div class="req"><h4>Strontianite: the chatbot shook a real strength</h4>
+<p>A naturally pragmatic thinker, Strontianite lost confidence in that competency after the LLM's evaluation. HIL caught the mismatch and helped her recognize the tendency as her own. In physical computing, HIL reframed her low confidence as doubt in her ability to <i>learn</i> the skill, and she agreed. She grew in the competency and in her meta-ability to learn.</p></div>
+<div class="req"><h4>Jasper: the one that slipped through</h4>
+<p>HIL inspired Jasper to produce an excellent annotated portfolio, but he kept the belief that there is one best way to do design. The LLM reinforced it by suggesting design directions whenever he was uncertain. The belief is plain in his written reflections, yet nobody caught it in time. That missed intervention shaped the redesign.</p></div>
+</section>
+
+<section id="redesign"><h2><span class="n mono">Section 08</span>Redesigning the DRG</h2>
+<p>I used the findings to redesign the DRG for its next run, with two goals: better outcomes for students (identifying and assessing their own design competencies, with growth in the competencies and in reflection as a byproduct) and more reliable data for studying LLM reflection and the instructor's role in it.</p>
+<div class="req"><h4>1. Frame the tools honestly</h4>
+<p>State up front that Bloom's Taxonomy isn't a linear ladder and that reaching the top of the pyramid isn't the point. Make it clear that the LLM only knows the context it's given: what you get out depends on what you put in. And lower expectations for its output, since students' own new connections are worth more than the chatbot's verdict. I kept Bloom's for cross-study comparison despite its fit problems.</p></div>
+<div class="req"><h4>2. One home for the group</h4>
+<p>We had kept the DRG off Canvas to set it apart from regular coursework. Students liked that, but the resulting disorganization hurt. I built a website that meets Washington State accessibility standards and keeps the informal feel. It prompts students with reflection questions, generates prompts to paste into an LLM and keeps past reflections in a journal. On the instructor side, staff can review responses and edit all of the course content.</p></div>
+<div class="req"><h4>3. A monitoring human in the loop</h4>
+<p>HIL worked and should stay largely the same, framed explicitly as a check on reflecting with AI. The one change: the instructor should proactively read reflections between sessions, so a belief like Jasper's surfaces before the last HIL rather than after it.</p></div>
+<div class="req"><h4>4. A defined roadmap</h4>
+<p>The schedule moves LLM evaluations to every other week, which answers the monotony students reported and opens space for free reflection driven by curiosity. It introduces the annotated portfolio on day one, adds a recorded midway check-in as a second longitudinal data point, adds competency statements (now being introduced in HCDE's Interaction Design course) and builds in time to deliberately push the LLM to its limits.</p></div>
+<table class="compare">
+<caption>Redesigned ten-week schedule</caption>
+<thead><tr><th>Week</th><th>Group session</th><th>Reflection</th></tr></thead>
+<tbody>
+<tr><td data-label="Week">1</td><td data-label="Group session">Frame competencies and reflection; set up LLM skills and memory; choose competencies; annotated portfolio as the goal</td><td data-label="Reflection">R0: past experience</td></tr>
+<tr><td data-label="Week">2</td><td data-label="Group session">Push the LLM and find its boundaries</td><td data-label="Reflection">R1: Bloom's</td></tr>
+<tr><td data-label="Week">3</td><td data-label="Group session">Read and discuss the annotated portfolio article · <b>HIL</b></td><td data-label="Reflection">R2: free reflection</td></tr>
+<tr><td data-label="Week">4</td><td data-label="Group session">Update competency definitions or draft a competency statement</td><td data-label="Reflection">R3: Bloom's</td></tr>
+<tr><td data-label="Week">5</td><td data-label="Group session">Midway check-in (recorded)</td><td data-label="Reflection">R4: most impactful so far</td></tr>
+<tr><td data-label="Week">6</td><td data-label="Group session">First pass at the annotated portfolio · <b>HIL</b></td><td data-label="Reflection">R5: Bloom's</td></tr>
+<tr><td data-label="Week">7</td><td data-label="Group session">LLM redesign</td><td data-label="Reflection">R6: free reflection</td></tr>
+<tr><td data-label="Week">8</td><td data-label="Group session">Competency statements</td><td data-label="Reflection">R7: Bloom's</td></tr>
+<tr><td data-label="Week">9</td><td data-label="Group session">Work time · <b>HIL</b></td><td data-label="Reflection">R8: free reflection</td></tr>
+<tr><td data-label="Week">10</td><td data-label="Group session">Annotated portfolio presentations; final interview</td><td data-label="Reflection">R9: final Bloom's</td></tr>
+</tbody>
+</table>
+</section>
+
+<section id="reflection"><h2><span class="n mono">Section 09</span>Limits &amp; Next Steps</h2>
+<p>Five participants can't support generalizable claims, and several findings rest on a single participant's experience. They are, however, consistent with what I observed as a facilitator and with the research team's discussions, and that's enough to shape the next DRG. They aren't enough to settle the question.</p>
+<p>The biggest thing I'd change is the prompt itself. Asking the LLM to <i>evaluate</i> students, by naming a level, strengths and gaps, may have created the openings for it to introduce and reinforce flawed mental models. My hypothesis for the next round is a question-based prompt: one that pushes back on a student's thinking and prompts further reflection instead of passing judgment on it.</p>
+<p>Longer term, I'd like this work to feed into a broader pedagogy of reflection in HCDE, possibly a course on developing students as reflective practitioners. That kind of course demands heavy instructor involvement, and a well-scoped LLM, paired with a human who's paying attention, might be what makes it feasible to teach.</p>
+<h5 style="margin-top:32px">Works cited</h5>
+<ol class="list" style="font-size:13.5px;color:var(--ink-soft)">
+<li>Braun, V., &amp; Clarke, V. (2006). Using thematic analysis in psychology. <i>Qualitative Research in Psychology, 3</i>(2), 77–101.</li>
+<li>Braun, V., &amp; Clarke, V. (2019). Reflecting on reflexive thematic analysis. <i>Qualitative Research in Sport, Exercise and Health, 11</i>(4), 589–597.</li>
+<li>Braun, V., &amp; Clarke, V. (2021). <i>Thematic analysis: A practical guide.</i> SAGE.</li>
+<li>Gaver, W., &amp; Bowers, J. (2012). Annotated portfolios. <i>Interactions, 19</i>(4), 40–49.</li>
+<li>Saldaña, J. (2021). <i>The coding manual for qualitative researchers</i> (4th ed.). SAGE.</li>
+</ol>
+</section>
+
+  </article>
+</div>
+</main>
+<footer class="g">
+  <nav class="pager" aria-label="More work">
+    <a href="index.html#work"><span class="mono">All projects</span><b>Timeline</b></a>
+    <a href="starting-point.html"><span class="mono">Next case study · Service Design · 2026</span><b>Starting Point</b></a>
+  </nav>
+  <p class="mono">© 2026 Cody Trinkaus · <a href="mailto:ctrink@uw.edu">ctrink@uw.edu</a> · <a href="https://linkedin.com/in/codytrinkaus" target="_blank" rel="noopener">LinkedIn</a></p>
+</footer>
+<dialog id="zoom" aria-label="Enlarged image"><button type="button" autofocus>Close ✕</button><img alt=""></dialog>
+<script src="case.js"></script>
+<script src="edit.js"></script>
+</body>
+</html>
